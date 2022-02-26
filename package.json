@@ -10,13 +10,16 @@
   },
   "dependencies": {
     "@solana/buffer-layout": "^4.0.0",
-    "@solana/spl-token": "^0.2.0",
+    "@solana/spl-token": "^0.1.8",
     "@solana/web3.js": "^1.35.1",
+    "@types/bn.js": "^5.1.0",
     "copy-to-clipboard": "^3.3.1",
     "next": "12.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "styled-components": "^5.3.3"
+    "react-native-web": "^0.17.6",
+    "styled-components": "^5.3.3",
+    "weighted": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",

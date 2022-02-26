@@ -7,9 +7,10 @@ body,
 #__next {
   padding: 0;
   margin: 0;
-  width: 100vw;
+  width: 100%;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: black;
 }
 
 a {
@@ -20,65 +21,96 @@ a {
 * {
   box-sizing: border-box;
 }
+.bottom-35 {
+  bottom: 35vh;
+}
 
 .border-y-1 {
   border-top-width: 1px;
   border-bottom-width: 1px;
 }
-.slide-out-compose {
-  animation: 0.5s ease-in reverse slideIn forwards;
-}
-.slide-compose {
-  animation: 0.5s ease-in slideIn forwards;
-}
-.show-compose {
+.alert-anim {
+  animation: reveal 5s ease-in-out 0s;
   position: absolute;
-  top: 0vh;
-  z-index: 50;
+  top: 10vh;
+  opacity: 0;
+  width: 90vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
 }
-.default-compose {
-  display: none;
-}
-@keyframes slideIn {
-  from {
-    display: none;
-    position: absolute;
-    top: 100vh;
-  }
-  to {
-    display:block;
-    position: absolute;
+@keyframes reveal {
+  0% {
+    opacity: 0;
     top: 0vh;
-    z-index: 50;
+  }
+  20% {
+    opacity: 0.9;
+    top: 10vh;
+  }
+  50% {
+    opacity: 1;
+    top: 10vh;
+  }
+  80% {
+    opacity: 0.9;
+    top: 10vh;
+  }
+  100% {
+    opacity: 0;
+    top: 0vh;
   }
 }
 .border-1 {
   border-width: 1px;
 }
 
-.w-90 {
+.w-86 {
   width: 86vw;
 }
 .w--10 {
-  width: 4.4vw;
+  width: 6vw;
 }
 .h-10vw {
-  height: 4.4vw;
+  height: 6vw;
 }
 @media screen and (max-width: 767px) {
   .w--10 {
-    width: 14vw;
+    width: 17vw;
   }
   .h-10vw {
-    height: 14vw;
+    height: 17vw;
   }
   .enter {
     height: 10vh !important;
   }
-  .vh-55 {
-    height: 55vh;
+}
+.py-2vh{
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+}
+#bgblack {
+  background-color: black;
+}
+.-mb-18 {
+  margin-bottom: -4.3rem;
+}
+#main-conversation {
+  width: 80%;
+  margin: 0 auto;
+}
+
+#textinput:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+@media (min-width: 1024px) {
+  #newmessage {
+      font-size: 3rem/* 48px */;
+      line-height: 1;
+      padding-bottom: 1.5rem/* 24px */;
   }
-  .vh-90 {
-    height: 89vh;
+  .lg\:mx-02 {
+    margin-left: 2%;
+    margin-right: 2%;
   }
 }
