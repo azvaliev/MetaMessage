@@ -1,7 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
-body {
+body,
+#__next {
   padding: 0;
   margin: 0;
+  width: 100vw;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
@@ -13,4 +19,66 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.border-y-1 {
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+}
+.slide-out-compose {
+  animation: 0.5s ease-in reverse slideIn forwards;
+}
+.slide-compose {
+  animation: 0.5s ease-in slideIn forwards;
+}
+.show-compose {
+  position: absolute;
+  top: 0vh;
+  z-index: 50;
+}
+.default-compose {
+  display: none;
+}
+@keyframes slideIn {
+  from {
+    display: none;
+    position: absolute;
+    top: 100vh;
+  }
+  to {
+    display:block;
+    position: absolute;
+    top: 0vh;
+    z-index: 50;
+  }
+}
+.border-1 {
+  border-width: 1px;
+}
+
+.w-90 {
+  width: 86vw;
+}
+.w--10 {
+  width: 4.4vw;
+}
+.h-10vw {
+  height: 4.4vw;
+}
+@media screen and (max-width: 767px) {
+  .w--10 {
+    width: 14vw;
+  }
+  .h-10vw {
+    height: 14vw;
+  }
+  .enter {
+    height: 10vh !important;
+  }
+  .vh-55 {
+    height: 55vh;
+  }
+  .vh-90 {
+    height: 89vh;
+  }
 }
