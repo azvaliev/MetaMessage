@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import ComposeField from "../components/UI/ComposeField";

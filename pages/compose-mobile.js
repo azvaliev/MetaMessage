@@ -98,16 +98,6 @@ const Compose2 = props => {
                     New Message
                 </Text>
             </View>
-            {/* <div className="flex flex-row border-y-1 border-gray-300 enter text-3xl text-white lg:mx-12 lg:border-2 lg:rounded-3xl">
-                <ComposeField
-                    value={recipient} 
-                    onInputChange={handleTypingRecipient}
-                    placeholder="Recipient..."
-                    preventScroll={preventDefault}
-                    ref={recipientRef}
-                />
-
-            </div> */}
             <View style={{
                 borderBottomWidth: '1px',
                 borderTopWidth: '1px',
@@ -123,7 +113,6 @@ const Compose2 = props => {
                     value={recipient}
                     onChange={handleTypingRecipient}
                     placeholder="Recipient Address"
-                    autoFocus={true}
                     style={{
                         backgroundColor: 'transparent',
                         borderColor: 'rgb(209 213 219)',
