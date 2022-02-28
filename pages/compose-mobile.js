@@ -5,7 +5,7 @@ import NativeComposeMessage from '../components/UI/NativeComposeMessage';
 import SendMsg from '../components/Logic/SendMsg';
 import AlertMessage from '../components/UI/AlertMessage';
 
-const compose2 = props => {
+const Compose2 = props => {
 
     const [recipient, setRecipient] = useState('');
     const [message, setMessage] = useState('');
@@ -146,4 +146,4 @@ const compose2 = props => {
     )
 }
 
-export default compose2;
+export default Compose2;

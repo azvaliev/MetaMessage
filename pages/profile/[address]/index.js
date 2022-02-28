@@ -18,7 +18,7 @@ height: 6vw;
 }
 `;
 
-export default function profile(props) {
+export default function Profile(props) {
 
   const router = useRouter();
   const {address} = router.query;
