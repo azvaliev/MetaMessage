@@ -78,7 +78,7 @@ export default function Compose (props) {
 
 
     return (
-        <Main className={`bg-black z-50 px-72 ${props.className} h-screen max-h-screen`}>
+        <Main className={`bg-black z-50 px-72 h-screen max-h-screen`}>
             <form onSubmit={preventDefault} className="lg:h-screen lg:flex lg:flex-col">
             <div className="relative z-20 text-white ">
                 <Link href="/">

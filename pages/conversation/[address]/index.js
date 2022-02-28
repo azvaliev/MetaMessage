@@ -79,7 +79,6 @@ export default function Conversation(props) {
             setTimeout(async () => {
                 router.push('/');
             })
-            
         }
     }
 
