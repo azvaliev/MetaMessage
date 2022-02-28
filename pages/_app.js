@@ -14,6 +14,7 @@ function MyApp({ Component, pageProps }) {
   const [conversations, setConversations] = useState([]);
   const [activeConversation, setActiveConversation] = useState();
   const [mobile, setMobile] = useState(false);
+  const [showAppGuide, setShowAppGuide] = useState(false);
   const router = useRouter();
 
   const handleGenerateKeypair = () => {
@@ -58,6 +59,10 @@ function MyApp({ Component, pageProps }) {
     setConversations(await GetConversations(keypair));
   }
 
+  const handleShowAddAppGuide = () => {
+    setShowAppGuide(!showAppGuide);
+  }
+
   return (
   <>
     <Head>
@@ -93,6 +98,7 @@ function MyApp({ Component, pageProps }) {
       conversations={conversations} mobile={mobile}
       activeConversation={activeConversation}
       onUpdateNeeded={handleRefreshConversation}
+      showAppGuide={showAppGuide} onShowAppGuide={handleShowAddAppGuide}
       />
 
   </>

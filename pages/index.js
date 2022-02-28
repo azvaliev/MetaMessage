@@ -9,21 +9,41 @@ import AlertMessage from '../components/UI/AlertMessage';
 
 export default function Home(props) {
 
-  const [showMessage, setShowMessage] = useState('');
 
   const Main = styled.div`
     width: 100%;
   `;
 
-  const ImageHolder = styled.div`
-    filter: invert(1);
+  const ProfileHolder = styled.div`
+
     min-width: 6vw;
     height: 6vw;
     @media screen and (max-width: 767px) {
-      min-width: 10vw;
-      height: 9vw;
+      min-width: 11vw;
+      height: 11vw;
     }
   `;
+
+  const OptionHolder = styled.div`
+  filter: invert(1);
+    min-width: 7vw;
+    height: 7vw;
+    @media screen and (max-width: 767px) {
+      min-width: 19vw;
+      min-height: 19vw;
+    }
+  `;
+
+  const OptionInnerHolder = styled.div`
+  filter: invert(1);
+    min-width: 6vw;
+    height: 6vw;
+    @media screen and (max-width: 767px) {
+      min-width: 14vw;
+      min-height: 14vw;
+    }
+  `;
+  
 
   const AddressHolder = styled.h1`
     width: 91vw;
@@ -41,16 +61,17 @@ export default function Home(props) {
   return (
     <Main className=" flex flex-col max-h-screen bg-black text-white lg:px-36">
       <div className=" h-fit py-4 border-b-2 border-gray-300 flex flex-row">
-        <AddressHolder className="text-3xl lg:text-4xl ml-2" id="home" onClick={() => handleCopyAddress(props.pubkey.toString())}>
-          {/* <Link href="/profile/[address]" as={`/profile/${props.pubkey.toString()}`}> */}
+        <AddressHolder className="text-3xl lg:text-4xl ml-2 my-auto"  id="home" >
+        {/* onClick={() => handleCopyAddress(props.pubkey.toString())}> */}
+        <Link href="/profile/[address]" as={`/profile/${props.pubkey.toString()}`}>
           {Object.keys(props.pubkey).length == 0 ? 'Meta Message' : ShortenPubkey(props.pubkey.toString(), true, props.mobile)}
-          {/* </Link> */}
-        </AddressHolder>
-        <ImageHolder className="relative h-full mr-4">
-          <Link href={props.mobile ? '/compose-mobile': '/compose'}> 
-          <Image src="/img/Compose.png" alt="Compose" layout="fill" objectFit="contain" />
           </Link>
-        </ImageHolder>
+        </AddressHolder>
+        <ProfileHolder className="relative h-full top-0 mt-0 mr-2">
+          <Link href="/profile/[address]" as={`/profile/${props.pubkey.toString()}`}>
+          <Image src="/img/logoblue.webp" alt="Profile" layout="fill" objectFit="contain" />
+          </Link>
+        </ProfileHolder>
       </div>
       
         {Object.keys(props.keypair).length == 0 ?
@@ -99,6 +120,18 @@ export default function Home(props) {
             })}
           </div>
         }
+        <OptionHolder className="absolute moreopts top-auto right-1 left-auto bg-gray-300 rounded-3xl">
+          <OptionInnerHolder className="relative bottom-4 flex">
+            <h5 className="mx-auto text-7xl">...</h5>
+          </OptionInnerHolder>
+        </OptionHolder>
+        <Link href={props.mobile ? '/compose-mobile': '/compose'}> 
+        <OptionHolder className="absolute compose top-auto right-1 left-auto bg-yellow-500 rounded-3xl">
+          <OptionInnerHolder className="relative top-3">
+          <Image src="/img/compose.png" alt="Compose" layout="fill" objectFit="contain" className="my-auto"/>
+          </OptionInnerHolder>
+        </OptionHolder>
+        </Link>
     </Main>
   )
 }

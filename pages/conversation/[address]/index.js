@@ -109,15 +109,16 @@ export default function Conversation(props) {
         <View style={{height: '100vh', backgroundColor: 'black'}}>
             {props.mobile ? 
             <>
-            <Text style={{color: "#2563EB", fontSize: '3.5rem', marginBottom: '-16%', zIndex: '20'}}
+            <Text style={{color: "#2563EB", fontSize: '3.5rem', marginBottom: '-16%', zIndex: '20', marginLeft: 'auto', marginRight: '4%'}}
                   onClick={closeConversation}>
-                &#x226A;</Text>
+                &#x2715;</Text>
             <View style={{borderBottomWidth: '2px', borderColor: 'white', paddingBottom: '2vh', paddingTop: '2vh', backgroundColor: '#100c08'}}>
                 <Text 
                 // onClick={HandleCopyAddress(address)}
                     style={{
                        color: 'white',
-                       textAlign: 'center',
+                       textAlign: 'left',
+                       marginLeft: '2%',
                        fontSize: '1.875rem',
                        lineHeight: '2.25rem'
                     }}>

@@ -1,6 +1,6 @@
 import {KeyboardAvoidingView, View, Text, TextInput} from 'react-native-web'
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NativeComposeMessage from '../components/UI/NativeComposeMessage';
 import SendMsg from '../components/Logic/SendMsg';
 import AlertMessage from '../components/UI/AlertMessage';
@@ -13,6 +13,7 @@ const Compose2 = props => {
         message: '',
         warning: true
     });
+    const [height, setHeight] = useState('45vh');
 
     async function handleSendMessage()  {
         if (message.length < 1) {
@@ -53,22 +54,30 @@ const Compose2 = props => {
         setRecipient(e.target.value);
     }
 
+    useEffect(() => {
+        let stayup = setInterval(() => {
+            window.scrollTo(0, 0);
+        }, 1);
+        if (!props.mobile) {
+            setHeight('90vh')
+        }
+        return () => {
+            clearInterval(stayup);
+        }
+    }, [])
     const onFocus = () => {
-        window.scrollTo(0,0);
-        setTimeout(() => {
-            window.scrollTo(0,0);
-        }, 30)
-        setTimeout(() => {
-            window.scrollTo(0,0);
-        }, 80)
+        if(props.mobile) {
+            setHeight('45vh');
+        }
     }
     const onBlur = () => {
-        window.scrollTo(0,0)
+        if(props.mobile) {
+            setHeight('80vh');
+        }
     }
 
     return (
         <View style={{height: '90vh', backgroundColor: 'black'}}>
-        <KeyboardAvoidingView style={{backgroundColor: 'black', minHeight: '50vh', maxHeight: '90vh'}}>
             <View style={{zIndex: '20'}}>
                 <Link href="/">
                     <Text
@@ -98,6 +107,7 @@ const Compose2 = props => {
                     New Message
                 </Text>
             </View>
+        <KeyboardAvoidingView style={{backgroundColor: 'black', height: height}}>
             <View style={{
                 borderBottomWidth: '1px',
                 borderTopWidth: '1px',
@@ -110,6 +120,8 @@ const Compose2 = props => {
             }}>
                 <TextInput nativeID="textinput"
                     autoFocus={true}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                     value={recipient}
                     onChange={handleTypingRecipient}
                     placeholder="Recipient Address"
