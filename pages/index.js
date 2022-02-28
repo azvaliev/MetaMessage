@@ -5,8 +5,11 @@ import copy from 'copy-to-clipboard';
 import Link from 'next/link';
 import ShortenPubkey from '../components/UI/ShortenPubkey';
 import { CompareDates } from '../components/Logic/CreateFormatDate';
+import AlertMessage from '../components/UI/AlertMessage';
 
 export default function Home(props) {
+
+  const [showMessage, setShowMessage] = useState('');
 
   const Main = styled.div`
     width: 100%;
@@ -36,10 +39,12 @@ export default function Home(props) {
   }, [])
 
   return (
-    <Main className=" flex flex-col h-screen bg-black text-white lg:px-36">
+    <Main className=" flex flex-col max-h-screen bg-black text-white lg:px-36">
       <div className=" h-fit py-4 border-b-2 border-gray-300 flex flex-row">
         <AddressHolder className="text-3xl lg:text-4xl ml-2" id="home" onClick={() => handleCopyAddress(props.pubkey.toString())}>
+          {/* <Link href="/profile/[address]" as={`/profile/${props.pubkey.toString()}`}> */}
           {Object.keys(props.pubkey).length == 0 ? 'Meta Message' : ShortenPubkey(props.pubkey.toString(), true, props.mobile)}
+          {/* </Link> */}
         </AddressHolder>
         <ImageHolder className="relative h-full mr-4">
           <Link href={props.mobile ? '/compose-mobile': '/compose'}> 

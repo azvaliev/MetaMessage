@@ -94,10 +94,6 @@ a {
 .-mb-18 {
   margin-bottom: -4.3rem;
 }
-#main-conversation {
-  width: 80%;
-  margin: 0 auto;
-}
 
 #textinput:focus {
   outline: 2px solid transparent;
@@ -112,5 +108,9 @@ a {
   .lg\:mx-02 {
     margin-left: 2%;
     margin-right: 2%;
+  }
+  #main-conversation {
+    width: 80%;
+    margin: 0 auto;
   }
 }
