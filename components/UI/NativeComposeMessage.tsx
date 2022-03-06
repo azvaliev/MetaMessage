@@ -3,6 +3,7 @@ import Image from "next/image";
 
 interface Props {
   onFocus: Function;
+  onBlur: Function;
   message: string;
   handleTypingMessage: Function;
   handleSendMessage: any;
@@ -70,4 +71,3 @@ export default function NativeComposeMessage(props: Props) {
     </View>
   );
 }
-

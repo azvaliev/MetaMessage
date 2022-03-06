@@ -159,6 +159,7 @@ const Compose2 = (props: Props) => {
       <AlertMessage
         message={theAlertMessage.message}
         warning={theAlertMessage.warning}
+        neutral={false}
       />
     </View>
   );
