@@ -28,6 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     const storedData = window.localStorage;
     // storedData.removeItem('keypair');
+    // For testing purposes
     const keypairCheck = storedData.getItem("keypair");
     if (keypairCheck) {
       setKeypair(
@@ -131,6 +132,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         onUpdateNeeded={handleRefreshConversation}
         showAppGuide={showAppGuide}
         onShowAppGuide={handleShowAddAppGuide}
+        displayPubkey={pubkey.toString()}
       />
     </>
   );

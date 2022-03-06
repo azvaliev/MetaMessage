@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import ShortenPubkey from "../components/UI/ShortenPubkey";
 import { CompareDates } from "../components/Logic/CreateFormatDate";
-import { Props } from "../components/types";
+import { Props, Message } from "../components/types";
 
 export default function Home(props: Props) {
   const Main = styled.div`
@@ -78,7 +78,7 @@ export default function Home(props: Props) {
         </ProfileHolder>
       </div>
 
-      {Object.keys(props.keypair).length == 0 ? (
+      {props.keypair == null ? (
         <div className="m-auto lg:mx-2 text-center">
           <h2 className="text-3xl">Welcome to Meta Message beta!</h2>
           <h3 className="text-2xl">Please claim your keypair below</h3>
@@ -99,7 +99,7 @@ export default function Home(props: Props) {
         </div>
       ) : (
         <div className="w-full">
-          {props.conversations.map((conversation) => {
+          {props.conversations.map((conversation: Array<Message>) => {
             let recipient = null;
             conversation.forEach((message) => {
               if (

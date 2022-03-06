@@ -38,19 +38,6 @@ export default function Profile(props) {
     }
   }, [props.pubkey]);
 
-  const attemptShortenPubkey = () => {
-    try {
-      return ShortenPubkey(displayAddress, false, props.mobile);
-    } catch (err) {
-      setTimeout(async () => {
-        router.push(
-          "/profile/[address]",
-          `/profile/${props.pubkey.toString()}`
-        );
-      });
-    }
-  };
-
   const displayAddAppGuide = () => {
     props.onShowAppGuide();
     router.push("/");
@@ -63,7 +50,7 @@ export default function Profile(props) {
           className="text-3xl lg:text-4xl ml-1 md:-ml-8 lg:-ml-24 md:text-center font-bold"
           id="home"
         >
-          {attemptShortenPubkey()}
+          {props.displayPubkey}
         </AddressHolder>
         <ImageHolder className="relative h-full ml-1 -mt-4 text-6xl text-blue-600 ">
           <Link href="/">&#x2715;</Link>
@@ -113,4 +100,3 @@ export default function Profile(props) {
     </div>
   );
 }
-
