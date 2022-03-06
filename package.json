@@ -24,6 +24,8 @@
     "weighted": "^1.0.0"
   },
   "devDependencies": {
+    "@types/react": "^17.0.39",
+    "@types/styled-components": "^5.1.24",
     "autoprefixer": "^10.4.2",
     "eslint": "8.9.0",
     "eslint-config-next": "12.1.0",

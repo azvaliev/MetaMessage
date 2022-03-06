@@ -26,7 +26,7 @@ export default async function CheckMessages(wallet: web3.Keypair) {
     if (transaction.memo != null) {
       messages.push({
         message: transaction.memo.slice(4, transaction.memo.length - 39),
-        date: transaction.memo.slice(transaction.memo.length - 40),
+        date: new Date(transaction.memo.slice(transaction.memo.length - 40)),
         signature: transaction.signature,
       });
     }
@@ -37,9 +37,9 @@ export default async function CheckMessages(wallet: web3.Keypair) {
   // Figure out who sent the messages
   for (let i = 0; i < messages.length; i++) {
     let details = await connection.getParsedTransaction(messages[i].signature);
-    details = details.transaction.message.accountKeys;
+    let detailsList = details.transaction.message.accountKeys;
 
-    details.forEach((detail) => {
+    detailsList.forEach((detail) => {
       if (detail.signer) {
         if (detail.pubkey.toString() == pubkey.toString()) {
           // do nothing
@@ -73,4 +73,3 @@ export default async function CheckMessages(wallet: web3.Keypair) {
 
   return parsedMessages;
 }
-
