@@ -3,6 +3,7 @@ import { Keypair } from "@solana/web3.js";
 
 async function GetConversations(wallet: Keypair) {
   let incoming = await CheckMessages(wallet);
+  console.log(incoming);
   if (incoming[0] != "N/A") {
     incoming.forEach((conversation) => {
       if (localStorage.getItem(conversation[0].from.toString()) !== null) {
