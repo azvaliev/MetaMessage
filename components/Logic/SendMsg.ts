@@ -45,7 +45,7 @@ export default async function SendMsg(
     console.log("bracket check?", msgFormat);
 
     // Sending message using Solana Memo Program
-    await transferTransaction.add(
+    transferTransaction.add(
       new web3.TransactionInstruction({
         keys: [{ pubkey: wallet.publicKey, isSigner: true, isWritable: true }],
         data: Buffer.from(msgFormat, "utf-8"),
@@ -133,4 +133,3 @@ export default async function SendMsg(
     return "badkey";
   }
 }
-

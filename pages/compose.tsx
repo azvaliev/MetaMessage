@@ -93,6 +93,7 @@ export default function Compose(props: Props) {
             value={recipient}
             onInputChange={handleTypingRecipient}
             placeholder="Recipient..."
+            textarea={false}
           />
         </div>
         <DesktopCompose
@@ -106,6 +107,7 @@ export default function Compose(props: Props) {
       <AlertMessage
         message={theAlertMessage.message}
         warning={theAlertMessage.warning}
+        neutral={false}
       />
     </Main>
   );
