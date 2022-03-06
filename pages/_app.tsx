@@ -9,7 +9,7 @@ import IsMobile from "../components/Logic/IsMobile";
 import type { AppProps } from "next/app";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [keypair, setKeypair] = useState({});
+  const [keypair, setKeypair] = useState(null);
   const [pubkey, setPubkey] = useState({});
   const [conversations, setConversations] = useState([]);
   const [mobile, setMobile] = useState(false);
