@@ -57,7 +57,7 @@ export default function Home(props: Props) {
             Click below to claim your unique address
           </h3>
           <h3 className="text-lg lg:text-4xl pt-1 lg:pt-2 font-light italic">
-            (It's like your phone # for the blockchain)
+            (It&lsquo;s like your phone # for the blockchain)
           </h3>
           <button
             className="bg-blue-700 px-4 py-2 lg:px-6 py-4 rounded-md mt-6 lg:mt-10 text-3xl lg:text-5xl lg:hover:text-6xl font-bold"
