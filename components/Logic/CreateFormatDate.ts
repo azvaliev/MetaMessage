@@ -2,11 +2,10 @@ const CreateDate = () => {
   return new Date();
 };
 
-const CompareDates = (past: string) => {
+const CompareDates = (past: Date) => {
   const current = Date.now();
-  let pastConv = new Date(past);
-  const pastFormat = FormatDate(pastConv);
-  let dif = current - Date.parse(pastConv.toDateString());
+  const pastFormat = FormatDate(past);
+  let dif = current - Date.parse(past.toDateString());
   // convert difference from ms to minutes
   dif = dif / 60000;
   let displayMessage: string;
@@ -26,18 +25,18 @@ const CompareDates = (past: string) => {
   } else if (dif < 8640) {
     displayMessage = new Intl.DateTimeFormat("en-US", {
       weekday: "long",
-    }).format(pastConv);
+    }).format(past);
   } else if (dif < 80320) {
     displayMessage = `${Math.round(dif / 10080)} weeks ago`;
   } else if (dif < 524160) {
     displayMessage = new Intl.DateTimeFormat("en-US", { month: "long" }).format(
-      pastConv
+      past
     );
   } else {
     displayMessage =
-      new Intl.DateTimeFormat("en-US", { month: "long" }).format(pastConv) +
+      new Intl.DateTimeFormat("en-US", { month: "long" }).format(past) +
       ", " +
-      pastConv.getFullYear();
+      past.getFullYear();
   }
   return [pastFormat, displayMessage];
 };
@@ -55,4 +54,3 @@ const FormatDate = (date: Date) => {
 };
 
 export { CreateDate, CompareDates };
-
