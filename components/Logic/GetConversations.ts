@@ -28,4 +28,3 @@ async function GetConversations(wallet: Keypair) {
 }
 
 export default GetConversations;
-

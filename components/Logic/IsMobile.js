@@ -11,5 +11,9 @@ export default function IsMobile() {
     )
       check = true;
   })(navigator.useragent || navigator.vendor || window.opera);
+
+  if (window.innerHeight > window.innerWidth) {
+    check = true;
+  }
   return check;
 }

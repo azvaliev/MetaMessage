@@ -1,53 +1,19 @@
 import Image from "next/image";
 import { useEffect } from "react";
-import styled from "styled-components";
 import Link from "next/link";
 import ShortenPubkey from "../components/UI/ShortenPubkey";
 import { CompareDates } from "../components/Logic/CreateFormatDate";
 import { Props, Message } from "../components/types";
+import { Main, AddressHolder, ProfileHolder } from "../components/StyledHome";
+import FloatOptionBar from "../components/UI/FloatOptionBar";
 
 export default function Home(props: Props) {
-  const Main = styled.div`
-    width: 100%;
-  `;
-
-  const ProfileHolder = styled.div`
-    min-width: 6vw;
-    height: 6vw;
-    @media screen and (max-width: 767px) {
-      min-width: 11vw;
-      height: 11vw;
-    }
-  `;
-
-  const OptionHolder = styled.div`
-    filter: invert(1);
-    min-width: 7vw;
-    height: 7vw;
-    @media screen and (max-width: 767px) {
-      min-width: 19vw;
-      min-height: 19vw;
-    }
-  `;
-
-  const OptionInnerHolder = styled.div`
-    filter: invert(1);
-    min-width: 6vw;
-    height: 6vw;
-    @media screen and (max-width: 767px) {
-      min-width: 14vw;
-      min-height: 14vw;
-    }
-  `;
-
-  const AddressHolder = styled.h1`
-    width: 91vw;
-  `;
-
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+  useEffect(() => {
     console.log(props.conversations);
-  });
+  }, [props.conversations]);
 
   return (
     <Main className=" flex flex-col max-h-screen bg-black text-white lg:px-36">
@@ -63,7 +29,7 @@ export default function Home(props: Props) {
               : ShortenPubkey(props.pubkey.toString(), true, props.mobile)}
           </Link>
         </AddressHolder>
-        <ProfileHolder className="relative h-full top-0 mt-0 mr-2">
+        <ProfileHolder className="relative z-50 h-full top-0 mt-0">
           <Link
             href="/profile/[address]"
             as={`/profile/${props.pubkey.toString()}`}
@@ -73,20 +39,31 @@ export default function Home(props: Props) {
               alt="Profile"
               layout="fill"
               objectFit="contain"
+              className="z-50"
             />
           </Link>
         </ProfileHolder>
       </div>
 
       {props.keypair == null ? (
-        <div className="m-auto lg:mx-2 text-center">
-          <h2 className="text-3xl">Welcome to Meta Message beta!</h2>
-          <h3 className="text-2xl">Please claim your keypair below</h3>
+        <div className="m-auto pt-8 lg:pt-12 lg:mx-2 text-center">
+          <h2 className="text-3xl lg:text-5xl underline">
+            Welcome to Meta Message!
+          </h2>
+          <h3 className="text-2xl lg:text-3xl pt-2 lg:pt-4 font-light">
+            Anonymous, end-to-end encrypted, Blockchain powered.
+          </h3>
+          <h3 className="text-xl lg:text-4xl pt-20 lg:pt-28 font-light">
+            Click below to claim your unique address
+          </h3>
+          <h3 className="text-lg lg:text-4xl pt-1 lg:pt-2 font-light italic">
+            (It's like your phone # for the blockchain)
+          </h3>
           <button
-            className="bg-blue-700 px-4 py-2 rounded-md mt-4 text-3xl hover:text-4xl font-bold"
+            className="bg-blue-700 px-4 py-2 lg:px-6 py-4 rounded-md mt-6 lg:mt-10 text-3xl lg:text-5xl lg:hover:text-6xl font-bold"
             onClick={props.onGenerateKeypair}
           >
-            Claim keypair
+            Claim Address
           </button>
         </div>
       ) : props.conversations.length == 0 ? (
@@ -114,6 +91,7 @@ export default function Home(props: Props) {
                 <Link
                   href="/conversation/[address]"
                   as={`/conversation/${recipient}`}
+                  key={recipient}
                 >
                   <div className="flex flex-col px-2 pt-4 pb-2 w-full border-b-2 border-gray-700">
                     <div className="flex flex-row">
@@ -142,24 +120,8 @@ export default function Home(props: Props) {
           })}
         </div>
       )}
-      <OptionHolder className="absolute moreopts top-auto right-1 left-auto bg-gray-300 rounded-3xl">
-        <OptionInnerHolder className="relative bottom-4 flex">
-          <h5 className="mx-auto text-7xl">...</h5>
-        </OptionInnerHolder>
-      </OptionHolder>
-      <Link href={props.mobile ? "/compose-mobile" : "/compose"}>
-        <OptionHolder className="absolute compose top-auto right-1 left-auto bg-yellow-500 rounded-3xl">
-          <OptionInnerHolder className="relative top-3">
-            <Image
-              src="/img/compose.png"
-              alt="Compose"
-              layout="fill"
-              objectFit="contain"
-              className="my-auto"
-            />
-          </OptionInnerHolder>
-        </OptionHolder>
-      </Link>
+
+      {props.keypair !== null && <FloatOptionBar />}
     </Main>
   );
 }

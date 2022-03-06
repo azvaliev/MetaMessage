@@ -2,7 +2,6 @@ import QRCode from "react-qr-code";
 import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
-import ShortenPubkey from "../../../components/UI/ShortenPubkey";
 import { useEffect, useState } from "react";
 import copy from "copy-to-clipboard";
 import { useRouter } from "next/router";
@@ -62,7 +61,7 @@ export default function Profile(props) {
       </h2>
       <QRCode
         className="mx-auto mt-6"
-        size={props.mobile ? "200" : "256"}
+        size={props.mobile ? 200 : 256}
         bgColor="#2563EB"
         value={displayAddress}
       />
@@ -83,7 +82,12 @@ export default function Profile(props) {
               Add Meta Message to your homescreen
             </h2>
             <div className="relative w-1/4 top-0 mb-1 mx-0">
-              <Image src="/img/icon.jpeg" layout="fill" objectFit="contain" />
+              <Image
+                src="/img/icon.jpeg"
+                alt=""
+                layout="fill"
+                objectFit="contain"
+              />
             </div>
           </div>
           <span className="italic text-center text-xl font-bold">

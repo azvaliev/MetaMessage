@@ -3,7 +3,6 @@ import { useEffect, useState, useRef } from "react";
 import { View, KeyboardAvoidingView, Text, ScrollView } from "react-native-web";
 import Message from "../../../components/UI/Message";
 import NativeComposeMessage from "../../../components/UI/NativeComposeMessage";
-import ShortenPubkey from "../../../components/UI/ShortenPubkey";
 import SendMsg from "../../../components/Logic/SendMsg";
 import AlertMessage from "../../../components/UI/AlertMessage";
 import DesktopCompose from "../../../components/UI/DesktopCompose";
@@ -119,7 +118,6 @@ export default function Conversation(props) {
             }}
           >
             <Text
-              // onClick={HandleCopyAddress(address)}
               style={{
                 color: "white",
                 textAlign: "left",
@@ -204,4 +202,3 @@ export default function Conversation(props) {
     </View>
   );
 }
-

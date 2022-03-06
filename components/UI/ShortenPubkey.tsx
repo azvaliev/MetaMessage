@@ -3,7 +3,6 @@ const ShortenPubkey = (key: string, intro: boolean, mobile: boolean) => {
     return key.substring(0, 12) + "..." + key.substring(key.length - 6);
   } else {
     if (intro) {
-      console.log(window.innerWidth);
       if (window.innerWidth < 1100) {
         return `Welcome back, ${
           key.substring(0, 12) + "..." + key.substring(key.length - 6)

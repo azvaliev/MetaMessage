@@ -54,15 +54,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           )
         );
       }, 5);
-      setInterval(async () => {
+      let check = setInterval(async () => {
         try {
-          console.log(
-            solanaWeb3.Keypair.fromSecretKey(
-              new Uint8Array(
-                Object.values(JSON.parse(keypairCheck)._keypair.secretKey)
-              )
-            )
-          );
           setConversations(
             await GetConversations(
               solanaWeb3.Keypair.fromSecretKey(
@@ -76,6 +69,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           console.error(err);
         }
       }, 5000);
+
+      () => {
+        clearInterval(check);
+      };
     }
   }, []);
 

@@ -109,14 +109,12 @@ a {
 .h-25vh {
   height: 14vh;
 }
-.compose {
-  bottom: 2%;
-  right: 4%;
-}
-.moreopts {
-  bottom: 16%;
-  right: 4%;
-}
+
+
+/* .scan-qr { */
+/* 	bottom: 28%; */
+/* } */
+
 .imgholder:after {
   position: absolute;
   content:"";
