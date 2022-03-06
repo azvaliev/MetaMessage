@@ -17,7 +17,7 @@ export default async function CheckMessages(wallet: web3.Keypair) {
 
   const recents = await connection.getConfirmedSignaturesForAddress2(
     pubkey,
-    [],
+    {},
     "confirmed"
   );
 
