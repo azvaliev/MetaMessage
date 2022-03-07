@@ -25,6 +25,7 @@ export default async function CheckMessages(wallet: web3.Keypair) {
   // TODO THIS IS WHERE YURI GAVE ME A BIG FAT ERROR
   recents.forEach((transaction) => {
     if (transaction.memo != null) {
+      console.log(transaction);
       let txDate: Date;
       try {
         txDate = new Date(
@@ -33,6 +34,7 @@ export default async function CheckMessages(wallet: web3.Keypair) {
       } catch {
         txDate = new Date();
       }
+      console.log("new txDate is", txDate.toString());
       messages.push({
         message: transaction.memo.slice(4, transaction.memo.indexOf("||")),
         date: txDate,
