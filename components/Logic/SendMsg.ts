@@ -41,7 +41,7 @@ export default async function SendMsg(
       })
     );
     const timeFormat = CreateDate();
-    let msgFormat = message + timeFormat.toString();
+    let msgFormat = message + "||" + timeFormat.toString();
     console.log("bracket check?", msgFormat);
 
     // Sending message using Solana Memo Program

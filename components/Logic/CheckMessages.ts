@@ -22,11 +22,14 @@ export default async function CheckMessages(wallet: web3.Keypair) {
   );
 
   // Get messages and transaction signatures
+  // TODO THIS IS WHERE YURI GAVE ME A BIG FAT ERROR
   recents.forEach((transaction) => {
     if (transaction.memo != null) {
       messages.push({
-        message: transaction.memo.slice(4, transaction.memo.length - 39),
-        date: new Date(transaction.memo.slice(transaction.memo.length - 40)),
+        message: transaction.memo.slice(4, transaction.memo.indexOf("||")),
+        date: new Date(
+          transaction.memo.slice(transaction.memo.indexOf("||") + 2)
+        ),
         signature: transaction.signature,
       });
     }
