@@ -25,11 +25,17 @@ export default async function CheckMessages(wallet: web3.Keypair) {
   // TODO THIS IS WHERE YURI GAVE ME A BIG FAT ERROR
   recents.forEach((transaction) => {
     if (transaction.memo != null) {
+      let txDate: Date;
+      try {
+        txDate = new Date(
+          transaction.memo.slice(transaction.memo.indexOf("||") + 2)
+        );
+      } catch {
+        txDate = new Date();
+      }
       messages.push({
         message: transaction.memo.slice(4, transaction.memo.indexOf("||")),
-        date: new Date(
-          transaction.memo.slice(transaction.memo.indexOf("||") + 2)
-        ),
+        date: txDate,
         signature: transaction.signature,
       });
     }
