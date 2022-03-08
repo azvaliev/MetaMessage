@@ -27,10 +27,9 @@ export default function NativeComposeMessage(props: Props) {
         color: "white",
         marginTop: "auto",
         marginBottom: "0",
-        marginLeft: "2%",
-        marginRight: "2%",
         display: "flex",
         flexDirection: "row",
+        backgroundColor: "black",
       }}
     >
       <TextInput
