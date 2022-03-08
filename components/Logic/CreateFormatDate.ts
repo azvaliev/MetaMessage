@@ -5,7 +5,7 @@ const CreateDate = () => {
 const CompareDates = (past: Date) => {
   // Gets current time & makes sure recieved date is in UTC for proper comparison
   const current = Date.now();
-  const pastFormat = FormatDate(past);
+  const pastFormat = FormatDate(new Date(past));
   const pastDate = new Date(past).toUTCString();
   // console.log(current);
   // console.log(pastDate);

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Link from "next/link";
-import ShortenPubkey from "../components/UI/ShortenPubkey";
+import { ShortenPubkey, ShortenMessage } from "../components/UI/Shorten";
 import { CompareDates } from "../components/Logic/CreateFormatDate";
 import { Props, MessageObj } from "../components/types";
 import { Main } from "../components/StyledHome";
@@ -12,8 +12,8 @@ export default function Home(props: Props) {
   }, []);
 
   return (
-    <Main className="flex flex-col max-h-screen bg-smoke text-white px-4 lg:px-36">
-      <div className=" h-fit py-4 border-b-2 border-gray-300 flex flex-row">
+    <Main className="flex flex-col max-h-screen bg-smoke text-white lg:px-36">
+      <div className=" h-fit py-4 border-b-2 border-gray-300 flex px-2 flex-row">
         <h1 className="text-3xl lg:text-35xl mx-auto my-auto" id="home">
           {/* onClick={() => handleCopyAddress(props.pubkey.toString())}> */}
           <Link
@@ -86,7 +86,10 @@ export default function Home(props: Props) {
                       props.pubkey.toString()
                         ? ""
                         : "You: "}
-                      {conversation[conversation.length - 1].message}
+                      {ShortenMessage(
+                        conversation[conversation.length - 1].message,
+                        props.mobile
+                      )}
                     </h4>
                     <h3 className="text-xl ml-0 mr-auto">
                       {

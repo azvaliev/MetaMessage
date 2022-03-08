@@ -6,18 +6,10 @@ import { useEffect, useState } from "react";
 import copy from "copy-to-clipboard";
 import { useRouter } from "next/router";
 import { Props } from "../../../components/types";
-import ShortenPubkey from "../../../components/UI/ShortenPubkey";
+import { ShortenPubkey } from "../../../components/UI/Shorten";
 
 const AddressHolder = styled.h1`
   word-wrap: break-word;
-`;
-const ImageHolder = styled.div`
-  min-width: 6vw;
-  height: 6vw;
-  @media screen and (max-width: 767px) {
-    min-width: 10vw;
-    height: 9vw;
-  }
 `;
 
 export default function Profile(props: Props) {

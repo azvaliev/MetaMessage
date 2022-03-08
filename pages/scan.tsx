@@ -2,20 +2,13 @@ import { Props } from "../components/types";
 import { QrReader } from "react-qr-reader";
 import adapter from "webrtc-adapter";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
 import Link from "next/link";
 export default function Scan(props: Props) {
   const router = useRouter();
-  // const [data, setData] = useState(null);
-
-  // useEffect(() => {
-  // setTimeout(() => {
-  // setData("");
-  // }, 50);
-  // }, []);
 
   const handleScanResult = (result) => {
     if (result) {
+      alert(result?.text);
       props.setCurrentRecipient(result?.text);
       router.push("/conversation/[address]", `conversation/${result?.text}`);
     }

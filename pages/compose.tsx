@@ -1,35 +1,19 @@
-import { useEffect, useState } from "react";
+import { KeyboardAvoidingView, View, TextInput, Text } from "react-native-web";
 import Link from "next/link";
-import styled from "styled-components";
-import ComposeField from "../components/UI/ComposeField";
-import DesktopCompose from "../components/UI/DesktopCompose";
+import { useEffect, useState } from "react";
+import ComposeMessageField from "../components/UI/ComposeMessageField";
 import SendMsg from "../components/Logic/SendMsg";
 import AlertMessage from "../components/UI/AlertMessage";
 import { Props } from "../components/types";
 
-let Main = styled.div`
-  overflow-y: hidden;
-`;
-
-export default function Compose(props: Props) {
+const Compose = (props: Props) => {
   const [recipient, setRecipient] = useState("");
   const [message, setMessage] = useState("");
   const [theAlertMessage, setTheAlertMessage] = useState({
     message: "",
     warning: true,
   });
-
-  const handleTypingMessage = (e) => {
-    setMessage(e.target.value);
-  };
-
-  const preventDefault = (e) => {
-    e.preventDefault();
-  };
-
-  const handleTypingRecipient = (e) => {
-    setRecipient(e.target.value);
-  };
+  const [height, setHeight] = useState("45vh");
 
   async function handleSendMessage() {
     if (message.length < 1) {
@@ -52,16 +36,6 @@ export default function Compose(props: Props) {
       }
     }
   }
-
-  useEffect(() => {
-    let stayup = setInterval(() => {
-      window.scrollTo(0, 0);
-    }, 1);
-    return () => {
-      clearInterval(stayup);
-    };
-  });
-
   const sendAlert = (message: string, warning: boolean) => {
     setTheAlertMessage({ message: message, warning: warning });
     setTimeout(() => {
@@ -72,43 +46,123 @@ export default function Compose(props: Props) {
     }, 7500);
   };
 
+  const handleTypingMessage = (e) => {
+    setMessage(e.target.value);
+  };
+
+  const handleTypingRecipient = (e) => {
+    setRecipient(e.target.value);
+  };
+
+  useEffect(() => {
+    let stayup = setInterval(() => {
+      window.scrollTo(0, 0);
+    }, 1);
+    if (!props.mobile) {
+      setHeight("90vh");
+    }
+    return () => {
+      clearInterval(stayup);
+    };
+  }, []);
+  const onFocus = () => {
+    if (props.mobile) {
+      setHeight("45vh");
+    }
+  };
+  const onBlur = () => {
+    if (props.mobile) {
+      setHeight("80vh");
+    }
+  };
+
   return (
-    <Main className={`bg-black z-50 px-72 h-screen max-h-screen`}>
-      <form
-        onSubmit={preventDefault}
-        className="lg:h-screen lg:flex lg:flex-col"
+    <View style={{ height: "90vh", backgroundColor: "black" }}>
+      <View style={{ zIndex: "20" }}>
+        <Link href="/">
+          <Text
+            style={{
+              fontSize: "4.5rem",
+              lineHeight: "1",
+              marginLeft: "auto",
+              marginRight: "2%",
+              width: "fit-content",
+              zIndex: "20",
+              color: "white",
+            }}
+          >
+            &#x2715;
+          </Text>
+        </Link>
+      </View>
+      <View style={{ color: "white", marginTop: "-4.7rem" }}>
+        <Text
+          nativeID="newmessage"
+          style={{
+            fontSize: "1.875rem",
+            lineHeight: "2.25rem",
+            paddingTop: "1.4rem",
+            paddingBottom: "0.5rem",
+            zIndex: "0",
+            color: "white",
+            textAlign: "center",
+          }}
+        >
+          New Message
+        </Text>
+      </View>
+      <KeyboardAvoidingView
+        style={{ backgroundColor: "black", height: height }}
       >
-        <div className="relative z-20 text-white ">
-          <Link href="/">
-            <h4 className="text-7xl ml-auto mr-0 w-fit z-20">&#x2715;</h4>
-          </Link>
-        </div>
-        <div className="flex flex-row text-white -mt-16">
-          <h2 className="text-3xl lg:text-5xl mx-auto pt-4 pb-2 lg:pb-6 -z-0">
-            New Message
-          </h2>
-        </div>
-        <div className="flex flex-row border-y-1 border-gray-300 enter lg:py-4 text-3xl text-white lg:mx-12 lg:border-2 lg:rounded-xl">
-          <ComposeField
+        <View
+          style={{
+            borderBottomWidth: "1px",
+            borderTopWidth: "1px",
+            borderColor: "grey",
+            minHeight: "10vh",
+            color: "white",
+            marginTop: "2vh",
+            marginLeft: "2%",
+            marginRight: "2%",
+          }}
+        >
+          <TextInput
+            nativeID="textinput"
+            autoFocus={true}
+            onFocus={onFocus}
+            onBlur={onBlur}
             value={recipient}
-            onInputChange={handleTypingRecipient}
-            placeholder="Recipient..."
-            textarea={false}
+            onChange={handleTypingRecipient}
+            placeholder="Recipient Address"
+            style={{
+              backgroundColor: "transparent",
+              borderColor: "rgb(209 213 219)",
+              borderRadius: "0px",
+              marginLeft: "2%",
+              marginRight: "2%",
+              width: "96%",
+              fontSize: "1.875rem",
+              lineHeight: "2.25rem",
+              marginTop: "auto",
+              marginBottom: "auto",
+            }}
           />
-        </div>
-        <DesktopCompose
-          bottom="bottom-35"
-          extramargin={true}
+        </View>
+        <ComposeMessageField
+          handleSendMessage={handleSendMessage}
           message={message}
           handleTypingMessage={handleTypingMessage}
-          handleSendMessage={handleSendMessage}
+          onFocus={onFocus}
+          onBlur={onBlur}
         />
-      </form>
+      </KeyboardAvoidingView>
       <AlertMessage
         message={theAlertMessage.message}
         warning={theAlertMessage.warning}
         neutral={false}
       />
-    </Main>
+    </View>
   );
-}
+};
+
+export default Compose;

@@ -33,6 +33,7 @@ export default async function CheckMessages(wallet: web3.Keypair) {
       } catch {
         txDate = new Date();
       }
+
       messages.push({
         message: transaction.memo.slice(
           transaction.memo.indexOf("] ") + 2,
@@ -41,6 +42,7 @@ export default async function CheckMessages(wallet: web3.Keypair) {
         date: txDate,
         signature: transaction.signature,
       });
+      console.log(messages);
     }
   });
 

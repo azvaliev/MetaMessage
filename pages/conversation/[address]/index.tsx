@@ -2,11 +2,11 @@ import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 import { View, KeyboardAvoidingView, Text, ScrollView } from "react-native-web";
 import Message from "../../../components/UI/Message";
-import NativeComposeMessage from "../../../components/UI/NativeComposeMessage";
+import ComposeMessageField from "../../../components/UI/ComposeMessageField";
 import SendMsg from "../../../components/Logic/SendMsg";
 import AlertMessage from "../../../components/UI/AlertMessage";
-import DesktopCompose from "../../../components/UI/DesktopCompose";
 import { Props, MessageObj } from "../../../components/types";
+import { ShortenPubkey } from "../../../components/UI/Shorten";
 
 export default function Conversation(props: Props) {
   const router = useRouter();
@@ -18,6 +18,7 @@ export default function Conversation(props: Props) {
     message: "",
     warning: true,
   });
+  const [displayAddress, setDisplayAddress] = useState(address);
 
   const scrollRef = useRef(null);
 
@@ -26,6 +27,7 @@ export default function Conversation(props: Props) {
       conversation.forEach((message: MessageObj) => {
         if (message.from === address) {
           setActiveConversation(conversation);
+          setDisplayAddress(ShortenPubkey(message.from, false, props.mobile));
         }
       });
     });
@@ -43,7 +45,7 @@ export default function Conversation(props: Props) {
 
   useEffect(() => {
     if (!props.mobile) {
-      setHeight("90vh");
+      setHeight("87vh");
     }
   }, []);
 
@@ -55,7 +57,11 @@ export default function Conversation(props: Props) {
         sendAlert("Please shorten your message", true);
       } else {
         setMessageContents("");
-        let result = await SendMsg(messageContents, address[0], props.keypair);
+        let result = await SendMsg(
+          messageContents,
+          address.toString(),
+          props.keypair
+        );
         if (result == "badkey") {
           sendAlert("Recipient address is invalid: Please Verify", true);
         } else if (result == "success") {
@@ -93,57 +99,20 @@ export default function Conversation(props: Props) {
   };
 
   return (
-    <View style={{ height: "100vh", backgroundColor: "black" }}>
-      {props.mobile ? (
-        <>
-          <Text
-            style={{
-              color: "#2563EB",
-              fontSize: "3.5rem",
-              marginBottom: "-16%",
-              zIndex: "20",
-              marginLeft: "auto",
-              marginRight: "4%",
-            }}
-            onClick={closeConversation}
-          >
-            &#x2715;
-          </Text>
-          <View
-            style={{
-              borderBottomWidth: "2px",
-              borderColor: "white",
-              paddingBottom: "2vh",
-              paddingTop: "2vh",
-              backgroundColor: "#100c08",
-            }}
-          >
-            <Text
-              style={{
-                color: "white",
-                textAlign: "left",
-                marginLeft: "2%",
-                fontSize: "1.875rem",
-                lineHeight: "2.25rem",
-              }}
-            >
-              {address}
-            </Text>
-          </View>
-        </>
-      ) : (
-        <>
-          <div
-            className="flex -mb-18 ml-4 font-extrabold z-20 text-7xl text-blue-600"
-            onClick={closeConversation}
-          >
-            &#x226A;
-          </div>
-          <div className="flex border-b-2 border-white py-2vh bg-smoke">
-            <h1 className="mx-auto text-4xl text-white">{address}</h1>
-          </div>
-        </>
-      )}
+    <div className="h-screen max-h-screen overflow-y-hidden bg-smoke main-conv lg:mx-auto">
+      <h5 className="closeConvBtn" onClick={closeConversation}>
+        &#x2715;
+      </h5>
+      <div
+        className="border-b-2 border-white flex flex-row"
+        style={{
+          padding: "2vh 0",
+        }}
+      >
+        <h1 className="text-left md:text-center ml-1 md:mx-auto text-3xl text-white">
+          {displayAddress}
+        </h1>
+      </div>
       <KeyboardAvoidingView
         style={{ height: height }}
         nativeID="main-conversation"
@@ -177,29 +146,19 @@ export default function Conversation(props: Props) {
             }
           })}
         </ScrollView>
-        {props.mobile ? (
-          <NativeComposeMessage
-            message={messageContents}
-            handleTypingMessage={handleTypingMessage}
-            handleSendMessage={handleSendMessage}
-            onBlur={onBlur}
-            onFocus={onFocus}
-          />
-        ) : (
-          <DesktopCompose
-            extramargin={false}
-            bottom="bottom-0"
-            message={messageContents}
-            handleTypingMessage={handleTypingMessage}
-            handleSendMessage={handleSendMessage}
-          />
-        )}
+        <ComposeMessageField
+          message={messageContents}
+          handleTypingMessage={handleTypingMessage}
+          handleSendMessage={handleSendMessage}
+          onBlur={onBlur}
+          onFocus={onFocus}
+        />
       </KeyboardAvoidingView>
       <AlertMessage
         message={theAlertMessage.message}
         warning={theAlertMessage.warning}
         neutral={false}
       />
-    </View>
+    </div>
   );
 }
