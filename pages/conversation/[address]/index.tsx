@@ -23,6 +23,7 @@ export default function Conversation(props: Props) {
   const scrollRef = useRef(null);
 
   useEffect(() => {
+    // Handle error if prior conversations do not exist
     try {
       props.conversations.forEach((conversation: Array<MessageObj>) => {
         conversation.forEach((message: MessageObj) => {
