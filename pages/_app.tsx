@@ -122,7 +122,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="msapplication-config" content="/icon/browserconfig.xml" />
 
         {/* <!-- Apple Web App Capable --> */}
-        {/* <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> --> */}
+        <meta name="apple-mobile-web-app-capable" content="yes" />
       </Head>
       <Component
         {...pageProps}
