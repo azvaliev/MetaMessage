@@ -125,6 +125,10 @@ filter: brightness(0%);
 .paint-it-white {
 filter: brightness(0%) invert(1);
 }
+.text-35xl {
+font-size: 2rem; 
+line-height: 2.5rem;
+}
 
 .imgholder:after {
   position: absolute;

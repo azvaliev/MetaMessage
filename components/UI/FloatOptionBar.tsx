@@ -69,7 +69,7 @@ export default function FloatOptionBar(props: { pubkey: PublicKey }) {
                   size={IsMobile ? 55 : 55}
                   className="m-auto"
                   bgColor="#000"
-                  fgColor="#3472F5"
+                  fgColor="#3472f5"
                 />
               </OptionInnerHolder>
             </OptionHolder>

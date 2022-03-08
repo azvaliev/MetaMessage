@@ -14,7 +14,7 @@ export default function Home(props: Props) {
   return (
     <Main className="flex flex-col max-h-screen bg-smoke text-white px-4 lg:px-36">
       <div className=" h-fit py-4 border-b-2 border-gray-300 flex flex-row">
-        <h1 className="text-3xl lg:text-4xl mx-auto my-auto" id="home">
+        <h1 className="text-3xl lg:text-35xl mx-auto my-auto" id="home">
           {/* onClick={() => handleCopyAddress(props.pubkey.toString())}> */}
           <Link
             href="/profile/[address]"
