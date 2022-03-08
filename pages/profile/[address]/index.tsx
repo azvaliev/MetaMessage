@@ -59,7 +59,7 @@ export default function Profile(props: Props) {
         className="mx-auto mt-6 border-1 border-gray-300"
         size={props.mobile ? 200 : 256}
         bgColor="#2563EB"
-        value={displayAddress}
+        value={props.pubkey.toString()}
       />
       <h3 className="text-2xl text-center pt-6 pb-4 border-b-2 ">
         Or.. tap{" "}
