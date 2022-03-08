@@ -17,7 +17,7 @@ export default function Scan(props: Props) {
   const handleScanResult = (result) => {
     if (result) {
       props.setCurrentRecipient(result?.text);
-      props.mobile ? router.push("/compose-mobile") : router.push("/compose");
+      router.push("/conversation/[address]", `conversation/${result?.text}`);
     }
   };
   return (
