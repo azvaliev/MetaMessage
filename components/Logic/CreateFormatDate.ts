@@ -3,9 +3,14 @@ const CreateDate = () => {
 };
 
 const CompareDates = (past: Date) => {
+  // Gets current time & makes sure recieved date is in UTC for proper comparison
   const current = Date.now();
   const pastFormat = FormatDate(past);
-  let dif = current - Date.parse(past.toDateString());
+  const pastDate = new Date(past).toUTCString();
+  // console.log(current);
+  // console.log(pastDate);
+  // console.log(Date.parse(pastDate));
+  let dif = current - Date.parse(pastDate);
   // convert difference from ms to minutes
   dif = dif / 60000;
   let displayMessage: string;

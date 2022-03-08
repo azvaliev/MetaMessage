@@ -11,10 +11,11 @@ export interface Props {
   onUpdateNeeded: Function;
   showAppGuide: boolean;
   onShowAppGuide: Function;
-  displayPubkey: string;
+  currentRecipient: string;
+  setCurrentRecipient: Function;
 }
 
-export interface Message {
+export interface MessageObj {
   from: string;
   message: string;
   date: Date;

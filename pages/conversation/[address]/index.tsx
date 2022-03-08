@@ -6,8 +6,9 @@ import NativeComposeMessage from "../../../components/UI/NativeComposeMessage";
 import SendMsg from "../../../components/Logic/SendMsg";
 import AlertMessage from "../../../components/UI/AlertMessage";
 import DesktopCompose from "../../../components/UI/DesktopCompose";
+import { Props, MessageObj } from "../../../components/types";
 
-export default function Conversation(props) {
+export default function Conversation(props: Props) {
   const router = useRouter();
   const { address } = router.query;
   const [activeConversation, setActiveConversation] = useState([]);
@@ -21,8 +22,8 @@ export default function Conversation(props) {
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    props.conversations.forEach((conversation) => {
-      conversation.forEach((message) => {
+    props.conversations.forEach((conversation: Array<MessageObj>) => {
+      conversation.forEach((message: MessageObj) => {
         if (message.from === address) {
           setActiveConversation(conversation);
         }
@@ -54,7 +55,7 @@ export default function Conversation(props) {
         sendAlert("Please shorten your message", true);
       } else {
         setMessageContents("");
-        let result = await SendMsg(messageContents, address, props.keypair);
+        let result = await SendMsg(messageContents, address[0], props.keypair);
         if (result == "badkey") {
           sendAlert("Recipient address is invalid: Please Verify", true);
         } else if (result == "success") {
@@ -126,7 +127,7 @@ export default function Conversation(props) {
                 lineHeight: "2.25rem",
               }}
             >
-              {props.displayPubkey}
+              {address}
             </Text>
           </View>
         </>
@@ -139,9 +140,7 @@ export default function Conversation(props) {
             &#x226A;
           </div>
           <div className="flex border-b-2 border-white py-2vh bg-smoke">
-            <h1 className="mx-auto text-4xl text-white">
-              {props.displayPubkey}
-            </h1>
+            <h1 className="mx-auto text-4xl text-white">{address}</h1>
           </div>
         </>
       )}
@@ -188,6 +187,7 @@ export default function Conversation(props) {
           />
         ) : (
           <DesktopCompose
+            extramargin={false}
             bottom="bottom-0"
             message={messageContents}
             handleTypingMessage={handleTypingMessage}
@@ -198,6 +198,7 @@ export default function Conversation(props) {
       <AlertMessage
         message={theAlertMessage.message}
         warning={theAlertMessage.warning}
+        neutral={false}
       />
     </View>
   );

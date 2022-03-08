@@ -4,16 +4,6 @@ export const Main = styled.div`
   width: 100%;
 `;
 
-export const ProfileHolder = styled.div`
-  min-width: 4vw;
-  height: 4vw;
-  margin-right: 1%;
-  @media screen and (max-width: 767px) {
-    min-width: 11vw;
-    height: 11vw;
-  }
-`;
-
 export const Bar = styled.div`
   right: 4%;
   min-width: 6vw;
@@ -23,7 +13,6 @@ export const Bar = styled.div`
 `;
 
 export const OptionHolder = styled.div`
-  filter: invert(1);
   min-width: 6vw;
   height: 6vw;
   @media screen and (max-width: 767px) {
@@ -31,10 +20,10 @@ export const OptionHolder = styled.div`
     min-height: 19vw;
   }
   margin-bottom: 1.25vh;
+  cursor: pointer;
 `;
 
 export const OptionInnerHolder = styled.div`
-  filter: invert(1);
   min-width: 5vw;
   height: 5vw;
   @media screen and (max-width: 767px) {
@@ -42,10 +31,6 @@ export const OptionInnerHolder = styled.div`
     min-height: 14vw;
   }
   @media (min-width: 660px) {
-    bottom: auto !important;
+    bottom: 1.5vw;
   }
-`;
-
-export const AddressHolder = styled.h1`
-  width: 91vw;
 `;

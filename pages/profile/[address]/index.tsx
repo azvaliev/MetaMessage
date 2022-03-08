@@ -5,9 +5,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import copy from "copy-to-clipboard";
 import { useRouter } from "next/router";
+import { Props } from "../../../components/types";
+import ShortenPubkey from "../../../components/UI/ShortenPubkey";
 
 const AddressHolder = styled.h1`
-  width: 91vw;
+  word-wrap: break-word;
 `;
 const ImageHolder = styled.div`
   min-width: 6vw;
@@ -18,20 +20,20 @@ const ImageHolder = styled.div`
   }
 `;
 
-export default function Profile(props) {
+export default function Profile(props: Props) {
   const router = useRouter();
   const { address } = router.query;
 
   const [displayAddress, setDisplayAddress] = useState("");
 
   const handleCopyAddress = () => {
-    copy(address);
+    copy(address.toString());
   };
 
   useEffect(() => {
     let key = props.pubkey.toString();
     if (typeof key === "string") {
-      setDisplayAddress(key);
+      setDisplayAddress(ShortenPubkey(key, false, true));
     } else {
       setDisplayAddress("loading...");
     }
@@ -43,24 +45,26 @@ export default function Profile(props) {
   };
 
   return (
-    <div className="flex flex-col text-white overflow-x-hidden md:mx-32 lg:mx-56">
+    <div className="flex flex-col text-white overflow-x-hidden mx-4 md:mx-32 lg:mx-42">
       <div className=" h-fit py-4 border-b-2  border-gray-300 flex flex-row">
         <AddressHolder
-          className="text-3xl lg:text-4xl ml-1 md:-ml-8 lg:-ml-24 md:text-center font-bold"
+          className={`
+            
+          text-3xl lg:text-3xl font-bold`}
           id="home"
         >
-          {props.displayPubkey}
+          {displayAddress}
         </AddressHolder>
-        <ImageHolder className="relative h-full ml-1 -mt-4 text-6xl text-blue-600 ">
+        <div className="relative h-full w-fit ml-auto mr-0 -mt-4 md:-mt-8 text-6xl lg:text-7xl text-blue-600 ">
           <Link href="/">&#x2715;</Link>
-        </ImageHolder>
+        </div>
       </div>
       <h2 className="pt-6 mx-2 text-center text-2xl">
         Looking to connect with others? Ask them to scan this QR code on their
         Meta Message
       </h2>
       <QRCode
-        className="mx-auto mt-6"
+        className="mx-auto mt-6 border-1 border-gray-300"
         size={props.mobile ? 200 : 256}
         bgColor="#2563EB"
         value={displayAddress}
@@ -68,7 +72,7 @@ export default function Profile(props) {
       <h3 className="text-2xl text-center pt-6 pb-4 border-b-2 ">
         Or.. tap{" "}
         <span
-          className="text-blue-500 underline font-bold"
+          className="text-blue-500 underline font-bold hover:cursor-pointer"
           onClick={handleCopyAddress}
         >
           here

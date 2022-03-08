@@ -1,24 +1,20 @@
-import Image from "next/image";
 import { useEffect } from "react";
 import Link from "next/link";
 import ShortenPubkey from "../components/UI/ShortenPubkey";
 import { CompareDates } from "../components/Logic/CreateFormatDate";
-import { Props, Message } from "../components/types";
-import { Main, AddressHolder, ProfileHolder } from "../components/StyledHome";
+import { Props, MessageObj } from "../components/types";
+import { Main } from "../components/StyledHome";
 import FloatOptionBar from "../components/UI/FloatOptionBar";
 
 export default function Home(props: Props) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  useEffect(() => {
-    console.log(props.conversations);
-  }, [props.conversations]);
 
   return (
-    <Main className=" flex flex-col max-h-screen bg-black text-white lg:px-36">
+    <Main className="flex flex-col max-h-screen bg-smoke text-white px-4 lg:px-36">
       <div className=" h-fit py-4 border-b-2 border-gray-300 flex flex-row">
-        <AddressHolder className="text-3xl lg:text-4xl ml-2 my-auto" id="home">
+        <h1 className="text-3xl lg:text-4xl mx-auto my-auto" id="home">
           {/* onClick={() => handleCopyAddress(props.pubkey.toString())}> */}
           <Link
             href="/profile/[address]"
@@ -28,21 +24,7 @@ export default function Home(props: Props) {
               ? "Meta Message"
               : ShortenPubkey(props.pubkey.toString(), true, props.mobile)}
           </Link>
-        </AddressHolder>
-        <ProfileHolder className="relative z-50 h-full top-0 mt-0">
-          <Link
-            href="/profile/[address]"
-            as={`/profile/${props.pubkey.toString()}`}
-          >
-            <Image
-              src="/img/logoblue.webp"
-              alt="Profile"
-              layout="fill"
-              objectFit="contain"
-              className="z-50"
-            />
-          </Link>
-        </ProfileHolder>
+        </h1>
       </div>
 
       {props.keypair == null ? (
@@ -76,7 +58,7 @@ export default function Home(props: Props) {
         </div>
       ) : (
         <div className="w-full">
-          {props.conversations.map((conversation: Array<Message>) => {
+          {props.conversations.map((conversation: Array<MessageObj>) => {
             let recipient = null;
             conversation.forEach((message) => {
               if (
@@ -121,7 +103,7 @@ export default function Home(props: Props) {
         </div>
       )}
 
-      {props.keypair !== null && <FloatOptionBar />}
+      {props.keypair !== null && <FloatOptionBar pubkey={props.pubkey} />}
     </Main>
   );
 }

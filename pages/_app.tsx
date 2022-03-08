@@ -14,6 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [conversations, setConversations] = useState([]);
   const [mobile, setMobile] = useState(false);
   const [showAppGuide, setShowAppGuide] = useState(false);
+  const [currentRecipient, setCurrentRecipient] = useState("");
   const router = useRouter();
 
   const handleGenerateKeypair = () => {
@@ -68,7 +69,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         } catch (err) {
           console.error(err);
         }
-      }, 5000);
+      }, 3000);
 
       () => {
         clearInterval(check);
@@ -82,6 +83,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const handleShowAddAppGuide = () => {
     setShowAppGuide(!showAppGuide);
+  };
+
+  const handleSetRecipient = (recipient) => {
+    setCurrentRecipient(recipient);
   };
 
   return (
@@ -117,7 +122,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="msapplication-config" content="/icon/browserconfig.xml" />
 
         {/* <!-- Apple Web App Capable --> */}
-        <meta name="apple-mobile-web-app-capable" content="yes" />
+        {/* <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> --> */}
       </Head>
       <Component
         {...pageProps}
@@ -129,7 +134,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         onUpdateNeeded={handleRefreshConversation}
         showAppGuide={showAppGuide}
         onShowAppGuide={handleShowAddAppGuide}
-        displayPubkey={pubkey.toString()}
+        currentRecipient={currentRecipient}
+        setCurrentRecipient={handleSetRecipient}
       />
     </>
   );

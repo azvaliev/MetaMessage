@@ -10,7 +10,7 @@ body,
   width: 100%;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: black;
+  background-color: #100c08;
 }
 
 a {
@@ -114,6 +114,17 @@ a {
 /* .scan-qr { */
 /* 	bottom: 28%; */
 /* } */
+.invert {
+
+  filter: invert(1);
+
+}
+.paint-it-black {
+filter: brightness(0%);
+}
+.paint-it-white {
+filter: brightness(0%) invert(1);
+}
 
 .imgholder:after {
   position: absolute;
