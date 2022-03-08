@@ -9,6 +9,7 @@ export default function Scan(props: Props) {
   const handleScanResult = (result) => {
     if (result) {
       alert(result?.text);
+      console.log(result);
       props.setCurrentRecipient(result?.text);
       router.push("/conversation/[address]", `conversation/${result?.text}`);
     }
