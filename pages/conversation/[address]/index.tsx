@@ -23,14 +23,19 @@ export default function Conversation(props: Props) {
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    props.conversations.forEach((conversation: Array<MessageObj>) => {
-      conversation.forEach((message: MessageObj) => {
-        if (message.from === address) {
-          setActiveConversation(conversation);
-          setDisplayAddress(ShortenPubkey(message.from, false, props.mobile));
-        }
+    try {
+      props.conversations.forEach((conversation: Array<MessageObj>) => {
+        conversation.forEach((message: MessageObj) => {
+          if (message.from === address) {
+            setActiveConversation(conversation);
+            setDisplayAddress(ShortenPubkey(message.from, false, props.mobile));
+          }
+        });
       });
-    });
+    } catch {
+      setDisplayAddress(ShortenPubkey(address.toString(), false, props.mobile));
+      setActiveConversation([]);
+    }
     const stayUp = setInterval(() => {
       window.scrollTo(0, 0);
     }, 2);
