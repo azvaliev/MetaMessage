@@ -15,7 +15,7 @@ export default function FloatOptionBar(props: { pubkey: PublicKey }) {
 
   return (
     <Bar className="h-full left-auto z-20 absolute flex flex-col-reverse">
-      <Link href={IsMobile ? "/compose-mobile" : "/compose"}>
+      <Link href="/compose">
         <OptionHolder className="relative invert top-auto right-1 left-auto bg-yellow-600 rounded-2xl md:rounded-xl">
           <OptionInnerHolder className="relative invert top-3 md:top-2">
             <Image
