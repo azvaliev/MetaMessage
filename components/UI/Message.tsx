@@ -8,14 +8,13 @@ interface Props {
   message: boolean;
   date: Date;
 }
+const Msg = styled.div`
+  max-width: 80%;
+  width: fit-content;
+`;
 
 export default function Message(props: Props) {
   const [showDate, setShowDate] = useState(props.showDate);
-
-  const Msg = styled.div`
-    max-width: 80%;
-    width: fit-content;
-  `;
 
   const handleClick = () => {
     setShowDate(!showDate);

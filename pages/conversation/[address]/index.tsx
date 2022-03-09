@@ -41,10 +41,6 @@ export default function Conversation(props: Props) {
     const stayUp = setInterval(() => {
       window.scrollTo(0, 0);
     }, 2);
-    scrollRef.current.scrollToEnd({ animated: false });
-    setTimeout(() => {
-      scrollRef.current.scrollToEnd({ animated: false });
-    }, 50);
     return () => {
       clearInterval(stayUp);
     };
@@ -54,6 +50,10 @@ export default function Conversation(props: Props) {
     if (!props.mobile) {
       setHeight("87vh");
     }
+    scrollRef.current.scrollToEnd({ animated: false });
+    setTimeout(() => {
+      scrollRef.current.scrollToEnd({ animated: false });
+    }, 50);
   }, []);
 
   async function handleSendMessage() {
@@ -113,13 +113,7 @@ export default function Conversation(props: Props) {
         style={{ height: height }}
         nativeID="main-conversation"
       >
-        <ScrollView
-          ref={scrollRef}
-          style={{
-            marginLeft: "2%",
-            marginRight: "2%",
-          }}
-        >
+        <ScrollView ref={scrollRef} nativeID="div-scroll-conv">
           {activeConversation.map((conversation, i) => {
             if (activeConversation.length === i + 1) {
               return (
