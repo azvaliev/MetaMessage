@@ -2,22 +2,15 @@ import { Props } from "../components/types";
 import { QrReader } from "react-qr-reader";
 import adapter from "webrtc-adapter";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
 import Link from "next/link";
 export default function Scan(props: Props) {
   const router = useRouter();
-  // const [data, setData] = useState(null);
-
-  // useEffect(() => {
-  // setTimeout(() => {
-  // setData("");
-  // }, 50);
-  // }, []);
 
   const handleScanResult = (result) => {
     if (result) {
+      console.log(result);
       props.setCurrentRecipient(result?.text);
-      props.mobile ? router.push("/compose-mobile") : router.push("/compose");
+      router.push("/conversation/[address]", `conversation/${result?.text}`);
     }
   };
   return (
@@ -31,12 +24,13 @@ export default function Scan(props: Props) {
         constraints={{ facingMode: "environment" }}
         containerStyle={{
           paddingTop: "0",
-          maxHeight: "33vw",
+          marginTop: "12vh",
+          maxHeight: "80vw",
         }}
         videoStyle={{
-          width: "33vw",
-          left: "33vw",
-          height: "33vw",
+          width: "80vw",
+          left: "10vw",
+          height: "80vw",
           borderRadius: "0.375rem",
         }}
       />

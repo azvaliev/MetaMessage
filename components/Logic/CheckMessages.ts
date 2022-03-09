@@ -33,6 +33,7 @@ export default async function CheckMessages(wallet: web3.Keypair) {
       } catch {
         txDate = new Date();
       }
+
       messages.push({
         message: transaction.memo.slice(
           transaction.memo.indexOf("] ") + 2,

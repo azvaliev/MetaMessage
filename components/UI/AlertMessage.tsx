@@ -9,7 +9,7 @@ const AlertMessage = (props: Props) => {
     <>
       {props.message.length > 1 && (
         <div
-          className={`flex flex-row p-4 mx-8 alert-anim rounded-md text-white text-3xl ${
+          className={`flex flex-row p-4 mx-auto alert-anim rounded-md text-white text-3xl ${
             props.warning
               ? "bg-red-600"
               : props.neutral
@@ -27,4 +27,3 @@ const AlertMessage = (props: Props) => {
   );
 };
 export default AlertMessage;
-

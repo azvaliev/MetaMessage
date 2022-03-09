@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Link from "next/link";
-import ShortenPubkey from "../components/UI/ShortenPubkey";
+import { ShortenPubkey, ShortenMessage } from "../components/UI/Shorten";
 import { CompareDates } from "../components/Logic/CreateFormatDate";
 import { Props, MessageObj } from "../components/types";
 import { Main } from "../components/StyledHome";
@@ -12,8 +12,8 @@ export default function Home(props: Props) {
   }, []);
 
   return (
-    <Main className="flex flex-col max-h-screen bg-smoke text-white px-4 lg:px-36">
-      <div className=" h-fit py-4 border-b-2 border-gray-300 flex flex-row">
+    <Main className="flex flex-col max-h-screen bg-smoke text-white lg:px-36">
+      <div className=" h-fit py-4 border-b-2 border-gray-300 flex px-2 flex-row">
         <h1 className="text-3xl lg:text-35xl mx-auto my-auto" id="home">
           {/* onClick={() => handleCopyAddress(props.pubkey.toString())}> */}
           <Link
@@ -81,12 +81,15 @@ export default function Home(props: Props) {
                         {ShortenPubkey(recipient, false, props.mobile)}
                       </h3>
                     </div>
-                    <h4 className="text-xl text-left italic pt-4 text-gray-400">
+                    <h4 className="text-xl text-left italic pt-2 md:pt-4 text-gray-400">
                       {conversation[conversation.length - 1].from !==
                       props.pubkey.toString()
                         ? ""
                         : "You: "}
-                      {conversation[conversation.length - 1].message}
+                      {ShortenMessage(
+                        conversation[conversation.length - 1].message,
+                        props.mobile
+                      )}
                     </h4>
                     <h3 className="text-xl ml-0 mr-auto">
                       {
@@ -103,7 +106,9 @@ export default function Home(props: Props) {
         </div>
       )}
 
-      {props.keypair !== null && <FloatOptionBar pubkey={props.pubkey} />}
+      {props.keypair !== null && (
+        <FloatOptionBar pubkey={props.pubkey} mobile={props.mobile} />
+      )}
     </Main>
   );
 }

@@ -37,9 +37,9 @@ a {
   position: absolute;
   top: 10vh;
   opacity: 0;
-  width: 90vw;
-  margin-left: 5vw;
-  margin-right: 5vw;
+  width: 90vw !important;
+  left: 5vw;
+  right: 5vw;
 }
 @keyframes reveal {
   0% {
@@ -146,6 +146,29 @@ line-height: 2.5rem;
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
+.closeConvBtn {
+    color: #2563EB;
+    font-size: 3.5rem;
+	z-index: 20;
+	position: absolute;
+	right: 3%;
+	top: -1.8vh;
+}
+  .main-conv {
+	width: 95% ;
+	margin: 0 auto;
+  }
+  #div-scroll-conv {
+scrollbar-color: dark !important;
+  }
+  ::-webkit-scrollbar {
+	  display: none;
+  }
+@media (min-width: 450px) {
+	.closeConvBtn {
+		top: -2.5%;
+	}
+}
 @media (min-width: 1024px) {
   #newmessage {
       font-size: 3rem/* 48px */;
@@ -156,8 +179,11 @@ line-height: 2.5rem;
     margin-left: 2%;
     margin-right: 2%;
   }
-  #main-conversation {
-    width: 80%;
-    margin: 0 auto;
+  .main-conv {
+	width: 65% ;
+	margin: 0 auto;
+  }
+  .closeConvBtn {
+	  right: 17%;
   }
 }

@@ -6,18 +6,10 @@ import { useEffect, useState } from "react";
 import copy from "copy-to-clipboard";
 import { useRouter } from "next/router";
 import { Props } from "../../../components/types";
-import ShortenPubkey from "../../../components/UI/ShortenPubkey";
+import { ShortenPubkey } from "../../../components/UI/Shorten";
 
 const AddressHolder = styled.h1`
   word-wrap: break-word;
-`;
-const ImageHolder = styled.div`
-  min-width: 6vw;
-  height: 6vw;
-  @media screen and (max-width: 767px) {
-    min-width: 10vw;
-    height: 9vw;
-  }
 `;
 
 export default function Profile(props: Props) {
@@ -61,13 +53,13 @@ export default function Profile(props: Props) {
       </div>
       <h2 className="pt-6 mx-2 text-center text-2xl">
         Looking to connect with others? Ask them to scan this QR code on their
-        Meta Message
+        Meta Message app
       </h2>
       <QRCode
         className="mx-auto mt-6 border-1 border-gray-300"
         size={props.mobile ? 200 : 256}
         bgColor="#2563EB"
-        value={displayAddress}
+        value={props.pubkey.toString()}
       />
       <h3 className="text-2xl text-center pt-6 pb-4 border-b-2 ">
         Or.. tap{" "}
@@ -94,9 +86,6 @@ export default function Profile(props: Props) {
               />
             </div>
           </div>
-          <span className="italic text-center text-xl font-bold">
-            (Coming Very Soon)
-          </span>
           <button
             className="mx-auto px-4 py-2 mt-4 text-4xl bg-indigo-600 rounded-md font-semibold line-through"
             onClick={displayAddAppGuide}

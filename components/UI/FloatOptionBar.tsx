@@ -6,7 +6,10 @@ import QRCode from "react-qr-code";
 import IsMobile from "../Logic/IsMobile";
 import { PublicKey } from "@solana/web3.js";
 
-export default function FloatOptionBar(props: { pubkey: PublicKey }) {
+export default function FloatOptionBar(props: {
+  pubkey: PublicKey;
+  mobile: boolean;
+}) {
   const [showOptions, setShowOptions] = useState(false);
 
   const handleToggleOptions = () => {
@@ -15,7 +18,7 @@ export default function FloatOptionBar(props: { pubkey: PublicKey }) {
 
   return (
     <Bar className="h-full left-auto z-20 absolute flex flex-col-reverse">
-      <Link href={IsMobile ? "/compose-mobile" : "/compose"}>
+      <Link href="/compose">
         <OptionHolder className="relative invert top-auto right-1 left-auto bg-yellow-600 rounded-2xl md:rounded-xl">
           <OptionInnerHolder className="relative invert top-3 md:top-2">
             <Image
@@ -61,19 +64,21 @@ export default function FloatOptionBar(props: { pubkey: PublicKey }) {
               />
             </Link>
           </OptionHolder>
-          <Link href="/scan">
-            <OptionHolder className="z-10 relative top-auto right-1 left-auto bg-p-blue rounded-2xl md:rounded-xl">
-              <OptionInnerHolder className="relative top-2 md:top-1 m-auto w-fit h-fit flex">
-                <QRCode
-                  value=""
-                  size={IsMobile ? 55 : 55}
-                  className="m-auto"
-                  bgColor="#000"
-                  fgColor="#3472f5"
-                />
-              </OptionInnerHolder>
-            </OptionHolder>
-          </Link>
+          {props.mobile && (
+            <Link href="/scan">
+              <OptionHolder className="z-10 relative top-auto right-1 left-auto bg-p-blue rounded-2xl md:rounded-xl">
+                <OptionInnerHolder className="relative top-2 md:top-1 m-auto w-fit h-fit flex">
+                  <QRCode
+                    value=""
+                    size={IsMobile ? 55 : 55}
+                    className="m-auto"
+                    bgColor="#000"
+                    fgColor="#3472f5"
+                  />
+                </OptionInnerHolder>
+              </OptionHolder>
+            </Link>
+          )}
         </>
       )}
     </Bar>
