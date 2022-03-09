@@ -47,8 +47,10 @@ export default function Conversation(props: Props) {
   }, [props.conversations]);
 
   useEffect(() => {
-    if (!props.mobile) {
+    if (props.mobile) {
       setHeight("87vh");
+    } else {
+      setHeight("80vh");
     }
     scrollRef.current.scrollToEnd({ animated: false });
     setTimeout(() => {
