@@ -20,3 +20,12 @@ export interface MessageObj {
   message: string;
   date: Date;
 }
+
+export interface PasswordStrengthObj {
+  min_length: boolean;
+  optimal_length: boolean;
+  contain_num: boolean;
+  contain_special: boolean;
+  not_generic: boolean;
+  contains_capital: boolean;
+}
