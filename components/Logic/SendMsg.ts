@@ -20,7 +20,6 @@ export default async function SendMsg(
 
   // Airdrop SOL for fees
   const balance = await connection.getBalance(wallet.publicKey);
-  console.log(balance);
   if (balance < web3.LAMPORTS_PER_SOL) {
     const airdropSignature = await connection.requestAirdrop(
       wallet.publicKey,
@@ -29,7 +28,6 @@ export default async function SendMsg(
 
     await connection.confirmTransaction(airdropSignature);
   }
-  // console.log('airdrop confirmed!');
 
   try {
     // Sending SOL - may be unneccesary
@@ -42,7 +40,6 @@ export default async function SendMsg(
     );
     const timeFormat = CreateDate();
     let msgFormat = message + "||" + timeFormat.toString();
-    console.log("bracket check?", msgFormat);
 
     // Sending message using Solana Memo Program
     transferTransaction.add(

@@ -106,7 +106,9 @@ export default function Home(props: Props) {
         </div>
       )}
 
-      {props.keypair !== null && <FloatOptionBar pubkey={props.pubkey} />}
+      {props.keypair !== null && (
+        <FloatOptionBar pubkey={props.pubkey} mobile={props.mobile} />
+      )}
     </Main>
   );
 }

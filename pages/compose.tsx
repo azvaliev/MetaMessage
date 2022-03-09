@@ -15,11 +15,12 @@ const Compose = (props: Props) => {
     warning: true,
   });
   const [height, setHeight] = useState("45vh");
+  const router = useRouter();
 
   async function handleSendMessage() {
+    sendAlert("Sending...", false);
     let result = await CheckSendMessage(message, recipient, props.keypair);
     if (!result[1]) {
-      const router = useRouter();
       router.push("/conversation/[address]", `/conversation/${recipient}`);
     } else {
       sendAlert(result[0], result[1]);
