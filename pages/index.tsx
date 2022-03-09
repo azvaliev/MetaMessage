@@ -81,7 +81,7 @@ export default function Home(props: Props) {
                         {ShortenPubkey(recipient, false, props.mobile)}
                       </h3>
                     </div>
-                    <h4 className="text-xl text-left italic pt-4 text-gray-400">
+                    <h4 className="text-xl text-left italic pt-2 md:pt-4 text-gray-400">
                       {conversation[conversation.length - 1].from !==
                       props.pubkey.toString()
                         ? ""

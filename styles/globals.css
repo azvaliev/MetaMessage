@@ -37,9 +37,9 @@ a {
   position: absolute;
   top: 10vh;
   opacity: 0;
-  width: 90vw;
-  margin-left: 5vw;
-  margin-right: 5vw;
+  width: 90vw !important;
+  left: 5vw;
+  right: 5vw;
 }
 @keyframes reveal {
   0% {

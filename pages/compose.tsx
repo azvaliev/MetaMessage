@@ -2,9 +2,10 @@ import { KeyboardAvoidingView, View, TextInput, Text } from "react-native-web";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ComposeMessageField from "../components/UI/ComposeMessageField";
-import SendMsg from "../components/Logic/SendMsg";
 import AlertMessage from "../components/UI/AlertMessage";
 import { Props } from "../components/types";
+import CheckSendMessage from "../components/Logic/CheckSendMessage";
+import { useRouter } from "next/router";
 
 const Compose = (props: Props) => {
   const [recipient, setRecipient] = useState("");
@@ -16,24 +17,12 @@ const Compose = (props: Props) => {
   const [height, setHeight] = useState("45vh");
 
   async function handleSendMessage() {
-    if (message.length < 1) {
-      sendAlert("Message too short", true);
+    let result = await CheckSendMessage(message, recipient, props.keypair);
+    if (!result[1]) {
+      const router = useRouter();
+      router.push("/conversation/[address]", `/conversation/${recipient}`);
     } else {
-      if (recipient.length < 32) {
-        sendAlert("Please enter valid address", true);
-      } else {
-        if (message.length > 300) {
-          sendAlert("Please shorten your message", true);
-        } else {
-          setMessage("");
-          let result = await SendMsg(message, recipient, props.keypair);
-          if (result == "badkey") {
-            sendAlert("Recipient address is invalid: Please Verify", true);
-          } else if (result == "success") {
-            sendAlert("Message Delivered", false);
-          }
-        }
-      }
+      sendAlert(result[0], result[1]);
     }
   }
   const sendAlert = (message: string, warning: boolean) => {
@@ -59,7 +48,7 @@ const Compose = (props: Props) => {
       window.scrollTo(0, 0);
     }, 1);
     if (!props.mobile) {
-      setHeight("90vh");
+      setHeight("85vh");
     }
     return () => {
       clearInterval(stayup);
@@ -77,42 +66,38 @@ const Compose = (props: Props) => {
   };
 
   return (
-    <View style={{ height: "90vh", backgroundColor: "black" }}>
-      <View style={{ zIndex: "20" }}>
+    <div
+      className="bg-smoke mx-2 lg:w-3/4 lg:mx-auto"
+      style={{ height: "90vh" }}
+    >
+      <div className="z-20">
         <Link href="/">
-          <Text
+          <h5
+            className="ml-auto w-fit z-20 text-white"
             style={{
               fontSize: "4.5rem",
               lineHeight: "1",
-              marginLeft: "auto",
               marginRight: "2%",
-              width: "fit-content",
-              zIndex: "20",
-              color: "white",
             }}
           >
             &#x2715;
-          </Text>
+          </h5>
         </Link>
-      </View>
-      <View style={{ color: "white", marginTop: "-4.7rem" }}>
-        <Text
-          nativeID="newmessage"
+      </div>
+      <div style={{ color: "white", marginTop: "-4.7rem" }}>
+        <h1
+          className="text-white text-3xl text-white text-center z-0"
+          id="newmessage"
           style={{
-            fontSize: "1.875rem",
-            lineHeight: "2.25rem",
             paddingTop: "1.4rem",
             paddingBottom: "0.5rem",
-            zIndex: "0",
-            color: "white",
-            textAlign: "center",
           }}
         >
           New Message
-        </Text>
-      </View>
+        </h1>
+      </div>
       <KeyboardAvoidingView
-        style={{ backgroundColor: "black", height: height }}
+        style={{ backgroundColor: "#100c08", height: height }}
       >
         <View
           style={{
@@ -161,7 +146,7 @@ const Compose = (props: Props) => {
         warning={theAlertMessage.warning}
         neutral={false}
       />
-    </View>
+    </div>
   );
 };
 

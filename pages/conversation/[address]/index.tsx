@@ -1,12 +1,13 @@
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
-import { View, KeyboardAvoidingView, Text, ScrollView } from "react-native-web";
+import { KeyboardAvoidingView, ScrollView } from "react-native-web";
 import Message from "../../../components/UI/Message";
 import ComposeMessageField from "../../../components/UI/ComposeMessageField";
-import SendMsg from "../../../components/Logic/SendMsg";
 import AlertMessage from "../../../components/UI/AlertMessage";
 import { Props, MessageObj } from "../../../components/types";
 import { ShortenPubkey } from "../../../components/UI/Shorten";
+import copy from "copy-to-clipboard";
+import CheckSendMessage from "../../../components/Logic/CheckSendMessage";
 
 export default function Conversation(props: Props) {
   const router = useRouter();
@@ -56,26 +57,12 @@ export default function Conversation(props: Props) {
   }, []);
 
   async function handleSendMessage() {
-    if (messageContents.length < 1) {
-      sendAlert("Message too short", true);
-    } else {
-      if (messageContents.length > 300) {
-        sendAlert("Please shorten your message", true);
-      } else {
-        setMessageContents("");
-        let result = await SendMsg(
-          messageContents,
-          address.toString(),
-          props.keypair
-        );
-        if (result == "badkey") {
-          sendAlert("Recipient address is invalid: Please Verify", true);
-        } else if (result == "success") {
-          props.onUpdateNeeded();
-          sendAlert("Message Delivered", false);
-        }
-      }
-    }
+    let result = await CheckSendMessage(
+      messageContents,
+      address.toString(),
+      props.keypair
+    );
+    sendAlert(result[0], result[1]);
   }
   const handleTypingMessage = (e) => {
     setMessageContents(e.target.value);
@@ -91,7 +78,7 @@ export default function Conversation(props: Props) {
       setHeight("80vh");
     }
   };
-  const sendAlert = (message, warning) => {
+  const sendAlert = (message: string, warning: boolean) => {
     setTheAlertMessage({ message: message, warning: warning });
     setTimeout(() => {
       setTheAlertMessage({
@@ -115,7 +102,10 @@ export default function Conversation(props: Props) {
           padding: "2vh 0",
         }}
       >
-        <h1 className="text-left md:text-center ml-1 md:mx-auto text-3xl text-white">
+        <h1
+          onClick={() => copy(address.toString())}
+          className="text-left md:text-center ml-1 md:mx-auto text-3xl text-white"
+        >
           {displayAddress}
         </h1>
       </div>
