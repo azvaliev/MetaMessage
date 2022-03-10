@@ -28,4 +28,5 @@ export interface PasswordStrengthObj {
   contain_special: boolean;
   not_generic: boolean;
   contains_capital: boolean;
+  good_mix?: boolean;
 }

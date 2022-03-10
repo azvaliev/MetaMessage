@@ -1,16 +1,23 @@
 import { ChangeEventHandler } from "react";
-import PasswordIndicator from "./PasswordIndicator";
+import PasswordBarIndicator from "./PasswordBarIndicator";
+import { PasswordStrengthObj } from "../../types";
+import PasswordStrengthHint from "./PasswordStrengthHint";
 
-const PasswordField = (props: {
+interface Props {
   password: string;
   setPassword: ChangeEventHandler;
-  strength: Object;
-}) => {
-  const calculateStrengthScore = (strengthArr: Array<boolean>) => {
-    const total = strengthArr.filter((v) => v === true).length;
-    return Math.round(total / 3);
-  };
+  strength: PasswordStrengthObj;
+}
 
+const PasswordField = (props: Props) => {
+  const calculateStrengthScore = (strengthArr: Array<boolean>) => {
+    // calculate the number of password strength reqs that are passed
+    const total = strengthArr.filter((v) => v === true).length;
+    // divide this by 3 to create a score for indicator
+    return Math.round(total / 2.3);
+  };
+  const strengthScore = calculateStrengthScore(Object.values(props.strength));
+  console.log(strengthScore);
   return (
     <>
       <input
@@ -18,10 +25,13 @@ const PasswordField = (props: {
         placeholder="password"
         value={props.password}
         onChange={props.setPassword}
-        className="text-xl mt-6 px-2 w-full bg-black border-1 border-gray-500"
+        className="text-xl mt-6 px-2 w-full bg-black text-center"
+        maxLength={20}
       />
-      <PasswordIndicator
-        strength={calculateStrengthScore(Object.values(props.strength))}
+      <PasswordBarIndicator strengthScore={strengthScore} />
+      <PasswordStrengthHint
+        strength={props.strength}
+        strengthScore={strengthScore}
       />
     </>
   );

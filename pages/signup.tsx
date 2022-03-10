@@ -12,6 +12,7 @@ export default function SignUp(props: Props) {
     contain_special: false,
     not_generic: false,
     contains_capital: false,
+    good_mix: false,
   });
   const [password, setPassword] = useState("");
 
