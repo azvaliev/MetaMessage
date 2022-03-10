@@ -7,12 +7,12 @@ import { Props } from "../components/types";
 export default function SignUp(props: Props) {
   const [passwordSecLevel, setPasswordSecLevel] = useState({
     min_length: false,
-    optimal_length: false,
     contain_num: false,
     contain_special: false,
     not_generic: false,
     contains_capital: false,
     good_mix: false,
+    optimal_length: false,
   });
   const [password, setPassword] = useState("");
 

@@ -6,35 +6,37 @@ interface Props {
 }
 const formattedReqs = [
   "At least 8 characters",
-  "Over 12 characters",
-  "Contains a number",
-  "Contains a special character",
-  "Not generic i.e.(password123)",
-  "Contains a capital",
+  "Include a number",
+  "Include a special character",
+  "Not generic (password123, year)",
+  "Include a capital",
 ];
 
 const PasswordStrengthHint = (props: Props) => {
   let bgColor = "";
   props.strengthScore <= 1
-    ? (bgColor = "bg-red-500")
-    : props.strengthScore <= 2
-    ? (bgColor = "bg-yellow-500")
-    : (bgColor = "bg-green-500");
+    ? (bgColor = "bg-red-500 border-red-500")
+    : (bgColor = "bg-blue-500 border-blue-500");
 
-  return (
-    <div className={`w-full ${bgColor} flex flex-col text-white`}>
-      {formattedReqs.map((req, i) => {
-        if (!Object.values(props.strength)[i]) {
-          return (
-            <div className="flex flex-row" key={i}>
-              {"\u2715"}
-              {req}
-            </div>
-          );
-        }
-      })}
-    </div>
-  );
+  if (props.strengthScore < 3 && props.strengthScore > -1) {
+    return (
+      <div
+        className={`w-full ${bgColor} bg-opacity-70 border-1 mt-2 rounded-md flex flex-col text-white`}
+      >
+        {formattedReqs.map((req, i) => {
+          if (!Object.values(props.strength)[i]) {
+            return (
+              <div className="flex flex-row" key={i}>
+                {props.strengthScore > 1 ? "Reccomended: " : "\u2715 "}
+                {req}
+              </div>
+            );
+          }
+        })}
+      </div>
+    );
+  }
+  return null;
 };
 
 export default PasswordStrengthHint;
