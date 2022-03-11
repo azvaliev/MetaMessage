@@ -27,7 +27,12 @@ export const createIVStore = async (iv: ArrayBuffer) => {
   return db
     .add("iv", iv, "iv_buffer")
     .then(() => true)
-    .catch((err) => console.error(err));
+    .catch(() => {
+      return db
+        .put("iv", iv, "iv_buffer")
+        .then(() => true)
+        .catch((err) => console.error(err));
+    });
 };
 
 export const getIVStore = async () => {

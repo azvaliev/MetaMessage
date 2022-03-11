@@ -26,14 +26,14 @@ const Login = (props: Props) => {
 
   return (
     <div className="flex flex-col text-white w-11/12 lg:w-1/2 mx-auto">
-      <h1 className="text-5xl my-4 mx-auto">Welcome</h1>
+      <h1 className="text-5xl mt-8 mx-auto">Welcome</h1>
       <input
         type="password"
         placeholder="enter your password"
         value={password}
         onChange={handleTyping}
         onKeyDown={checkEnter}
-        className={`text-xl mt-[27vh] px-2 w-5/6 lg:w-2/3 mx-auto bg-black outline-none border-1 ${
+        className={`text-xl mt-[30vh] px-2 w-5/6 lg:w-2/3 mx-auto bg-black outline-none border-1 ${
           props.mobile ? "text-center" : "text-left"
         } ${showError ? "border-red-500" : "border-blue-500"} py-1`}
         maxLength={20}
