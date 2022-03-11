@@ -1,7 +1,6 @@
 import "../styles/globals.css";
 import Head from "next/head";
 import { useState, useEffect } from "react";
-import GenerateKeypair from "../components/Logic/GenerateKeypair";
 import GetConversations from "../components/Logic/GetConversations";
 import { useRouter } from "next/router";
 import IsMobile from "../components/Logic/IsMobile";
@@ -18,12 +17,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   // TODO - remove this
-  const handleGenerateKeypair = () => {
-    setKeypair(GenerateKeypair());
-    setTimeout(() => {
-      router.reload();
-    }, 100);
-  };
 
   useEffect(() => {
     console.log(keypair);
@@ -59,13 +52,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     setMobile(IsMobile());
 
     const storedData = window.localStorage;
-    // storedData.removeItem('keypair');
+    // storedData.removeItem("keypair");
     // For testing purposes
     const keypairCheck = storedData.getItem("keypair");
     if (keypairCheck) {
       router.push("/login");
     } else {
-      router.push("/signup");
+      router.push("/welcome");
     }
   }, []);
 
@@ -126,7 +119,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <Component
         {...pageProps}
-        onGenerateKeypair={handleGenerateKeypair}
         keypair={keypair}
         pubkey={pubkey}
         conversations={conversations}

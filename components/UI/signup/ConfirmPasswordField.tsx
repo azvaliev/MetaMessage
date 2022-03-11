@@ -1,4 +1,4 @@
-import { useEffect, ChangeEventHandler } from "react";
+import { KeyboardEvent, useEffect, ChangeEventHandler } from "react";
 import PasswordBarIndicator from "./PasswordBarIndicator";
 import checkConfirmPassword from "../../Logic/signup/CheckConfirmPassword";
 
@@ -7,6 +7,8 @@ interface Props {
   confirmPassword: string;
   setConfirmPassword: ChangeEventHandler;
   onPasswordConfirmed: Function;
+  onSubmit: Function;
+  mobile: boolean;
 }
 
 const ConfirmPasswordField = (props: Props) => {
@@ -23,14 +25,22 @@ const ConfirmPasswordField = (props: Props) => {
       : props.onPasswordConfirmed(false);
   }, [props.confirmPassword]);
 
+  // allow users to hit enter to submit
+  const checkEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+    e.key === "Enter" && confirmPasswordScore === 3 ? props.onSubmit() : null;
+  };
+
   return (
     <>
       <input
         type="password"
-        placeholder="confirm password"
+        placeholder={props.mobile ? "confirm password" : "Confirm password"}
         value={props.confirmPassword}
         onChange={props.setConfirmPassword}
-        className="text-xl mt-6 px-2 w-full bg-black text-center outline-none py-1"
+        onKeyDown={checkEnter}
+        className={`text-xl mt-6 px-2 w-full bg-black border-gray-600 border-[0.2px] ${
+          props.mobile ? "text-center" : "text-left"
+        } outline-none py-1`}
         maxLength={20}
       />
       <PasswordBarIndicator score={confirmPasswordScore} halfBar={true} />

@@ -9,6 +9,7 @@ interface Props {
   setPassword: ChangeEventHandler;
   strength: PasswordStrengthObj;
   onPasswordAccepted: Function;
+  mobile: boolean;
 }
 
 const PasswordField = (props: Props) => {
@@ -35,10 +36,12 @@ const PasswordField = (props: Props) => {
     <>
       <input
         type="password"
-        placeholder="password"
+        placeholder={props.mobile ? "password" : "Create a password"}
         value={props.password}
         onChange={props.setPassword}
-        className="text-xl mt-6 px-2 w-full bg-black text-center outline-none py-1"
+        className={`text-xl mt-6 px-2 w-full bg-black border-gray-600 border-[0.2px] ${
+          props.mobile ? "text-center py-2" : "text-left py-1"
+        } outline-none`}
         maxLength={20}
       />
       <PasswordBarIndicator score={strengthScore} />

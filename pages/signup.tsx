@@ -1,4 +1,3 @@
-import { Main } from "../components/StyledHome";
 import { ChangeEvent, useState } from "react";
 import PasswordField from "../components/UI/signup/PasswordField";
 import CheckPasswordStrength from "../components/Logic/signup/CheckPasswordStrength";
@@ -41,21 +40,19 @@ export default function SignUp(props: Props) {
   };
 
   return (
-    <Main className="text-white text-center lg:w-1/2 lg:mx-auto">
-      <h1 className="text-3xl py-2 underline">Create a password</h1>
-      <p className="py-2 text-lg">
+    <div className="text-white text-center md:w-5/6 lg:w-1/2 md:mx-auto">
+      <h1 className="text-4xl py-2 pt-6 underline">Create a password</h1>
+      <p className="p-2 text-lg px-[2vw] md:px-[8vw] lg:px-[2vw]">
         Your unique private keys for &lsquo;signing&lsquo; a message are stored
         locally. However, locally stored keys can be vulnerable if not
         encrypted.
       </p>
-      <h2 className="text-2xl lg:w-3/4 mx-auto pt-8">
-        Please create a password below to ensure these stay secure
-      </h2>
-      <div className="w-3/4 lg:w-2/3 mx-auto">
+      <div className="w-11/12 mt-[5vh] md:w-3/4 lg:w-2/3 mx-auto">
         <PasswordField
           password={password.password}
           setPassword={handleChangePassword}
           strength={passwordSecLevel}
+          mobile={props.mobile}
           onPasswordAccepted={(v: boolean) =>
             setPasswordValid({ ...passwordValid, password: v })
           }
@@ -65,7 +62,9 @@ export default function SignUp(props: Props) {
           <ConfirmPasswordField
             passwordOG={password.password}
             confirmPassword={password.confirmPassword}
+            onSubmit={handleSubmitPassword}
             setConfirmPassword={handleChangeConfirmPassword}
+            mobile={props.mobile}
             onPasswordConfirmed={(v: boolean) =>
               setPasswordValid({ ...passwordValid, confirmPassword: v })
             }
@@ -74,7 +73,7 @@ export default function SignUp(props: Props) {
         {/* Hide/disable button until password is min strength & confirmed */}
         <button
           onClick={passwordValid.confirmPassword ? handleSubmitPassword : null}
-          className={`mt-8 bg-blue-500 rounded-md px-4 py-2 text-3xl ${
+          className={`mt-8 bg-blue-500 rounded-md px-4 py-2 text-3xl font-semibold ${
             passwordValid.password
               ? passwordValid.confirmPassword
                 ? ""
@@ -82,9 +81,9 @@ export default function SignUp(props: Props) {
               : "invisible"
           }`}
         >
-          Confirm
+          Submit
         </button>
       </div>
-    </Main>
+    </div>
   );
 }

@@ -6,10 +6,10 @@ interface Props {
 }
 const formattedReqs = [
   "At least 8 characters",
-  "Include a number",
-  "Include a special character",
-  "Avoid common phrases (password123, year)",
-  "Include a capital",
+  "Include a number (0-9)",
+  "Include a special character ^&$*",
+  "Avoid common phrases (123, year)",
+  "Include a capital letter",
 ];
 
 const PasswordStrengthHint = (props: Props) => {
@@ -23,14 +23,21 @@ const PasswordStrengthHint = (props: Props) => {
   if (props.strengthScore < 3 && props.strengthScore > -1) {
     return (
       <div
-        className={`w-full ${bgColor} bg-opacity-70 border-1 mt-2 rounded-md flex flex-col text-white`}
+        className={`w-fit mx-auto px-4 py-1 ${bgColor} bg-opacity-75 border-1 mt-3 rounded-md flex flex-col text-white`}
       >
+        {props.strengthScore > 1 && (
+          <h5 className="border-b-[0.2px] border-gray-300 font-semibold">
+            Reccomended
+          </h5>
+        )}
         {formattedReqs.map((req, i) => {
           if (!Object.values(props.strength)[i]) {
             return (
-              <div className="flex flex-row" key={i}>
-                {props.strengthScore > 1 ? "Reccomended: " : "\u2715 "}
-                {req}
+              <div className="flex flex-row text-center" key={i}>
+                <p className="mx-auto">
+                  {props.strengthScore <= 1 && "\u2715 "}
+                  {req}
+                </p>
               </div>
             );
           }
