@@ -27,6 +27,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     setMobile(IsMobile());
 
+    // TODO: Move this to a seperate component that checks whether keypair is stored already
+    // and prompts to enter password for decryption or sends message to redirect to signup page
+
     const storedData = window.localStorage;
     // storedData.removeItem('keypair');
     // For testing purposes
@@ -85,8 +88,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     setShowAppGuide(!showAppGuide);
   };
 
-  const handleSetRecipient = (recipient) => {
+  const handleSetRecipient = (recipient: string) => {
     setCurrentRecipient(recipient);
+  };
+
+  const handleSetPassword = (password: string) => {
+    // TODO: run the encryption/storage function
   };
 
   return (
@@ -136,6 +143,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         onShowAppGuide={handleShowAddAppGuide}
         currentRecipient={currentRecipient}
         setCurrentRecipient={handleSetRecipient}
+        onSetPassword={handleSetPassword}
       />
     </>
   );

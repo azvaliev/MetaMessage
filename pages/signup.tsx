@@ -1,5 +1,5 @@
 import { Main } from "../components/StyledHome";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import PasswordField from "../components/UI/signup/PasswordField";
 import CheckPasswordStrength from "../components/Logic/signup/CheckPasswordStrength";
 import { PasswordStrengthObj, Props } from "../components/types";
@@ -26,17 +26,20 @@ export default function SignUp(props: Props) {
     confirmPassword: false,
   });
 
-  const handleChangePassword = (e) => {
+  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPasswordSecLevel(
       CheckPasswordStrength(e.target.value, passwordSecLevel)
     );
     setPassword({ ...password, password: e.target.value });
   };
-  const handleChangeConfirmPassword = (e) => {
+  const handleChangeConfirmPassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword({ ...password, confirmPassword: e.target.value });
     console.log(passwordValid);
   };
-  const handleSubmitPassword = () => {};
+  const handleSubmitPassword = () => {
+    props.onSetPassword(password.password);
+    // Send user to homepage
+  };
 
   return (
     <Main className="text-white text-center lg:w-1/2 lg:mx-auto">

@@ -13,6 +13,7 @@ export interface Props {
   onShowAppGuide: Function;
   currentRecipient: string;
   setCurrentRecipient: Function;
+  onSetPassword: Function;
 }
 
 export interface MessageObj {
