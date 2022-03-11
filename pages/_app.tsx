@@ -1,7 +1,6 @@
 import "../styles/globals.css";
 import Head from "next/head";
 import { useState, useEffect } from "react";
-import * as solanaWeb3 from "@solana/web3.js";
 import GenerateKeypair from "../components/Logic/GenerateKeypair";
 import GetConversations from "../components/Logic/GetConversations";
 import { useRouter } from "next/router";
@@ -11,13 +10,14 @@ import encryptStorePassword from "../components/Logic/local_encryption/encryptSt
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [keypair, setKeypair] = useState(null);
-  const [pubkey, setPubkey] = useState({});
+  const [pubkey, setPubkey] = useState(null);
   const [conversations, setConversations] = useState([]);
   const [mobile, setMobile] = useState(false);
   const [showAppGuide, setShowAppGuide] = useState(false);
   const [currentRecipient, setCurrentRecipient] = useState("");
   const router = useRouter();
 
+  // TODO - remove this
   const handleGenerateKeypair = () => {
     setKeypair(GenerateKeypair());
     setTimeout(() => {
@@ -26,50 +26,18 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   useEffect(() => {
-    setMobile(IsMobile());
+    console.log(keypair);
+  }, [keypair]);
 
-    // TODO: Move this to a seperate component that checks whether keypair is stored already
-    // and prompts to enter password for decryption or sends message to redirect to signup page
-
-    const storedData = window.localStorage;
-    // storedData.removeItem('keypair');
-    // For testing purposes
-    const keypairCheck = storedData.getItem("keypair");
-    if (keypairCheck) {
-      setKeypair(
-        solanaWeb3.Keypair.fromSecretKey(
-          new Uint8Array(
-            Object.values(JSON.parse(keypairCheck)._keypair.secretKey)
-          )
-        )
-      );
-      setPubkey(
-        new solanaWeb3.PublicKey(
-          Object.values(JSON.parse(keypairCheck)._keypair.publicKey)
-        )
-      );
+  useEffect(() => {
+    if (keypair !== null) {
       setTimeout(async () => {
-        setConversations(
-          await GetConversations(
-            solanaWeb3.Keypair.fromSecretKey(
-              new Uint8Array(
-                Object.values(JSON.parse(keypairCheck)._keypair.secretKey)
-              )
-            )
-          )
-        );
+        setConversations(await GetConversations(keypair));
       }, 5);
+      // TODO move this with the above
       let check = setInterval(async () => {
         try {
-          setConversations(
-            await GetConversations(
-              solanaWeb3.Keypair.fromSecretKey(
-                new Uint8Array(
-                  Object.values(JSON.parse(keypairCheck)._keypair.secretKey)
-                )
-              )
-            )
-          );
+          setConversations(await GetConversations(keypair));
         } catch (err) {
           console.error(err);
         }
@@ -78,6 +46,26 @@ function MyApp({ Component, pageProps }: AppProps) {
       () => {
         clearInterval(check);
       };
+    }
+  }, [keypair]);
+
+  const onSignIn = (kp, pk) => {
+    setKeypair(kp);
+    setPubkey(pk);
+    router.push("/");
+  };
+
+  useEffect(() => {
+    setMobile(IsMobile());
+
+    const storedData = window.localStorage;
+    // storedData.removeItem('keypair');
+    // For testing purposes
+    const keypairCheck = storedData.getItem("keypair");
+    if (keypairCheck) {
+      router.push("/login");
+    } else {
+      router.push("/signup");
     }
   }, []);
 
@@ -93,8 +81,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     setCurrentRecipient(recipient);
   };
 
-  const handleSetPassword = (password: string) => {
-    const [tempKey, tempPubkey] = encryptStorePassword(password);
+  const handleSetPassword = async (password: string) => {
+    const [tempKey, tempPubkey] = await encryptStorePassword(password);
     setKeypair(tempKey);
     setPubkey(tempPubkey);
     router.push("/");
@@ -149,6 +137,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         currentRecipient={currentRecipient}
         setCurrentRecipient={handleSetRecipient}
         onSetPassword={handleSetPassword}
+        onSignIn={onSignIn}
       />
     </>
   );

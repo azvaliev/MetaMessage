@@ -14,6 +14,7 @@ export interface Props {
   currentRecipient: string;
   setCurrentRecipient: Function;
   onSetPassword: Function;
+  onSignIn: Function;
 }
 
 export interface MessageObj {

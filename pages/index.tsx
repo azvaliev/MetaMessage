@@ -16,14 +16,16 @@ export default function Home(props: Props) {
       <div className=" h-fit py-4 border-b-2 border-gray-300 flex px-2 flex-row">
         <h1 className="text-3xl lg:text-35xl mx-auto my-auto" id="home">
           {/* onClick={() => handleCopyAddress(props.pubkey.toString())}> */}
-          <Link
-            href="/profile/[address]"
-            as={`/profile/${props.pubkey.toString()}`}
-          >
-            {Object.keys(props.pubkey).length == 0
-              ? "Meta Message"
-              : ShortenPubkey(props.pubkey.toString(), true, props.mobile)}
-          </Link>
+          {props.pubkey === null ? (
+            "Meta Message"
+          ) : (
+            <Link
+              href="/profile/[address]"
+              as={`/profile/${props.pubkey.toString()}`}
+            >
+              {ShortenPubkey(props.pubkey.toString(), true, props.mobile)}
+            </Link>
+          )}
         </h1>
       </div>
 
