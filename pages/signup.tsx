@@ -34,7 +34,6 @@ export default function SignUp(props: Props) {
   };
   const handleChangeConfirmPassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword({ ...password, confirmPassword: e.target.value });
-    console.log(passwordValid);
   };
   const handleSubmitPassword = () => {
     props.onSetPassword(password.password);

@@ -7,6 +7,7 @@ import GetConversations from "../components/Logic/GetConversations";
 import { useRouter } from "next/router";
 import IsMobile from "../components/Logic/IsMobile";
 import type { AppProps } from "next/app";
+import encryptStorePassword from "../components/Logic/local_encryption/encryptStorePassword";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [keypair, setKeypair] = useState(null);
@@ -93,6 +94,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   const handleSetPassword = (password: string) => {
+    const [tempKey, tempPubkey] = encryptStorePassword(password);
+    setKeypair(tempKey);
+    setPubkey(tempPubkey);
+    router.push("/");
     // TODO: run the encryption/storage function
   };
 

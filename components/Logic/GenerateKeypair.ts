@@ -1,9 +1,9 @@
-import * as solanaWeb3 from '@solana/web3.js';
+import { Keypair } from "@solana/web3.js";
 
 const GenerateKeypair = () => {
-    let keypair = solanaWeb3.Keypair.generate();
-    window.localStorage.setItem('keypair', JSON.stringify(keypair));
-    return keypair;
-}
+  let keypair = Keypair.generate();
+  return keypair;
+};
 
 export default GenerateKeypair;
+
