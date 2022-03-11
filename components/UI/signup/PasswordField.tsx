@@ -1,26 +1,36 @@
-import { ChangeEventHandler } from "react";
+import { ChangeEventHandler, useState, useEffect } from "react";
 import PasswordBarIndicator from "./PasswordBarIndicator";
 import { PasswordStrengthObj } from "../../types";
 import PasswordStrengthHint from "./PasswordStrengthHint";
+import { calculateStrengthScore } from "../../Logic/signup/CheckPasswordStrength";
 
 interface Props {
   password: string;
   setPassword: ChangeEventHandler;
   strength: PasswordStrengthObj;
+  onPasswordAccepted: Function;
 }
 
 const PasswordField = (props: Props) => {
-  const calculateStrengthScore = (strengthArr: Array<boolean>) => {
-    // calculate the number of password strength reqs that are passed
-    const total = strengthArr.filter((v) => v === true).length;
-    // divide this by 3 to create a score for indicator
-    if (props.password.length > 3) {
-      return Math.round(total / 2.3);
-    }
-    return -1;
-  };
-  const strengthScore = calculateStrengthScore(Object.values(props.strength));
-  console.log(strengthScore);
+  const [strengthScore, setStrengthScore] = useState(
+    calculateStrengthScore(Object.values(props.strength), props.password.length)
+  );
+  // Calculate new strength score on password change
+  useEffect(() => {
+    setStrengthScore(
+      calculateStrengthScore(
+        Object.values(props.strength),
+        props.password.length
+      )
+    );
+  }, [props.password]);
+  // Let the signup component know if new strength score is acceptable
+  useEffect(() => {
+    strengthScore >= 2
+      ? props.onPasswordAccepted(true)
+      : props.onPasswordAccepted(false);
+  }, [strengthScore]);
+
   return (
     <>
       <input
@@ -31,7 +41,7 @@ const PasswordField = (props: Props) => {
         className="text-xl mt-6 px-2 w-full bg-black text-center outline-none py-1"
         maxLength={20}
       />
-      <PasswordBarIndicator strengthScore={strengthScore} />
+      <PasswordBarIndicator score={strengthScore} />
       <PasswordStrengthHint
         strength={props.strength}
         strengthScore={strengthScore}
