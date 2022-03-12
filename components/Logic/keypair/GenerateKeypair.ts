@@ -6,4 +6,3 @@ const GenerateKeypair = () => {
 };
 
 export default GenerateKeypair;
-

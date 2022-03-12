@@ -29,7 +29,10 @@ const Login = (props: Props) => {
       <h1 className="text-5xl mt-8 mx-auto">Welcome</h1>
       <input
         type="password"
-        placeholder="enter your password"
+        placeholder={
+          props.mobile ? "enter your password" : "Enter your password"
+        }
+        autoFocus={!props.mobile}
         value={password}
         onChange={handleTyping}
         onKeyDown={checkEnter}

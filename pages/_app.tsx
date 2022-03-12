@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import IsMobile from "../components/Logic/IsMobile";
 import type { AppProps } from "next/app";
 import encryptStorePassword from "../components/Logic/local_encryption/encryptStorePassword";
+import RestoreKeypair from "../components/Logic/keypair/RestoreKeypair";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [keypair, setKeypair] = useState(null);
@@ -43,22 +44,30 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [keypair]);
 
   const onSignIn = (kp, pk) => {
+    sessionStorage.setItem("keypair", JSON.stringify(kp));
     setKeypair(kp);
     setPubkey(pk);
     router.push("/");
   };
 
   useEffect(() => {
-    setMobile(IsMobile());
-
-    const storedData = window.localStorage;
     // storedData.removeItem("keypair");
     // For testing purposes
-    const keypairCheck = storedData.getItem("keypair");
-    if (keypairCheck) {
-      router.push("/login");
+    setMobile(IsMobile());
+
+    const sessionCheck = sessionStorage.getItem("keypair");
+    if (sessionCheck) {
+      let kp = RestoreKeypair(sessionCheck);
+      setKeypair(kp);
+      setPubkey(kp.publicKey);
+      router.push("/");
     } else {
-      router.push("/welcome");
+      const keypairCheck = localStorage.getItem("keypair");
+      if (keypairCheck) {
+        router.push("/login");
+      } else {
+        router.push("/welcome");
+      }
     }
   }, []);
 

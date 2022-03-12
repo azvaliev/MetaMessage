@@ -5,6 +5,7 @@ const {
   createCipheriv,
 } = require("crypto");
 import { Keypair } from "@solana/web3.js";
+import RestoreKeypair from "../keypair/RestoreKeypair";
 import { toArrayBuffer, toBuffer } from "./BufferConv";
 import { getIVStore, updateIVStore } from "./ManageIndexDB";
 
@@ -24,12 +25,7 @@ const decryptPassword = async (password: string) => {
   // TODO - Perhaps do the above through creating two new keypairs using the string and comparing equality
 
   // Convert JSON parsed object "keypair" into Solana Keypair type
-  const decryptedKeypair = Keypair.fromSecretKey(
-    new Uint8Array(
-      Object.values(JSON.parse(decyptedKeyString)._keypair.secretKey)
-    )
-  );
-  console.log(decryptedKeypair);
+  const decryptedKeypair = RestoreKeypair(decyptedKeyString);
   // As soon as decryption is done, re-encrypt with a new IV to protect user password security
   ReEncrypt(password, decyptedKeyString, iv);
   return [decryptedKeypair, decryptedKeypair.publicKey];

@@ -1,4 +1,4 @@
-import GenerateKeypair from "../GenerateKeypair";
+import GenerateKeypair from "../keypair/GenerateKeypair";
 import { toArrayBuffer } from "./BufferConv";
 import { createIVStore } from "./ManageIndexDB";
 
