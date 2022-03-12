@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           } catch (err) {
             console.error(err);
           }
-        }, 5000);
+        }, 6000);
 
         () => {
           clearInterval(check);
