@@ -3,13 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { OptionHolder, OptionInnerHolder, Bar } from "./StyledOptionBar";
 import QRCode from "react-qr-code";
-import IsMobile from "../../Logic/IsMobile";
+import IsMobile from "../../logic/IsMobile";
 import { PublicKey } from "@solana/web3.js";
 
-export default function FloatOptionBar(props: {
-  pubkey: PublicKey;
-  mobile: boolean;
-}) {
+export default function FloatOptionBar(props: { pubkey: PublicKey }) {
   const [showOptions, setShowOptions] = useState(false);
 
   const handleToggleOptions = () => {

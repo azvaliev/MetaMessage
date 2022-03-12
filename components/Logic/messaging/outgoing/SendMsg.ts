@@ -1,4 +1,4 @@
-import { CreateDate } from "./CreateFormatDate";
+import { CreateDate } from "../CreateFormatDate";
 
 // import * as splToken from '@solana/spl-token'
 

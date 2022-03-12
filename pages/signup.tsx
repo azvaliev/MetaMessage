@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import PasswordField from "../components/UI/signup/PasswordField";
-import CheckPasswordStrength from "../components/Logic/signup/CheckPasswordStrength";
+import CheckPasswordStrength from "../components/logic/signup/CheckPasswordStrength";
 import { PasswordStrengthObj, Props } from "../components/types";
 import ConfirmPasswordField from "../components/UI/signup/ConfirmPasswordField";
 

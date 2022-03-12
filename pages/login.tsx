@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 import { Props } from "../components/types";
 import Link from "next/link";
-import decryptPassword from "../components/Logic/local_encryption/decryptPassword";
+import decryptPassword from "../components/logic/local_encryption/decryptPassword";
 
 const Login = (props: Props) => {
   const [password, setPassword] = useState("");
