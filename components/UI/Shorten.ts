@@ -1,7 +1,10 @@
 const ShortenPubkey = (key: string, intro: boolean, mobile: boolean) => {
+  // Solana addresses are way too long to display
+  // This function shortens them
   let subLen: number;
   mobile ? (subLen = 10) : (subLen = 12);
   if (intro) {
+    // add welcome message if on homepage
     return `Welcome back, ${
       key.substring(0, subLen) + "..." + key.substring(key.length - 6)
     }`;
@@ -11,6 +14,7 @@ const ShortenPubkey = (key: string, intro: boolean, mobile: boolean) => {
 };
 
 const ShortenMessage = (message: string, mobile: boolean) => {
+  // This shortens the message for preview on homescreen
   let charlimit: number;
   mobile ? (charlimit = 35) : (charlimit = 70);
   if (message.length > charlimit) {

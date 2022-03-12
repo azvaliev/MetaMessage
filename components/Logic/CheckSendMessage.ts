@@ -7,19 +7,19 @@ export default async function CheckSendMessage(
   keypair: Keypair
 ) {
   if (message.length < 1) {
-    return ["Message too short", true];
+    return {alertMsg: "Message too short",warning: true};
   } else {
     if (recipient.length < 32) {
-      return ["Please enter valid address", true];
+      return {alertMsg: "Please enter valid address", warning: true};
     } else {
       if (message.length > 300) {
-        return ["Please shorten your message", true];
+        return {alertMsg: "Please shorten your message", warning: true};
       } else {
         let result = await SendMsg(message, recipient, keypair);
         if (result == "badkey") {
-          return ["Recipient address is invalid: Please Verify", true];
+          return {alertMsg: "Recipient address is invalid: Please Verify", warning: true};
         } else if (result == "success") {
-          return ["Message Delivered", false];
+          return {alertMsg: "Message Delivered", warning: false};
         }
       }
     }

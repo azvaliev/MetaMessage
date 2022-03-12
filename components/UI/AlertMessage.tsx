@@ -18,7 +18,7 @@ const AlertMessage = (props: Props) => {
           }`}
         >
           <h4 className="w-fit">{props.message}</h4>
-          <h4 className="w-fit mr-0 ml-auto border-1 rounded-full h-fit">
+          <h4 className="w-fit mr-0 ml-auto border-[1px] rounded-full h-fit">
             &nbsp;&nbsp;i&nbsp;&nbsp;
           </h4>
         </div>

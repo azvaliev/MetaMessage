@@ -21,17 +21,17 @@ a {
 * {
   box-sizing: border-box !important;
 }
-.mb-1 {
-  margin-bottom: 0.25rem;
-}
-.bottom-35 {
-  bottom: 35vh;
+
+::-webkit-scrollbar {
+  display: none;
 }
 
-.border-y-1 {
-  border-top-width: 1px;
-  border-bottom-width: 1px;
+.btn-disabled {
+  border: 1px solid #999999;
+	background-color: #cccccc;
+	color: #666666;
 }
+
 .alert-anim {
   animation: reveal 5s ease-in-out 0s;
   position: absolute;
@@ -63,128 +63,11 @@ a {
     top: 0vh;
   }
 }
-.border-1 {
-  border-width: 1px;
-}
 
-.w-86 {
-  width: 86vw;
-}
-.w--10 {
-  width: 6vw;
-}
-.h-10vw {
-  height: 6vw;
-}
-@media screen and (max-width: 767px) {
-  .w--10 {
-    width: 17vw;
-  }
-  .h-10vw {
-    height: 17vw;
-  }
-  .enter {
-    height: 10vh !important;
-  }
-}
-.py-2vh{
-  padding-top: 2vh;
-  padding-bottom: 2vh;
-}
-#bgblack {
-  background-color: black;
-}
-.-mb-18 {
-  margin-bottom: -4.3rem;
-}
-.w-30 {
-  width: 35%;
-}
-.w-70 {
-  width: 65%;
-}
-.h-10vh {
-  max-height: 20vh;
-}
-.h-25vh {
-  height: 14vh;
-}
-
-
-/* .scan-qr { */
-/* 	bottom: 28%; */
-/* } */
-.invert {
-
-  filter: invert(1);
-
-}
-.paint-it-black {
-filter: brightness(0%);
-}
-.paint-it-white {
-filter: brightness(0%) invert(1);
-}
-
-.imgholder:after {
-  position: absolute;
-  content:"";
-  height:100%;
-  width:100%;
-  top:0;
-  left:0;
-  background: linear-gradient(to bottom, rgba(0,0,255,0.1) 0%,rgba(59,130,246,0.85) 100%);
-  border-top-left-radius: 25px;
-  border-top-right-radius: 25px;
-}
-
-#textinput:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-.closeConvBtn {
-    color: #2563EB;
-    font-size: 3.5rem;
-	z-index: 20;
-	position: absolute;
-	right: 3%;
-	top: -1.8vh;
-}
-  .main-conv {
-	width: 95% ;
-	margin: 0 auto;
-  }
-  #div-scroll-conv {
-scrollbar-color: dark !important;
-  }
-  ::-webkit-scrollbar {
-	  display: none;
-  }
-  .btn-disabled {
-	  border: 1px solid #999999;
-		background-color: #cccccc;
-		color: #666666;
-  }
-@media (min-width: 450px) {
-	.closeConvBtn {
-		top: -2.5%;
-	}
-}
 @media (min-width: 1024px) {
   #newmessage {
-      font-size: 3rem/* 48px */;
+      font-size: 3rem;
       line-height: 1;
-      padding-bottom: 1.5rem/* 24px */;
-  }
-  .lg\:mx-02 {
-    margin-left: 2%;
-    margin-right: 2%;
-  }
-  .main-conv {
-	width: 65% ;
-	margin: 0 auto;
-  }
-  .closeConvBtn {
-	  right: 17%;
+      padding-bottom: 1.5rem;
   }
 }

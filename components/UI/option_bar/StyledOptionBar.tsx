@@ -1,9 +1,5 @@
 import styled from "styled-components";
 
-export const Main = styled.div`
-  width: 100%;
-`;
-
 export const Bar = styled.div`
   right: 4%;
   min-width: 6vw;
@@ -32,5 +28,19 @@ export const OptionInnerHolder = styled.div`
   }
   @media (min-width: 660px) {
     bottom: 1.5vw;
+  }
+`;
+export const CloseConvBtn = styled.h5`
+  color: rgb(37, 99, 235);
+  font-size: 3.5rem;
+	z-index: 20;
+	position: absolute;
+	right: 3%;
+	top: -1.8vh;
+  @media (min-width: 450px) {
+    top: -2.5vh;
+  }
+  @media (min-width: 1024px) {
+    right: 17%;
   }
 `;

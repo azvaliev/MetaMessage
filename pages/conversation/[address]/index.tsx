@@ -1,14 +1,15 @@
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 import { KeyboardAvoidingView, ScrollView } from "react-native-web";
-import Message from "../../../components/UI/Message";
-import ComposeMessageField from "../../../components/UI/ComposeMessageField";
+import Message from "../../../components/UI/conversation/Message";
+import ComposeMessageField from "../../../components/UI/conversation/ComposeMessageField";
 import AlertMessage from "../../../components/UI/AlertMessage";
 import { Props, MessageObj } from "../../../components/types";
 import { ShortenPubkey } from "../../../components/UI/Shorten";
 import copy from "copy-to-clipboard";
 import CheckSendMessage from "../../../components/Logic/CheckSendMessage";
 import IsMobile from "../../../components/Logic/IsMobile";
+import { CloseConvBtn } from "../../../components/UI/option_bar/StyledOptionBar";
 
 export default function Conversation(props: Props) {
   const router = useRouter();
@@ -73,8 +74,8 @@ export default function Conversation(props: Props) {
       address.toString(),
       props.keypair
     );
-    if (result[1]) {
-      sendAlert(result[0], result[1]);
+    if (result.warning) {
+      sendAlert(result.alertMsg, result.warning);
     }
     await props.onUpdateNeeded();
     setTimeout(() => {
@@ -109,10 +110,10 @@ export default function Conversation(props: Props) {
   };
 
   return (
-    <div className="h-screen max-h-screen overflow-y-hidden bg-smoke main-conv lg:mx-auto">
-      <h5 className="closeConvBtn" onClick={closeConversation}>
+    <div className="h-screen max-h-screen overflow-y-hidden bg-smoke my-0 mx-auto w-[95%] lg:w-[65%] lg:mx-auto">
+      <CloseConvBtn onClick={closeConversation}>
         &#x2715;
-      </h5>
+      </CloseConvBtn>
       <div
         className="border-b-2 border-white flex flex-row"
         style={{
@@ -154,6 +155,7 @@ export default function Conversation(props: Props) {
           })}
         </ScrollView>
         <ComposeMessageField
+          mobile={props.mobile}
           message={messageContents}
           handleTypingMessage={handleTypingMessage}
           handleSendMessage={handleSendMessage}

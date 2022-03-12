@@ -3,8 +3,7 @@ import Link from "next/link";
 import { ShortenPubkey, ShortenMessage } from "../components/UI/Shorten";
 import { CompareDates } from "../components/Logic/CreateFormatDate";
 import { Props, MessageObj } from "../components/types";
-import { Main } from "../components/StyledHome";
-import FloatOptionBar from "../components/UI/FloatOptionBar";
+import FloatOptionBar from "../components/UI/option_bar/FloatOptionBar";
 
 export default function Home(props: Props) {
   useEffect(() => {
@@ -12,7 +11,7 @@ export default function Home(props: Props) {
   }, []);
 
   return (
-    <Main className="flex flex-col max-h-screen bg-smoke text-white lg:px-36">
+    <div className="w-full flex flex-col max-h-screen bg-smoke text-white lg:w-[65%] mx-auto">
       <div className=" h-fit py-4 border-b-2 border-gray-300 flex px-2 flex-row">
         <h1 className="text-3xl lg:text-35xl mx-auto my-auto" id="home">
           {/* onClick={() => handleCopyAddress(props.pubkey.toString())}> */}
@@ -88,6 +87,6 @@ export default function Home(props: Props) {
       {props.keypair !== null && (
         <FloatOptionBar pubkey={props.pubkey} mobile={props.mobile} />
       )}
-    </Main>
+    </div>
   );
 }

@@ -1,7 +1,7 @@
-import { KeyboardAvoidingView, View, TextInput, Text } from "react-native-web";
+import { KeyboardAvoidingView, View} from "react-native-web";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import ComposeMessageField from "../components/UI/ComposeMessageField";
+import ComposeMessageField from "../components/UI/conversation/ComposeMessageField";
 import AlertMessage from "../components/UI/AlertMessage";
 import { Props } from "../components/types";
 import CheckSendMessage from "../components/Logic/CheckSendMessage";
@@ -21,10 +21,10 @@ const Compose = (props: Props) => {
     sendAlert("Sending...", false);
     let result = await CheckSendMessage(message, recipient, props.keypair);
     await props.onUpdateNeeded();
-    if (!result[1]) {
+    if (!result.warning) {
       router.push("/conversation/[address]", `/conversation/${recipient}`);
     } else {
-      sendAlert(result[0], result[1]);
+      sendAlert(result.alertMsg, result.warning);
     }
   }
   const sendAlert = (message: string, warning: boolean) => {
@@ -88,7 +88,7 @@ const Compose = (props: Props) => {
       </div>
       <div style={{ color: "white", marginTop: "-4.7rem" }}>
         <h1
-          className="text-white text-3xl text-white text-center z-0"
+          className="text-3xl text-white text-center z-0"
           id="newmessage"
           style={{
             paddingTop: "1.4rem",
@@ -113,29 +113,18 @@ const Compose = (props: Props) => {
             marginRight: "2%",
           }}
         >
-          <TextInput
-            nativeID="textinput"
+          <input className="focus:outline-none bg-transparent border-gray-300 mx-[2%] w-[96%]
+                           text-3xl my-auto"
             autoFocus={true}
             onFocus={onFocus}
             onBlur={onBlur}
             value={recipient}
             onChange={handleTypingRecipient}
             placeholder="Recipient Address"
-            style={{
-              backgroundColor: "transparent",
-              borderColor: "rgb(209 213 219)",
-              borderRadius: "0px",
-              marginLeft: "2%",
-              marginRight: "2%",
-              width: "96%",
-              fontSize: "1.875rem",
-              lineHeight: "2.25rem",
-              marginTop: "auto",
-              marginBottom: "auto",
-            }}
           />
         </View>
         <ComposeMessageField
+          mobile={props.mobile}
           handleSendMessage={handleSendMessage}
           message={message}
           handleTypingMessage={handleTypingMessage}

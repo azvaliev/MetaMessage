@@ -23,7 +23,7 @@ const PasswordStrengthHint = (props: Props) => {
   if (props.strengthScore < 3 && props.strengthScore > -1) {
     return (
       <div
-        className={`w-fit mx-auto px-4 py-1 ${bgColor} bg-opacity-75 border-1 mt-3 rounded-md flex flex-col text-white`}
+        className={`w-fit mx-auto px-4 py-1 ${bgColor} bg-opacity-75 border-[1px] mt-3 rounded-md flex flex-col text-white`}
       >
         {props.strengthScore > 1 && (
           <h5 className="border-b-[0.2px] border-gray-300 font-semibold">

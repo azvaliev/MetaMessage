@@ -69,12 +69,12 @@ export default function Profile(props: Props) {
         value={fullAddress}
       />
       {props.mobile && (
-        <>
-          <div className="flex flex-row h-25vh pt-4 border-t-[0.5px] border-white">
+        <div className="flex flex-col border-b-[0.5px] pb-6 border-white">
+          <div className="flex flex-row h-[14vh] pt-4 border-t-[0.5px] border-white">
             <h2 className="text-2xl md:text-3xl text-left ml-2 w-3/4 mt-4">
               Add Meta Message to your homescreen
             </h2>
-            <div className="relative w-1/4 top-0 mb-1 mx-0">
+            <div className="relative w-1/4 top-0 mb-[0.25rem] mx-0">
               <Image
                 src="/img/icon.jpeg"
                 alt=""
@@ -89,25 +89,18 @@ export default function Profile(props: Props) {
           >
             Show me how
           </button>
-        </>
+        </div>
       )}
-      <h2 className="text-3xl pt-4 mt-8 border-t-[0.5px] underline border-white text-center">
-        Manage Account
-      </h2>
-      <div className="flex flex-row py-4 pb-6 border-b-[0.5px] border-white decoration-1">
+      <div className="flex flex-row py-4 pb-6 border-b-[0.5px] border-white decoration-[0.7px]">
         <h5
           onClick={props.onDeleteAccount}
-          className={`text-red-500 text-2xl underline mr-3 ml-auto text-center ${
-            props.mobile ? "font-light" : "font-extralight"
-          }`}
+          className={`text-red-500 text-2xl md:text-3xl underline mr-3 ml-auto text-center font-light`}
         >
           Delete Account
         </h5>
         <h5
           onClick={props.onLogout}
-          className={`text-red-500 text-2xl underline ml-3 mr-auto ${
-            props.mobile ? "font-light" : "font-extralight"
-          }`}
+          className={`text-red-500 text-2xl md:text-3xl underline ml-3 mr-auto font-light`}
         >
           Log Out
         </h5>

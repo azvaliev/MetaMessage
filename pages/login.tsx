@@ -36,7 +36,7 @@ const Login = (props: Props) => {
         value={password}
         onChange={handleTyping}
         onKeyDown={checkEnter}
-        className={`text-xl mt-[30vh] px-2 w-5/6 lg:w-2/3 mx-auto bg-black outline-none border-1 ${
+        className={`text-xl mt-[30vh] px-2 w-5/6 lg:w-2/3 mx-auto bg-black outline-none border-[1px] ${
           props.mobile ? "text-center" : "text-left"
         } ${showError ? "border-red-500" : "border-blue-500"} py-1`}
         maxLength={20}
