@@ -20,6 +20,7 @@ export interface Props {
 
 export interface MessageObj {
   from: string;
+  to: string;
   message: string;
   date: Date;
 }

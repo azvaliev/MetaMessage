@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           } catch (err) {
             console.error(err);
           }
-        }, 6000);
+        }, 5000);
 
         () => {
           clearInterval(check);
@@ -60,6 +60,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     await DeleteAccount();
     router.push("/welcome");
 
+    setConversations([]);
     setKeypair("");
     setPubkey("");
   };

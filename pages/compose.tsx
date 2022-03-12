@@ -20,6 +20,7 @@ const Compose = (props: Props) => {
   async function handleSendMessage() {
     sendAlert("Sending...", false);
     let result = await CheckSendMessage(message, recipient, props.keypair);
+    await props.onUpdateNeeded();
     if (!result[1]) {
       router.push("/conversation/[address]", `/conversation/${recipient}`);
     } else {

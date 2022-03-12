@@ -22,7 +22,6 @@ export default async function CheckMessages(wallet: web3.Keypair) {
   );
 
   // Get messages and transaction signatures
-  // TODO THIS IS WHERE YURI GAVE ME A BIG FAT ERROR
   recents.forEach((transaction) => {
     if (transaction.memo != null) {
       let txDate: Date;
@@ -51,18 +50,20 @@ export default async function CheckMessages(wallet: web3.Keypair) {
   for (let i = 0; i < messages.length; i++) {
     let details = await connection.getParsedTransaction(messages[i].signature);
     let detailsList = details.transaction.message.accountKeys;
+    let message_from: string;
+    let message_to: string;
 
     detailsList.forEach((detail) => {
       if (detail.signer) {
-        if (detail.pubkey.toString() == pubkey.toString()) {
-          // do nothing
-        } else {
-          cleanedMessages.push({
-            ...messages[i],
-            from: detail.pubkey.toString(),
-          });
-        }
+        message_from = detail.pubkey.toString();
+      } else if (detail.writable) {
+        message_to = detail.pubkey.toString();
       }
+    });
+    cleanedMessages.push({
+      ...messages[i],
+      from: message_from,
+      to: message_to,
     });
   }
 
@@ -71,7 +72,10 @@ export default async function CheckMessages(wallet: web3.Keypair) {
   cleanedMessages.forEach((message) => {
     let pushed = false;
     parsedMessages.forEach((conversation) => {
-      if (conversation[0].from == message.from) {
+      if (
+        conversation[0].from == message.from ||
+        conversation[0].to == message.to
+      ) {
         conversation.push(message);
         pushed = true;
       }
