@@ -95,6 +95,7 @@ export default function Scan(props: Props) {
           onResult={handleScanResult}
           scanDelay={scanPrompt.show ? 100 : 30000}
           constraints={{ facingMode: "environment" }}
+          videoContainerStyle={{ paddingTop: "0", height: "100%" }}
           containerStyle={{
             padding: "0",
             margin: "1.5vh auto",

@@ -64,7 +64,7 @@ export default function FloatOptionBar(props: {
               />
             </Link>
           </OptionHolder>
-          {props.mobile && (
+          {IsMobile() && (
             <Link href="/scan">
               <OptionHolder className="z-10 relative top-auto right-1 left-auto bg-p-blue rounded-2xl md:rounded-xl">
                 <OptionInnerHolder className="relative top-2 md:top-1 m-auto w-fit h-fit flex">
