@@ -55,8 +55,10 @@ export default async function CheckMessages(wallet: web3.Keypair) {
 
     detailsList.forEach((detail) => {
       if (detail.signer) {
+        // Signer can only be one individual, who initiated the transaction
         message_from = detail.pubkey.toString();
       } else if (detail.writable) {
+        // Those who have writing but not signing privleges were designated to be on recieving end
         message_to = detail.pubkey.toString();
       }
     });
