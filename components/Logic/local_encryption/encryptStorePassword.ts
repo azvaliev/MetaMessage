@@ -1,6 +1,6 @@
 import GenerateKeypair from "../keypair/GenerateKeypair";
 import { toArrayBuffer } from "./BufferConv";
-import { createIVStore } from "./ManageIndexDB";
+import { createIVStore } from "../account/ManageIndexDB";
 
 const { createCipheriv, randomBytes, createHash } = require("crypto");
 
@@ -19,7 +19,7 @@ const encryptStorePassword = async (password: string) => {
   const encryptedKeypair =
     cipher.update(JSON.stringify(keypair), "utf8", "hex") + cipher.final("hex");
   localStorage.setItem("keypair", encryptedKeypair);
-  // add new encrypted keypair to localstorage, and return unencrypted for session
+  // Put encrypted keypair into localstorage, send unencrypted to state
   return [keypair, pubkey];
 };
 

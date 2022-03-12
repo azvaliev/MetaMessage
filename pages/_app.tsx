@@ -6,7 +6,8 @@ import { useRouter } from "next/router";
 import IsMobile from "../components/Logic/IsMobile";
 import type { AppProps } from "next/app";
 import encryptStorePassword from "../components/Logic/local_encryption/encryptStorePassword";
-import RestoreKeypair from "../components/Logic/keypair/RestoreKeypair";
+import DeleteAccount from "../components/Logic/account/DeleteAccount";
+import { Keypair, PublicKey } from "@solana/web3.js";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [keypair, setKeypair] = useState(null);
@@ -17,13 +18,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [currentRecipient, setCurrentRecipient] = useState("");
   const router = useRouter();
 
-  // TODO - remove this
-
   useEffect(() => {
-    console.log(keypair);
-  }, [keypair]);
-
-  useEffect(() => {
+    // Check if keypair has been retrieved succesfully before
+    // atttempting to get messages
     if (keypair !== null) {
       setTimeout(async () => {
         setConversations(await GetConversations(keypair));
@@ -43,11 +40,23 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   }, [keypair]);
 
-  const onSignIn = (kp, pk) => {
-    sessionStorage.setItem("keypair", JSON.stringify(kp));
+  const handleSignIn = (kp: Keypair, pk: PublicKey) => {
     setKeypair(kp);
     setPubkey(pk);
     router.push("/");
+  };
+
+  const handleLogout = () => {
+    setKeypair(null);
+    setPubkey(null);
+    router.push("/login");
+  };
+  const handleDeleteAccount = async () => {
+    // Send user back to homepage while deleting all data
+    router.push("/welcome");
+    await DeleteAccount();
+    setKeypair(null);
+    setPubkey(null);
   };
 
   useEffect(() => {
@@ -55,19 +64,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     // For testing purposes
     setMobile(IsMobile());
 
-    const sessionCheck = sessionStorage.getItem("keypair");
-    if (sessionCheck) {
-      let kp = RestoreKeypair(sessionCheck);
-      setKeypair(kp);
-      setPubkey(kp.publicKey);
-      router.push("/");
+    const keypairCheck = localStorage.getItem("keypair");
+    if (keypairCheck) {
+      router.push("/login");
     } else {
-      const keypairCheck = localStorage.getItem("keypair");
-      if (keypairCheck) {
-        router.push("/login");
-      } else {
-        router.push("/welcome");
-      }
+      router.push("/welcome");
     }
   }, []);
 
@@ -88,7 +89,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     setKeypair(tempKey);
     setPubkey(tempPubkey);
     router.push("/");
-    // TODO: run the encryption/storage function
   };
 
   return (
@@ -138,7 +138,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         currentRecipient={currentRecipient}
         setCurrentRecipient={handleSetRecipient}
         onSetPassword={handleSetPassword}
-        onSignIn={onSignIn}
+        onSignIn={handleSignIn}
+        onLogout={handleLogout}
+        onDeleteAccount={handleDeleteAccount}
       />
     </>
   );

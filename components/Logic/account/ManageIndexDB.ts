@@ -1,4 +1,4 @@
-import { openDB } from "idb";
+import { openDB, deleteDB } from "idb";
 
 export const updateIVStore = async (iv: ArrayBuffer) => {
   // check for compatibility
@@ -43,6 +43,14 @@ export const getIVStore = async () => {
   const db = await openDB("IVStore", 2);
   const res = await db.get("iv", "iv_buffer");
   return res;
+};
+
+export const deleteStore = async () => {
+  if (!checkIndexDBCompatible) {
+    return true;
+  }
+  await deleteDB("IVStore");
+  return true;
 };
 
 const checkIndexDBCompatible = () => {

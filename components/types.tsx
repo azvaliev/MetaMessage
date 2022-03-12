@@ -1,4 +1,5 @@
 import * as web3 from "@solana/web3.js";
+import { MouseEventHandler } from "react";
 
 export interface Props {
   keypair: web3.Keypair;
@@ -13,6 +14,8 @@ export interface Props {
   setCurrentRecipient: Function;
   onSetPassword: Function;
   onSignIn: Function;
+  onLogout: MouseEventHandler;
+  onDeleteAccount: MouseEventHandler;
 }
 
 export interface MessageObj {

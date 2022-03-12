@@ -37,6 +37,7 @@ const PasswordField = (props: Props) => {
       <input
         type="password"
         placeholder={props.mobile ? "password" : "Create a password"}
+        autoFocus={!props.mobile}
         value={props.password}
         onChange={props.setPassword}
         className={`text-xl mt-6 px-2 w-full bg-black border-gray-600 border-[0.2px] ${

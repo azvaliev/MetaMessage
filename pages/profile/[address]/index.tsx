@@ -17,17 +17,23 @@ export default function Profile(props: Props) {
   const { address } = router.query;
 
   const [displayAddress, setDisplayAddress] = useState("");
+  const [fullAddress, setFullAddress] = useState("");
 
   const handleCopyAddress = () => {
     copy(address.toString());
   };
 
   useEffect(() => {
-    let key = props.pubkey.toString();
-    if (typeof key === "string") {
-      setDisplayAddress(ShortenPubkey(key, false, true));
-    } else {
-      setDisplayAddress("loading...");
+    try {
+      let key = props.pubkey.toString();
+      if (typeof key === "string") {
+        setDisplayAddress(ShortenPubkey(key, false, true));
+        setFullAddress(key);
+      } else {
+        setDisplayAddress("loading...");
+      }
+    } catch (err) {
+      router.push("/");
     }
   }, [props.pubkey]);
 
@@ -37,43 +43,34 @@ export default function Profile(props: Props) {
   };
 
   return (
-    <div className="flex flex-col text-white overflow-x-hidden mx-4 md:mx-32 lg:mx-42">
-      <div className=" h-fit py-4 border-b-2  border-gray-300 flex flex-row">
-        <AddressHolder
-          className={`
-            
-          text-3xl lg:text-3xl font-bold`}
-          id="home"
-        >
+    <div className="flex flex-col text-white overflow-x-hidden mx-4 md:w-2/3 md:mx-auto lg:w-1/2">
+      <div className=" h-fit pt-4 pb-2 border-b-[1px] border-gray-300 flex flex-row">
+        <AddressHolder className={`text-3xl lg:text-3xl font-bold`} id="home">
           {displayAddress}
         </AddressHolder>
-        <div className="relative h-full w-fit ml-auto mr-0 -mt-4 md:-mt-8 text-6xl lg:text-7xl text-blue-600 ">
+        <div className="relative h-full w-fit ml-auto mr-0 -mt-4 md:-mt-8 lg:-mt-6 text-6xl lg:text-7xl text-blue-600 ">
           <Link href="/">&#x2715;</Link>
         </div>
       </div>
       <h2 className="pt-6 mx-2 text-center text-2xl">
-        Looking to connect with others? Ask them to scan this QR code on their
-        Meta Message app
-      </h2>
-      <QRCode
-        className="mx-auto mt-6 border-1 border-gray-300"
-        size={props.mobile ? 200 : 256}
-        bgColor="#2563EB"
-        value={props.pubkey.toString()}
-      />
-      <h3 className="text-2xl text-center pt-6 pb-4 border-b-2 ">
-        Or.. tap{" "}
+        {"Tap "}
         <span
           className="text-blue-500 underline font-bold hover:cursor-pointer"
           onClick={handleCopyAddress}
         >
           here
-        </span>{" "}
-        to copy your address
-      </h3>
+        </span>
+        {" or scan below to copy your address"}
+      </h2>
+      <QRCode
+        className="mx-auto my-6 border-1 border-gray-300"
+        size={props.mobile ? 200 : 256}
+        bgColor="#2563EB"
+        value={fullAddress}
+      />
       {props.mobile && (
         <>
-          <div className="flex flex-row h-25vh pt-4">
+          <div className="flex flex-row h-25vh pt-4 border-t-[0.5px] border-white">
             <h2 className="text-2xl md:text-3xl text-left ml-2 w-3/4 mt-4">
               Add Meta Message to your homescreen
             </h2>
@@ -94,6 +91,27 @@ export default function Profile(props: Props) {
           </button>
         </>
       )}
+      <h2 className="text-3xl pt-4 mt-8 border-t-[0.5px] underline border-white text-center">
+        Manage Account
+      </h2>
+      <div className="flex flex-row py-4 pb-6 border-b-[0.5px] border-white decoration-1">
+        <h5
+          onClick={props.onDeleteAccount}
+          className={`text-red-500 text-2xl underline mr-3 ml-auto text-center ${
+            props.mobile ? "font-light" : "font-extralight"
+          }`}
+        >
+          Delete Account
+        </h5>
+        <h5
+          onClick={props.onLogout}
+          className={`text-red-500 text-2xl underline ml-3 mr-auto ${
+            props.mobile ? "font-light" : "font-extralight"
+          }`}
+        >
+          Log Out
+        </h5>
+      </div>
     </div>
   );
 }

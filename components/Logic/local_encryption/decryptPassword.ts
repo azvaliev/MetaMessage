@@ -4,10 +4,9 @@ const {
   randomBytes,
   createCipheriv,
 } = require("crypto");
-import { Keypair } from "@solana/web3.js";
 import RestoreKeypair from "../keypair/RestoreKeypair";
 import { toArrayBuffer, toBuffer } from "./BufferConv";
-import { getIVStore, updateIVStore } from "./ManageIndexDB";
+import { getIVStore, updateIVStore } from "../account/ManageIndexDB";
 
 const decryptPassword = async (password: string) => {
   const encryptedKeypair = localStorage.getItem("keypair");
