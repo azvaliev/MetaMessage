@@ -125,10 +125,6 @@ filter: brightness(0%);
 .paint-it-white {
 filter: brightness(0%) invert(1);
 }
-.text-35xl {
-font-size: 2rem; 
-line-height: 2.5rem;
-}
 
 .imgholder:after {
   position: absolute;
@@ -163,6 +159,11 @@ scrollbar-color: dark !important;
   }
   ::-webkit-scrollbar {
 	  display: none;
+  }
+  .btn-disabled {
+	  border: 1px solid #999999;
+		background-color: #cccccc;
+		color: #666666;
   }
 @media (min-width: 450px) {
 	.closeConvBtn {

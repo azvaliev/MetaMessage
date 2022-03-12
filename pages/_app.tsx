@@ -1,79 +1,80 @@
 import "../styles/globals.css";
 import Head from "next/head";
 import { useState, useEffect } from "react";
-import * as solanaWeb3 from "@solana/web3.js";
-import GenerateKeypair from "../components/Logic/GenerateKeypair";
 import GetConversations from "../components/Logic/GetConversations";
 import { useRouter } from "next/router";
 import IsMobile from "../components/Logic/IsMobile";
 import type { AppProps } from "next/app";
+import encryptStorePassword from "../components/Logic/local_encryption/encryptStorePassword";
+import DeleteAccount from "../components/Logic/account/DeleteAccount";
+import { Keypair, PublicKey } from "@solana/web3.js";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [keypair, setKeypair] = useState(null);
-  const [pubkey, setPubkey] = useState({});
+  const [pubkey, setPubkey] = useState(null);
   const [conversations, setConversations] = useState([]);
   const [mobile, setMobile] = useState(false);
   const [showAppGuide, setShowAppGuide] = useState(false);
   const [currentRecipient, setCurrentRecipient] = useState("");
   const router = useRouter();
 
-  const handleGenerateKeypair = () => {
-    setKeypair(GenerateKeypair());
-    setTimeout(() => {
-      router.reload();
-    }, 100);
+  useEffect(() => {
+    // Check if keypair has been retrieved succesfully before
+    // atttempting to get messages
+    if (keypair !== null) {
+      if (keypair.length < 1) {
+        router.push("/welcome");
+      } else {
+        setTimeout(async () => {
+          setConversations(await GetConversations(keypair));
+        }, 5);
+        // TODO move this with the above
+        let check = setInterval(async () => {
+          try {
+            setConversations(await GetConversations(keypair));
+          } catch (err) {
+            console.error(err);
+          }
+        }, 5000);
+
+        () => {
+          clearInterval(check);
+        };
+      }
+    }
+  }, [keypair]);
+
+  const handleSignIn = (kp: Keypair, pk: PublicKey) => {
+    setKeypair(kp);
+    setPubkey(pk);
+    router.push("/");
+  };
+
+  const handleLogout = () => {
+    setKeypair(null);
+    setPubkey(null);
+    router.push("/login");
+  };
+  const handleDeleteAccount = async () => {
+    // Send user back to homepage while deleting all data
+    await DeleteAccount();
+    router.push("/welcome");
+
+    setConversations([]);
+    setKeypair("");
+    setPubkey("");
   };
 
   useEffect(() => {
+    // storedData.removeItem("keypair");
+    // For testing purposes
     setMobile(IsMobile());
 
-    const storedData = window.localStorage;
-    // storedData.removeItem('keypair');
-    // For testing purposes
-    const keypairCheck = storedData.getItem("keypair");
+    const keypairCheck = localStorage.getItem("keypair");
     if (keypairCheck) {
-      setKeypair(
-        solanaWeb3.Keypair.fromSecretKey(
-          new Uint8Array(
-            Object.values(JSON.parse(keypairCheck)._keypair.secretKey)
-          )
-        )
-      );
-      setPubkey(
-        new solanaWeb3.PublicKey(
-          Object.values(JSON.parse(keypairCheck)._keypair.publicKey)
-        )
-      );
-      setTimeout(async () => {
-        setConversations(
-          await GetConversations(
-            solanaWeb3.Keypair.fromSecretKey(
-              new Uint8Array(
-                Object.values(JSON.parse(keypairCheck)._keypair.secretKey)
-              )
-            )
-          )
-        );
-      }, 5);
-      let check = setInterval(async () => {
-        try {
-          setConversations(
-            await GetConversations(
-              solanaWeb3.Keypair.fromSecretKey(
-                new Uint8Array(
-                  Object.values(JSON.parse(keypairCheck)._keypair.secretKey)
-                )
-              )
-            )
-          );
-        } catch (err) {
-          console.error(err);
-        }
-      }, 5000);
-
-      () => {
-        clearInterval(check);
-      };
+      router.push("/login");
+    } else {
+      router.push("/welcome");
     }
   }, []);
 
@@ -85,8 +86,15 @@ function MyApp({ Component, pageProps }: AppProps) {
     setShowAppGuide(!showAppGuide);
   };
 
-  const handleSetRecipient = (recipient) => {
+  const handleSetRecipient = (recipient: string) => {
     setCurrentRecipient(recipient);
+  };
+
+  const handleSetPassword = async (password: string) => {
+    const [tempKey, tempPubkey] = await encryptStorePassword(password);
+    setKeypair(tempKey);
+    setPubkey(tempPubkey);
+    router.push("/");
   };
 
   return (
@@ -126,7 +134,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <Component
         {...pageProps}
-        onGenerateKeypair={handleGenerateKeypair}
         keypair={keypair}
         pubkey={pubkey}
         conversations={conversations}
@@ -136,6 +143,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         onShowAppGuide={handleShowAddAppGuide}
         currentRecipient={currentRecipient}
         setCurrentRecipient={handleSetRecipient}
+        onSetPassword={handleSetPassword}
+        onSignIn={handleSignIn}
+        onLogout={handleLogout}
+        onDeleteAccount={handleDeleteAccount}
       />
     </>
   );

@@ -8,13 +8,14 @@ import { Props, MessageObj } from "../../../components/types";
 import { ShortenPubkey } from "../../../components/UI/Shorten";
 import copy from "copy-to-clipboard";
 import CheckSendMessage from "../../../components/Logic/CheckSendMessage";
+import IsMobile from "../../../components/Logic/IsMobile";
 
 export default function Conversation(props: Props) {
   const router = useRouter();
   const { address } = router.query;
   const [activeConversation, setActiveConversation] = useState([]);
   const [messageContents, setMessageContents] = useState("");
-  const [height, setHeight] = useState("80vh");
+  const [height, setHeight] = useState("79vh");
   const [theAlertMessage, setTheAlertMessage] = useState({
     message: "",
     warning: true,
@@ -26,9 +27,10 @@ export default function Conversation(props: Props) {
   useEffect(() => {
     // Handle error if prior conversations do not exist
     try {
+      console.log(props.conversations);
       props.conversations.forEach((conversation: Array<MessageObj>) => {
         conversation.forEach((message: MessageObj) => {
-          if (message.from === address) {
+          if (message.to === address || message.from === address) {
             setActiveConversation(conversation);
             setDisplayAddress(ShortenPubkey(message.from, false, props.mobile));
           }
@@ -46,25 +48,38 @@ export default function Conversation(props: Props) {
     };
   }, [props.conversations]);
 
-  useEffect(() => {
+  const heightCheck = () => {
     if (props.mobile) {
       setHeight("87vh");
     } else {
-      setHeight("80vh");
+      setHeight("79vh");
     }
+  };
+
+  useEffect(() => {
+    heightCheck();
     scrollRef.current.scrollToEnd({ animated: false });
     setTimeout(() => {
+      IsMobile() ? setHeight("79vh") : setHeight("87vh");
       scrollRef.current.scrollToEnd({ animated: false });
-    }, 50);
+    }, 30);
   }, []);
 
   async function handleSendMessage() {
+    sendAlert("Sending...", false);
+    setMessageContents("");
     let result = await CheckSendMessage(
       messageContents,
       address.toString(),
       props.keypair
     );
-    sendAlert(result[0], result[1]);
+    if (result[1]) {
+      sendAlert(result[0], result[1]);
+    }
+    await props.onUpdateNeeded();
+    setTimeout(() => {
+      scrollRef.current.scrollToEnd({ animated: false });
+    }, 5);
   }
   const handleTypingMessage = (e) => {
     setMessageContents(e.target.value);

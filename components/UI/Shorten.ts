@@ -1,10 +1,12 @@
 const ShortenPubkey = (key: string, intro: boolean, mobile: boolean) => {
+  let subLen: number;
+  mobile ? (subLen = 10) : (subLen = 12);
   if (intro) {
     return `Welcome back, ${
-      key.substring(0, 12) + "..." + key.substring(key.length - 6)
+      key.substring(0, subLen) + "..." + key.substring(key.length - 6)
     }`;
   } else {
-    return key.substring(0, 12) + "..." + key.substring(key.length - 6);
+    return key.substring(0, subLen) + "..." + key.substring(key.length - 6);
   }
 };
 
