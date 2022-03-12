@@ -26,6 +26,7 @@ export default function Conversation(props: Props) {
   useEffect(() => {
     // Handle error if prior conversations do not exist
     try {
+      console.log(props.conversations);
       props.conversations.forEach((conversation: Array<MessageObj>) => {
         conversation.forEach((message: MessageObj) => {
           if (message.from === address) {

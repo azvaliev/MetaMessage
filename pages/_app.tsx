@@ -22,21 +22,25 @@ function MyApp({ Component, pageProps }: AppProps) {
     // Check if keypair has been retrieved succesfully before
     // atttempting to get messages
     if (keypair !== null) {
-      setTimeout(async () => {
-        setConversations(await GetConversations(keypair));
-      }, 5);
-      // TODO move this with the above
-      let check = setInterval(async () => {
-        try {
+      if (keypair.length < 1) {
+        router.push("/welcome");
+      } else {
+        setTimeout(async () => {
           setConversations(await GetConversations(keypair));
-        } catch (err) {
-          console.error(err);
-        }
-      }, 5000);
+        }, 5);
+        // TODO move this with the above
+        let check = setInterval(async () => {
+          try {
+            setConversations(await GetConversations(keypair));
+          } catch (err) {
+            console.error(err);
+          }
+        }, 6000);
 
-      () => {
-        clearInterval(check);
-      };
+        () => {
+          clearInterval(check);
+        };
+      }
     }
   }, [keypair]);
 
@@ -53,10 +57,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
   const handleDeleteAccount = async () => {
     // Send user back to homepage while deleting all data
-    router.push("/welcome");
     await DeleteAccount();
-    setKeypair(null);
-    setPubkey(null);
+    router.push("/welcome");
+
+    setKeypair("");
+    setPubkey("");
   };
 
   useEffect(() => {
