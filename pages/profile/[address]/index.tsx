@@ -63,7 +63,7 @@ export default function Profile(props: Props) {
         {" or scan below to copy your address"}
       </h2>
       <QRCode
-        className="mx-auto my-6 border-1 border-gray-300"
+        className="mx-auto my-6 border-[0.8px] border-gray-700"
         size={props.mobile ? 200 : 256}
         bgColor="#2563EB"
         value={fullAddress}
