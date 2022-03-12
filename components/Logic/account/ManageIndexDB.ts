@@ -5,7 +5,11 @@ export const updateIVStore = async (iv: ArrayBuffer) => {
   if (!checkIndexDBCompatible) {
     return false;
   }
-  const db = await openDB("IVStore", 2);
+  const db = await openDB("IVStore", 2.1, {
+    upgrade(db) {
+      db.createObjectStore("iv");
+    },
+  });
   return db
     .put("iv", iv, "iv_buffer")
     .then(() => true)
@@ -19,7 +23,7 @@ export const createIVStore = async (iv: ArrayBuffer) => {
   }
   // upgrade function will get triggered on first attempt
   // which will create the collection to store IV
-  const db = await openDB("IVStore", 2, {
+  const db = await openDB("IVStore", 2.1, {
     upgrade(db) {
       db.createObjectStore("iv");
     },
@@ -40,7 +44,7 @@ export const getIVStore = async () => {
   if (!checkIndexDBCompatible) {
     return false;
   }
-  const db = await openDB("IVStore", 2);
+  const db = await openDB("IVStore", 2.1);
   const res = await db.get("iv", "iv_buffer");
   return res;
 };
