@@ -1,12 +1,12 @@
 import "../styles/globals.css";
 import Head from "next/head";
 import { useState, useEffect } from "react";
-import GetConversations from "../components/logic/messaging/incoming/GetConversations";
+import GetConversations from "../components/Logic/messaging/incoming/GetConversations";
 import { useRouter } from "next/router";
-import IsMobile from "../components/logic/IsMobile";
+import IsMobile from "../components/Logic/IsMobile";
 import type { AppProps } from "next/app";
-import encryptStorePassword from "../components/logic/local_encryption/encryptStorePassword";
-import DeleteAccount from "../components/logic/account/DeleteAccount";
+import encryptStorePassword from "../components/Logic/local_encryption/encryptStorePassword";
+import DeleteAccount from "../components/Logic/account/DeleteAccount";
 import { Keypair, PublicKey } from "@solana/web3.js";
 
 function MyApp({ Component, pageProps }: AppProps) {

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { ShortenPubkey, ShortenMessage } from "../components/UI/Shorten";
-import { CompareDates } from "../components/logic/CreateFormatDate";
+import { CompareDates } from "../components/Logic/CreateFormatDate";
 import { Props, MessageObj } from "../components/types";
 import FloatOptionBar from "../components/UI/option_bar/FloatOptionBar";
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ComposeMessageField from "../components/UI/conversation/ComposeMessageField";
 import AlertMessage from "../components/UI/AlertMessage";
 import { Props } from "../components/types";
-import CheckSendMessage from "../components/logic/messaging/outgoing/CheckSendMessage";
+import CheckSendMessage from "../components/Logic/messaging/outgoing/CheckSendMessage";
 import { useRouter } from "next/router";
 
 const Compose = (props: Props) => {

@@ -7,8 +7,8 @@ import AlertMessage from "../../../components/UI/AlertMessage";
 import { Props, MessageObj } from "../../../components/types";
 import { ShortenPubkey } from "../../../components/UI/Shorten";
 import copy from "copy-to-clipboard";
-import CheckSendMessage from "../../../components/logic/messaging/outgoing/CheckSendMessage";
-import IsMobile from "../../../components/logic/IsMobile";
+import CheckSendMessage from "../../../components/Logic/messaging/outgoing/CheckSendMessage";
+import IsMobile from "../../../components/Logic/IsMobile";
 import { CloseConvBtn } from "../../../components/UI/option_bar/StyledOptionBar";
 
 export default function Conversation(props: Props) {
