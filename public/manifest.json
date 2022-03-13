@@ -1,0 +1,21 @@
+{ 
+
+    "name": "Meta Message", 
+  
+    "short_name": "Meta Message", 
+  
+    "start_url": "https://master.d1njpqck0kce9f.amplifyapp.com", 
+  
+    "display": "standalone", 
+  
+    "icons": [{ 
+  
+      "src": "/icon/logo196.png", 
+  
+      "sizes": "196x196", 
+  
+      "type": "image/png" 
+  
+    }] 
+  
+  }
