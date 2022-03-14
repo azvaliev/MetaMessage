@@ -30,12 +30,10 @@ export default function Conversation(props: Props) {
     try {
       console.log(props.conversations);
       props.conversations.forEach((conversation: Array<MessageObj>) => {
-        conversation.forEach((message: MessageObj) => {
-          if (message.to === address || message.from === address) {
+          if (conversation[0].to === address || conversation[0].from === address) {
             setActiveConversation(conversation);
-            setDisplayAddress(ShortenPubkey(message.from, false, props.mobile));
+            setDisplayAddress(ShortenPubkey(address, false, props.mobile));
           }
-        });
       });
     } catch {
       setDisplayAddress(ShortenPubkey(address.toString(), false, props.mobile));
