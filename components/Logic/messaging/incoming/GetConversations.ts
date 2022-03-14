@@ -5,11 +5,11 @@ async function GetConversations(wallet: Keypair) {
   let incoming = await CheckMessages(wallet);
   if (incoming[0] != "N/A") {
     incoming.forEach((conversation) => {
-      if (localStorage.getItem(conversation[0].from.toString()) !== null) {
-        conversation.push(
-          ...JSON.parse(localStorage.getItem(conversation[0].from.toString()))
-        );
-      }
+      // if (localStorage.getItem(conversation[0].from.toString()) !== null) {
+      //   conversation.push(
+      //     ...JSON.parse(localStorage.getItem(conversation[0].from.toString()))
+      //   );
+      // }
 
       conversation.sort((a, b) => {
         let a_ms = new Date(a.date).getTime();

@@ -1,94 +1,63 @@
 import * as web3 from "@solana/web3.js";
+import * as splToken from "@solana/spl-token";
 
 export default async function CheckMessages(wallet: web3.Keypair) {
-  // Connect to Devnet Cluster
-  const connection = new web3.Connection(
-    web3.clusterApiUrl("devnet"),
-    "confirmed"
-  );
-  const pubkey = new web3.PublicKey(wallet.publicKey);
+	// Connect to Devnet Cluster
+	const connection = new web3.Connection(
+		web3.clusterApiUrl("devnet"),
+		"confirmed"
+	);
+	const pubkey = new web3.PublicKey(wallet.publicKey);
 
-  let messages = [];
+	// get recent transactions
+	const recents = await connection.getConfirmedSignaturesForAddress2(
+		pubkey,
+		{},
+		"confirmed"
+	);
 
-  // const accInfo = await connection.getAccountInfo(pubkey)
-  // .catch(err => {
-  //     console.error(err);
-  // });
+	let messages = []
 
-  const recents = await connection.getConfirmedSignaturesForAddress2(
-    pubkey,
-    {},
-    "confirmed"
-  );
+	
+	// Get message ID's, sender information 
+	recents.forEach(async (transaction) => {
+		const parsedTransaction = await connection.getParsedTransaction(transaction.signature)
+		const details = parsedTransaction.transaction.message.instructions[0].parsed.info;
+		// console.log(parsedTransaction.meta.innerInstructions);
+		const innerInstructions = parsedTransaction.meta.innerInstructions[0].instructions[0].parsed.info;
+		const sender = new web3.PublicKey(details.source);
+		const reciever = new web3.PublicKey(details.wallet);
+		const mint = new web3.PublicKey(details.mint);
+		const tokenAccount = new web3.PublicKey(innerInstructions.destination);
+		const senderTokenAccount = new web3.PublicKey(innerInstructions.source);
 
-  // Get messages and transaction signatures
-  recents.forEach((transaction) => {
-    if (transaction.memo != null) {
-      let txDate: Date;
-      try {
-        txDate = new Date(
-          transaction.memo.slice(transaction.memo.indexOf("||") + 2)
-        );
-      } catch {
-        txDate = new Date();
-      }
+		// an alternate way of getting some of this information
+		// const tokenAccount = details.account;
+		// let senderTokenAccount: web3.PublicKey;
+		// console.log(parsedTransaction)
+		// parsedTransaction.transaction.message.accountKeys.forEach((account) => {
+		// 	if (account.signer && account.writable) {
+		// 		senderTokenAccount = account.pubkey;
+		// 	}
+		// })
 
-      messages.push({
-        message: transaction.memo.slice(
-          transaction.memo.indexOf("] ") + 2,
-          transaction.memo.indexOf("||")
-        ),
-        date: txDate,
-        signature: transaction.signature,
-      });
-    }
-  });
+		if (sender != wallet.publicKey) {
+			// Messages sent from user will be encrypted in localstorage until
+			// read signal is recieved
+			const accDetail = await splToken.getAccount(connection, tokenAccount);
+			const balance = Number(accDetail.amount );
+			if (balance > 0) {
+				messages.push({
+					'sender': sender,
+					'reciever': reciever,
+					'tokenAccount': tokenAccount,
+					'senderTokenAccount': senderTokenAccount,
+					'messageID': mint
+				})
+			}
+		}
 
-  let cleanedMessages = [];
+	});
 
-  // Figure out who sent the messages
-  for (let i = 0; i < messages.length; i++) {
-    let details = await connection.getParsedTransaction(messages[i].signature);
-    let detailsList = details.transaction.message.accountKeys;
-    let message_from: string;
-    let message_to: string;
-
-    detailsList.forEach((detail) => {
-      if (detail.signer) {
-        // Signer can only be one individual, who initiated the transaction
-        message_from = detail.pubkey.toString();
-      } else if (detail.writable) {
-        // Those who have writing but not signing privleges were designated to be on recieving end
-        message_to = detail.pubkey.toString();
-      }
-    });
-    cleanedMessages.push({
-      ...messages[i],
-      from: message_from,
-      to: message_to,
-    });
-  }
-
-  let parsedMessages = [];
-
-  cleanedMessages.forEach((message) => {
-    let pushed = false;
-    parsedMessages.forEach((conversation) => {
-      if (
-        conversation[0].from == message.from ||
-        conversation[0].to == message.to
-      ) {
-        conversation.push(message);
-        pushed = true;
-      }
-    });
-    if (pushed == false) {
-      parsedMessages.push([message]);
-    }
-  });
-  if (parsedMessages.length < 1) {
-    parsedMessages = ["N/A"];
-  }
-
-  return parsedMessages;
+	return messages;
 }
