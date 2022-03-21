@@ -53,7 +53,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   const handleLogout = () => {
     setKeypair(null);
     setPubkey(null);
-    router.push("/login");
+    setTimeout(() => {
+      router.push("/login");
+    }, 50)
   };
   const handleDeleteAccount = async () => {
     // Send user back to homepage while deleting all data
@@ -69,14 +71,16 @@ function MyApp({ Component, pageProps }: AppProps) {
     // storedData.removeItem("keypair");
     // For testing purposes
     setMobile(IsMobile());
+  }, []);
 
+  const handleSendToLoginSignup = () => {
     const keypairCheck = localStorage.getItem("keypair");
     if (keypairCheck) {
       router.push("/login");
     } else {
       router.push("/welcome");
     }
-  }, []);
+  };
 
   const handleRefreshConversation = async () => {
     setConversations(await GetConversations(keypair));
@@ -150,6 +154,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         onSignIn={handleSignIn}
         onLogout={handleLogout}
         onDeleteAccount={handleDeleteAccount}
+        onSendToLoginSignup={handleSendToLoginSignup}
       />
     </>
   );

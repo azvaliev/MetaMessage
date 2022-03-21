@@ -29,6 +29,7 @@ const Login = (props: Props) => {
       <h1 className="text-5xl mt-8 mx-auto">Welcome</h1>
       <input
         type="password"
+        name="password"
         placeholder={
           props.mobile ? "enter your password" : "Enter your password"
         }

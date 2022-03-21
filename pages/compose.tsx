@@ -23,7 +23,7 @@ const Compose = (props: Props) => {
 		let result = await CheckSendMessage(message, recipient, props.keypair);
 		await props.onUpdateNeeded();
 		if (!result.warning) {
-			router.push("/");
+			router.push("/conversation/[address]", `/conversation/${recipient}`);
 		} else {
 			sendAlert(result.alertMsg, result.warning);
 		}

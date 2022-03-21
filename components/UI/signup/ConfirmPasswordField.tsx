@@ -34,6 +34,7 @@ const ConfirmPasswordField = (props: Props) => {
     <>
       <input
         type="password"
+        name="confirmPassword"
         placeholder={props.mobile ? "confirm password" : "Confirm password"}
         value={props.confirmPassword}
         onChange={props.setConfirmPassword}

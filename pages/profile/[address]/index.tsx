@@ -93,13 +93,13 @@ export default function Profile(props: Props) {
       )}
       <div className="flex flex-row py-4 pb-6 border-b-[0.5px] border-white decoration-[0.7px]">
         <h5
-          onClick={props.onDeleteAccount}
+          onClick={props.onDeleteAccount} id="deleteAccount"
           className={`text-red-500 text-2xl md:text-3xl underline mr-3 ml-auto text-center font-light`}
         >
           Delete Account
         </h5>
         <h5
-          onClick={props.onLogout}
+          onClick={props.onLogout} id="logout"
           className={`text-red-500 text-2xl md:text-3xl underline ml-3 mr-auto font-light`}
         >
           Log Out
