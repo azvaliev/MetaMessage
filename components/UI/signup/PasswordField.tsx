@@ -41,9 +41,7 @@ const PasswordField = (props: Props) => {
         autoFocus={!props.mobile}
         value={props.password}
         onChange={props.setPassword}
-        className={`text-xl mt-6 px-2 w-full bg-black border-gray-600 border-[0.2px] ${
-          props.mobile ? "text-center py-2" : "text-left py-1"
-        } outline-none`}
+        className={`text-xl mt-6 px-2 w-full bg-black border-gray-600 border-[0.2px] text-center py-2 md:text-left md:py-1 outline-none`}
         maxLength={20}
       />
       <PasswordBarIndicator score={strengthScore} />

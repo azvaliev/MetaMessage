@@ -11,7 +11,6 @@ import { Keypair, PublicKey } from "@solana/web3.js";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [keypair, setKeypair] = useState(null);
-  const [pubkey, setPubkey] = useState(null);
   const [conversations, setConversations] = useState([]);
   const [mobile, setMobile] = useState(false);
   const [showAppGuide, setShowAppGuide] = useState(false);
@@ -49,13 +48,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const handleSignIn = (kp: Keypair, pk: PublicKey) => {
     setKeypair(kp);
-    setPubkey(pk);
     router.push("/");
   };
 
   const handleLogout = () => {
     setKeypair(null);
-    setPubkey(null);
     setTimeout(() => {
       router.push("/login");
     }, 50)
@@ -67,7 +64,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     setConversations([]);
     setKeypair("");
-    setPubkey("");
   };
 
   useEffect(() => {
@@ -100,7 +96,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   const handleSetPassword = async (password: string) => {
     const [tempKey, tempPubkey] = await encryptStorePassword(password);
     setKeypair(tempKey);
-    setPubkey(tempPubkey);
     router.push("/");
   };
 
@@ -145,7 +140,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Component
         {...pageProps}
         keypair={keypair}
-        pubkey={pubkey}
         conversations={conversations}
         mobile={mobile}
         onUpdateNeeded={handleRefreshConversation}

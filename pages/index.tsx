@@ -17,13 +17,12 @@ export default function Home(props: Props) {
 		<div className="w-full flex flex-col max-h-screen bg-smoke text-white lg:w-[65%] mx-auto">
 			<div className="flex flex-row px-2 py-4 border-b-2 border-gray-300 h-fit">
 				<h1 className="mx-auto my-auto text-3xl lg:text-35xl" id="home">
-					{/* onClick={() => handleCopyAddress(props.pubkey.toString())}> */}
-					{props.pubkey != null && (
+					{props.keypair !== null && (
 						<Link
 							href="/profile/[address]"
-							as={`/profile/${props.pubkey.toString()}`}
+							as={`/profile/${props.keypair.publicKey.toString()}`}
 						>
-							{ShortenPubkey(props.pubkey.toString(), true, props.mobile)}
+							{ShortenPubkey(props.keypair.publicKey.toString(), true)}
 						</Link>
 					)}
 				</h1>
@@ -43,7 +42,7 @@ export default function Home(props: Props) {
 						let recipient = null;
 						conversation.forEach((message) => {
 							if (
-								message.sender !== props.pubkey &&
+								message.sender !== props.keypair.publicKey &&
 								message.sender !== undefined
 							) {
 								recipient = message.sender;
@@ -62,12 +61,12 @@ export default function Home(props: Props) {
 									<div className="flex flex-col w-full px-2 pt-4 pb-2 border-b-2 border-gray-700">
 										<div className="flex flex-row">
 											<h3 className="ml-0 mr-auto text-2xl">
-												{ShortenPubkey(recipient.toString(), false, props.mobile)}
+												{ShortenPubkey(recipient.toString(), false)}
 											</h3>
 										</div>
 										<h4 className="pt-2 text-xl italic text-left text-gray-400 md:pt-4">
 											{conversation[conversation.length - 1].sender !==
-												props.pubkey
+												props.keypair.publicKey
 												? "New Message"
 												: "Delivered"}
 										</h4>
@@ -79,7 +78,7 @@ export default function Home(props: Props) {
 				</div>
 			)}
 
-			{props.keypair !== null && <FloatOptionBar pubkey={props.pubkey} />}
+			{props.keypair !== null && <FloatOptionBar pubkey={props.keypair.publicKey} />}
 		</div>
 	);
 }

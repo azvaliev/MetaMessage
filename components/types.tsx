@@ -3,7 +3,6 @@ import {MouseEventHandler} from "react";
 
 export interface Props {
 	keypair: Keypair;
-	pubkey: PublicKey;
 	conversations: any;
 	mobile: boolean;
 	activeConversation: Object;

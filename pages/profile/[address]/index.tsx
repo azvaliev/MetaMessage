@@ -25,7 +25,7 @@ export default function Profile(props: Props) {
 
   useEffect(() => {
     try {
-      let key = props.pubkey.toString();
+      let key = props.keypair.publicKey.toString();
       if (typeof key === "string") {
         setDisplayAddress(ShortenPubkey(key, false, true));
         setFullAddress(key);
@@ -35,7 +35,7 @@ export default function Profile(props: Props) {
     } catch (err) {
       router.push("/");
     }
-  }, [props.pubkey]);
+  }, [props.keypair]);
 
   const displayAddAppGuide = () => {
     props.onShowAppGuide();
