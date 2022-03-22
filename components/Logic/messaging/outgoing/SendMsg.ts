@@ -1,4 +1,4 @@
-import PostMessage from "./PostMessage";
+import postMessage from "./postMessage";
 import * as splToken from "@solana/spl-token";
 
 import * as web3 from "@solana/web3.js";
@@ -83,7 +83,7 @@ export default async function SendMsg(
 		// Mint address for use in DB
 		console.error(mintInfo.address.toString());
 		const mintID = mintInfo.address.toString();
-		const res = await PostMessage(mintID, message);
+		const res = await postMessage(mintID, message);
 		return res.ok ? "success" : "badkey";
 	} catch (err) {
 		console.error(err);

@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import ComposeMessageField from "../components/UI/conversation/ComposeMessageField";
 import AlertMessage from "../components/UI/AlertMessage";
 import {Props} from "../components/types";
-import CheckSendMessage from "../components/Logic/messaging/outgoing/CheckSendMessage";
+import checkSendMessage from "../components/Logic/messaging/outgoing/checkSendMessage";
 import {useRouter} from "next/router";
 
 const Compose = (props: Props) => {
@@ -20,8 +20,7 @@ const Compose = (props: Props) => {
 	async function handleSendMessage() {
 		setMessage("");
 		sendAlert("Sending...", false);
-		let result = await CheckSendMessage(message, recipient, props.keypair);
-		await props.onUpdateNeeded();
+		let result = await checkSendMessage(message, recipient, props.keypair);
 		if (!result.warning) {
 			router.push("/conversation/[address]", `/conversation/${recipient}`);
 		} else {

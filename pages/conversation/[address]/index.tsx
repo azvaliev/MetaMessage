@@ -7,10 +7,11 @@ import AlertMessage from "../../../components/UI/AlertMessage";
 import { Props, MessageObj } from "../../../components/types";
 import { ShortenPubkey } from "../../../components/UI/Shorten";
 import copy from "copy-to-clipboard";
-import CheckSendMessage from "../../../components/Logic/messaging/outgoing/CheckSendMessage";
+import checkSendMessage from "../../../components/Logic/messaging/outgoing/checkSendMessage";
 import IsMobile from "../../../components/Logic/IsMobile";
 import { CloseConvBtn } from "../../../components/UI/option_bar/StyledOptionBar";
-import GetMessage from "../../../components/Logic/messaging/incoming/GetMessage";
+import getMessage from "../../../components/Logic/messaging/incoming/getMessage";
+import handleRedirect from "../../../components/Logic/account/HandleRedirect";
 
 export default function Conversation(props: Props) {
   const router = useRouter();
@@ -27,10 +28,9 @@ export default function Conversation(props: Props) {
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    
     // Send user to login/signup if no keypair
 		if (props.keypair === null) {
-			props.onSendToLoginSignup();
+      router.push(handleRedirect());
 		}
 
     // Handle error if prior conversations do not exist
@@ -45,7 +45,7 @@ export default function Conversation(props: Props) {
       
 
       Promise.all(activeConvCopy.map(async (message: MessageObj) => {
-        return await GetMessage(message.messageID.toString())
+        return await getMessage(message.messageID.toString())
       }))
       .then((res) => {
         setActiveConversation(() => {
@@ -90,7 +90,7 @@ export default function Conversation(props: Props) {
   async function handleSendMessage() {
     sendAlert("Sending...", false);
     setMessageContents("");
-    let result = await CheckSendMessage(
+    let result = await checkSendMessage(
       messageContents,
       address.toString(),
       props.keypair
@@ -98,7 +98,6 @@ export default function Conversation(props: Props) {
     if (result.warning) {
       sendAlert(result.alertMsg, result.warning);
     }
-    await props.onUpdateNeeded();
     setTimeout(() => {
       scrollRef.current.scrollToEnd({ animated: false });
     }, 5);

@@ -1,12 +1,12 @@
-import GenerateKeypair from "../keypair/GenerateKeypair";
-import { toArrayBuffer } from "./BufferConv";
-import { createIVStore } from "../account/ManageIndexDB";
+import generateKeypair from "../keypair/generateKeypair";
+import { toArrayBuffer } from "./bufferConv";
+import { createIVStore } from "../account/manageIndexDB";
 
 const { createCipheriv, randomBytes, createHash } = require("crypto");
 
 const encryptStorePassword = async (password: string) => {
   // This function is for first-time signup
-  const keypair = GenerateKeypair();
+  const keypair = generateKeypair();
   const pubkey = keypair.publicKey;
   const key = createHash("sha256").update(password).digest("hex").substr(0, 32);
   let iv = randomBytes(16);

@@ -1,14 +1,18 @@
 import {useEffect} from "react";
 import Link from "next/link";
-import {ShortenPubkey, ShortenMessage} from "../components/UI/Shorten";
-import {CompareDates} from "../components/Logic/CreateFormatDate";
+import { ShortenPubkey } from "../components/UI/Shorten";
 import {Props, MessageObj} from "../components/types";
 import FloatOptionBar from "../components/UI/option_bar/FloatOptionBar";
+import handleRedirect from "../components/Logic/account/HandleRedirect";
+import { useRouter } from "next/router";
 
 export default function Home(props: Props) {
+
+	const router = useRouter();
+
 	useEffect(() => {
 		if (props.keypair === null) {
-			props.onSendToLoginSignup();
+			router.push(handleRedirect());
 		}
 		window.scrollTo(0, 0);
 	}, []);
@@ -22,7 +26,7 @@ export default function Home(props: Props) {
 							href="/profile/[address]"
 							as={`/profile/${props.keypair.publicKey.toString()}`}
 						>
-							{ShortenPubkey(props.keypair.publicKey.toString(), true)}
+							{ShortenPubkey(props.keypair.publicKey.toString(), true, props.mobile)}
 						</Link>
 					)}
 				</h1>
@@ -61,7 +65,7 @@ export default function Home(props: Props) {
 									<div className="flex flex-col w-full px-2 pt-4 pb-2 border-b-2 border-gray-700">
 										<div className="flex flex-row">
 											<h3 className="ml-0 mr-auto text-2xl">
-												{ShortenPubkey(recipient.toString(), false)}
+												{ShortenPubkey(recipient.toString(), false, props.mobile)}
 											</h3>
 										</div>
 										<h4 className="pt-2 text-xl italic text-left text-gray-400 md:pt-4">

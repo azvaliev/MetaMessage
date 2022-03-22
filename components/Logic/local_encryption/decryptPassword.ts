@@ -4,9 +4,9 @@ const {
   randomBytes,
   createCipheriv,
 } = require("crypto");
-import RestoreKeypair from "../keypair/RestoreKeypair";
-import { toArrayBuffer, toBuffer } from "./BufferConv";
-import { getIVStore, updateIVStore } from "../account/ManageIndexDB";
+import RestoreKeypair from "../keypair/restoreKeypair";
+import { toArrayBuffer, toBuffer } from "./bufferConv";
+import { getIVStore, updateIVStore } from "../account/manageIndexDB";
 
 const decryptPassword = async (password: string) => {
   const encryptedKeypair = localStorage.getItem("keypair");

@@ -1,7 +1,7 @@
 import { Keypair } from "@solana/web3.js";
-import SendMsg from "./SendMsg";
+import sendMsg from "./sendMsg";
 
-export default async function CheckSendMessage(
+export default async function checkSendMessage(
   message: string,
   recipient: string,
   keypair: Keypair
@@ -15,7 +15,7 @@ export default async function CheckSendMessage(
       if (message.length > 300) {
         return { alertMsg: "Please shorten your message", warning: true };
       } else {
-        let result = await SendMsg(message, recipient, keypair);
+        let result = await sendMsg(message, recipient, keypair);
         if (result == "badkey") {
           return {
             alertMsg: "Recipient address is invalid: Please Verify",

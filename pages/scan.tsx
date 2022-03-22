@@ -25,7 +25,6 @@ export default function Scan(props: Props) {
         };
       });
       setTimeout(() => {
-        props.setCurrentRecipient(result?.text);
         router.push("/conversation/[address]", `conversation/${result?.text}`);
       }, 200);
     }

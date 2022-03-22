@@ -38,8 +38,8 @@ export default function Profile(props: Props) {
   }, [props.keypair]);
 
   const displayAddAppGuide = () => {
-    props.onShowAppGuide();
     router.push("/");
+    // Pull up a guide page/component
   };
 
   return (

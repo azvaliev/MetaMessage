@@ -1,7 +1,7 @@
-import { deleteStore } from "./ManageIndexDB";
+import { deleteStore } from "./manageIndexDB";
 
-const DeleteAccount = async () => {
+const deleteAccount = async () => {
   localStorage.clear();
   return await deleteStore();
 };
-export default DeleteAccount;
+export default deleteAccount;

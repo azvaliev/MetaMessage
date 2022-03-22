@@ -1,7 +1,7 @@
 import * as web3 from "@solana/web3.js";
 import * as splToken from "@solana/spl-token";
 
-export default async function CheckMessages(wallet: web3.Keypair) {
+export default async function checkMessages(wallet: web3.Keypair) {
 	// Connect to Devnet Cluster
 	const connection = new web3.Connection(
 		web3.clusterApiUrl("devnet"),

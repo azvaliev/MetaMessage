@@ -6,16 +6,10 @@ export interface Props {
 	conversations: any;
 	mobile: boolean;
 	activeConversation: Object;
-	onUpdateNeeded: Function;
-	showAppGuide: boolean;
-	onShowAppGuide: Function;
-	currentRecipient: string;
-	setCurrentRecipient: Function;
 	onSetPassword: Function;
 	onSignIn: Function;
 	onLogout: MouseEventHandler;
 	onDeleteAccount: MouseEventHandler;
-	onSendToLoginSignup: Function;
 }
 
 export interface MessageObj {
