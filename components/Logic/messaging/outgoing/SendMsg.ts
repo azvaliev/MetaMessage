@@ -40,15 +40,15 @@ export default async function SendMsg(
 		console.error("minted!");
 
 		// Create a new account to hold token
+		// Mint directly to recipient account
 		const associatedTokenAccount =
 			await splToken.getOrCreateAssociatedTokenAccount(
 				connection,
 				wallet,
 				mint,
-				wallet.publicKey
+				recipPubkey
 			);
 
-		console.error("Finding/creating mint account");
 		// Mint one token to account
 		await splToken.mintTo(
 			connection,
@@ -59,25 +59,24 @@ export default async function SendMsg(
 			1
 		);
 
-		console.error("minted!");
+		// // Create a token account for recipient
+		// const toTokenAccount = 
+		// 	await splToken.getOrCreateAssociatedTokenAccount(
+		// 	connection,
+		// 	wallet,
+		// 	mint,
+		// 	recipPubkey
+		// );
 
-		// Create a token account for recipient
-		const toTokenAccount = await splToken.getOrCreateAssociatedTokenAccount(
-			connection,
-			wallet,
-			mint,
-			recipPubkey
-		);
-
-		// Transfer newly minted token to recipient
-		const signature = await splToken.transfer(
-			connection,
-			wallet,
-			associatedTokenAccount.address,
-			toTokenAccount.address,
-			wallet.publicKey,
-			1
-		);
+		// // Transfer newly minted token to recipient
+		// const signature = await splToken.transfer(
+		// 	connection,
+		// 	wallet,
+		// 	associatedTokenAccount.address,
+		// 	toTokenAccount.address,
+		// 	wallet.publicKey,
+		// 	1
+		// );
 		const mintInfo = await splToken.getMint(connection, mint);
 		// Mint creators i.e. sender address
 		console.error(mintInfo.mintAuthority.toString());

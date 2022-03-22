@@ -4,7 +4,7 @@ import { CompareDates } from "../../Logic/CreateFormatDate";
 interface Props {
   showDate: boolean;
   from: boolean;
-  message: boolean;
+  message: string;
   date: Date;
 }
 

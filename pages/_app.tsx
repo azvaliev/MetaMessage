@@ -31,11 +31,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         // TODO move this with the above
         let check = setInterval(async () => {
           try {
-            setConversations(await GetConversations(keypair));
+            const newConversations = await GetConversations(keypair);
+            if (newConversations !== conversations) {
+              setConversations(newConversations);
+            }
           } catch (err) {
             console.error(err);
           }
-        }, 6000);
+        }, 60000);
 
         () => {
           clearInterval(check);

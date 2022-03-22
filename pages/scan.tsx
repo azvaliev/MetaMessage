@@ -42,7 +42,6 @@ export default function Scan(props: Props) {
     let dotAnim = setInterval(() => {
       let newText: string;
       setScanPrompt((prevState) => {
-        console.log(prevState);
         prevState.text === "Scanning..."
           ? (newText = "Scanning.")
           : (newText = prevState.text + ".");

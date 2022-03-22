@@ -7,9 +7,6 @@ const CompareDates = (past: Date) => {
   const current = Date.now();
   const pastFormat = FormatDate(new Date(past));
   const pastDate = new Date(past).toUTCString();
-  // console.log(current);
-  // console.log(pastDate);
-  // console.log(Date.parse(pastDate));
   let dif = current - Date.parse(pastDate);
   // convert difference from ms to minutes
   dif = dif / 60000;

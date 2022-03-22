@@ -73,6 +73,5 @@ export default async function CheckMessages(wallet: web3.Keypair) {
 		}
 	};
 
-	console.log(conversations);
 	return conversations;
 }

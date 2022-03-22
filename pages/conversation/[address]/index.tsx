@@ -10,6 +10,7 @@ import copy from "copy-to-clipboard";
 import CheckSendMessage from "../../../components/Logic/messaging/outgoing/CheckSendMessage";
 import IsMobile from "../../../components/Logic/IsMobile";
 import { CloseConvBtn } from "../../../components/UI/option_bar/StyledOptionBar";
+import GetMessage from "../../../components/Logic/messaging/incoming/GetMessage";
 
 export default function Conversation(props: Props) {
   const router = useRouter();
@@ -26,16 +27,37 @@ export default function Conversation(props: Props) {
   const scrollRef = useRef(null);
 
   useEffect(() => {
+    
+    // Send user to login/signup if no keypair
+		if (props.keypair === null) {
+			props.onSendToLoginSignup();
+		}
+
     // Handle error if prior conversations do not exist
     try {
-      console.log(props.conversations);
-      props.conversations.forEach((conversation: Array<MessageObj>) => {
-          if (conversation[0].to === address || conversation[0].from === address) {
-            setActiveConversation(conversation);
+      let activeConvCopy = [];
+      props.conversations.forEach((conversation: MessageObj[]) => {
+          if (conversation[0].sender.toString() === address || conversation[0].reciever.toString() === address) {
+            activeConvCopy = [...conversation];
             setDisplayAddress(ShortenPubkey(address, false, props.mobile));
           }
       });
-    } catch {
+      
+
+      Promise.all(activeConvCopy.map(async (message: MessageObj) => {
+        return await GetMessage(message.messageID.toString())
+      }))
+      .then((res) => {
+        setActiveConversation(() => {
+          return activeConvCopy.map((message, i) => {
+            return {...message, messageContents: res[i]}
+          })
+        })
+      })
+      .catch((error) => console.error(error))
+
+    } catch (e) {
+      console.error(e)
       setDisplayAddress(ShortenPubkey(address.toString(), false, props.mobile));
       setActiveConversation([]);
     }
@@ -46,6 +68,7 @@ export default function Conversation(props: Props) {
       clearInterval(stayUp);
     };
   }, [props.conversations]);
+  
 
   const heightCheck = () => {
     if (props.mobile) {
@@ -105,7 +128,8 @@ export default function Conversation(props: Props) {
   };
   const closeConversation = () => {
     router.push("/");
-  };
+  }
+
 
   return (
     <div className="h-screen max-h-screen overflow-y-hidden bg-smoke my-0 mx-auto w-[95%] lg:w-[65%] lg:mx-auto">
@@ -130,23 +154,26 @@ export default function Conversation(props: Props) {
         nativeID="main-conversation"
       >
         <ScrollView ref={scrollRef} nativeID="div-scroll-conv">
-          {activeConversation.map((conversation, i) => {
+          {activeConversation.map((message: MessageObj, i) => {
+            if (!message.messageContents) {
+              return null
+            }
             if (activeConversation.length === i + 1) {
               return (
                 <Message
-                  from={conversation.from === address ? true : false}
-                  message={conversation.message}
+                  from={message.sender.toString() === address ? true : false}
+                  message={message.messageContents}
                   showDate={true}
-                  date={conversation.date}
+                  date={new Date}
                 />
               );
             } else {
               return (
                 <Message
-                  from={conversation.from === address ? true : false}
-                  message={conversation.message}
+                  from={message.sender.toString() === address ? true : false}
+                  message={""}
                   showDate={false}
-                  date={conversation.date}
+                  date={new Date}
                 />
               );
             }

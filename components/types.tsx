@@ -24,7 +24,8 @@ export interface MessageObj {
 	reciever: PublicKey,
 	tokenAccount: PublicKey,
 	senderTokenAccount: PublicKey,
-	messageID: PublicKey
+	messageID: PublicKey,
+	messageContents?: string,
 }
 
 export interface PasswordStrengthObj {

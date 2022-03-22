@@ -8,7 +8,8 @@ export default async function handler(
 	const client = new Client();
 	if (!client.isOpen()) {
 		await client.open(
-			"redis://metamsgapp:jokfo8-tIxxad-wotpac@redis-15336.c232.us-east-1-2.ec2.cloud.redislabs.com:15336"
+			"redis://metamsgapp:jokfo8-tIxxad-wotpac@redis-16110.c14.us-east-1-2.ec2.cloud.redislabs.com:16110"
+
 		);
 	}
 	const key = req.body.key;
@@ -16,11 +17,12 @@ export default async function handler(
 	client
 		.execute(["SET", key, messageData, "EX", "259200"])
 		.then(async () => {
-			await client.close();
+			await client.execute(["QUIT"]);
 			res.status(200).send('success!');
+			
 		})
-		.catch(async (err) => {
-			await client.close();
+		.catch(async err => {
+			await client.execute(["QUIT"])
 			res.status(500).json(err);
 		});
 }

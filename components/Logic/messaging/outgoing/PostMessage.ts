@@ -1,6 +1,5 @@
 const PostMessage = async (key: string, message: string) => {
 	let data = {"key": key, "message": message}
-	console.log(data);
 	let res = await fetch("/api/sendmessage", {
 		body: JSON.stringify(data),
 		headers: {
