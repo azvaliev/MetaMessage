@@ -1,10 +1,15 @@
 import { NextApiResponse } from "next";
 import { Client } from "redis-om";
 
-export default async function handler({query: {id}}, res: NextApiResponse) {
+export default async function handler(
+	{query: {id}},
+	res: NextApiResponse
+) {
 	const client = new Client();
 	if (!client.isOpen()) {
-		client.open("redis://metamsgapp:jokfo8-tIxxad-wotpac@redis-16110.c14.us-east-1-2.ec2.cloud.redislabs.com:16110");
+		await client.open(
+			process.env.API_URL
+		);
 	}
 	try {
 		const msg = await client.execute(["GET", id]);

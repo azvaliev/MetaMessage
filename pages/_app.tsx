@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 					} catch (err) {
 						console.error(err);
 					}
-				}, 60000);
+				}, 5000);
 
 				() => {
 					clearInterval(check);
@@ -71,7 +71,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 
 	const handleSetPassword = async (password: string) => {
-		const [tempKey, tempPubkey] = await encryptStorePassword(password);
+		const [tempKey] = await encryptStorePassword(password);
 		setKeypair(tempKey);
 		router.push("/");
 	};

@@ -8,8 +8,7 @@ export default async function handler(
 	const client = new Client();
 	if (!client.isOpen()) {
 		await client.open(
-			"redis://metamsgapp:jokfo8-tIxxad-wotpac@redis-16110.c14.us-east-1-2.ec2.cloud.redislabs.com:16110"
-
+			process.env.API_URL
 		);
 	}
 	const key = req.body.key;
