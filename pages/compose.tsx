@@ -20,7 +20,7 @@ const Compose = (props: Props) => {
 	async function handleSendMessage() {
 		setMessage("");
 		sendAlert("Sending...", false);
-		let result = await checkSendMessage(message, recipient, props.keypair);
+		const result = await checkSendMessage(message, recipient, props.keypair);
 		if (!result.warning) {
 			router.push("/conversation/[address]", `/conversation/${recipient}`);
 		} else {
@@ -46,7 +46,7 @@ const Compose = (props: Props) => {
 	};
 
 	useEffect(() => {
-		let stayup = setInterval(() => {
+		const stayup = setInterval(() => {
 			window.scrollTo(0, 0);
 		}, 1);
 		if (!props.mobile) {
@@ -115,12 +115,12 @@ const Compose = (props: Props) => {
 				>
 					<input className="focus:outline-none bg-transparent border-gray-300 mx-[2%] w-[96%]
                            text-3xl my-auto"
-						autoFocus={true}
-						onFocus={onFocus}
-						onBlur={onBlur}
-						value={recipient}
-						onChange={handleTypingRecipient}
-						placeholder="Recipient Address"
+					autoFocus={true}
+					onFocus={onFocus}
+					onBlur={onBlur}
+					value={recipient}
+					onChange={handleTypingRecipient}
+					placeholder="Recipient Address"
 					/>
 				</View>
 				<ComposeMessageField

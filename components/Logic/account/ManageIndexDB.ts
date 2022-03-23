@@ -1,4 +1,4 @@
-import {openDB, deleteDB} from "idb";
+import { openDB } from "idb";
 
 export const updateIVStore = async (iv: ArrayBuffer) => {
 	// check for compatibility
@@ -10,7 +10,7 @@ export const updateIVStore = async (iv: ArrayBuffer) => {
 			try {
 				db.createObjectStore("iv");
 			} catch (e) {
-				console.error(e)
+				console.error(e);
 			}
 		},
 	});

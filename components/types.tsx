@@ -3,9 +3,9 @@ import {MouseEventHandler} from "react";
 
 export interface Props {
 	keypair: Keypair;
-	conversations: any;
+	conversations: Array<Array<MessageObj>>;
 	mobile: boolean;
-	activeConversation: Object;
+	activeConversation: Array<MessageObj>;
 	onSetPassword: Function;
 	onSignIn: Function;
 	onLogout: MouseEventHandler;

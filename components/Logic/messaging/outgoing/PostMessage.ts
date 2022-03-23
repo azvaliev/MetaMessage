@@ -1,6 +1,6 @@
 const PostMessage = async (key: string, message: string) => {
-	let data = {"key": key, "message": message}
-	let res = await fetch("/api/sendmessage", {
+	const data = {"key": key, "message": message};
+	const res = await fetch("/api/sendmessage", {
 		body: JSON.stringify(data),
 		headers: {
 			"Accept": "application/json",
@@ -8,6 +8,6 @@ const PostMessage = async (key: string, message: string) => {
 		},
 		method: "POST",
 	});
-	return res
+	return res;
 };
 export default PostMessage;

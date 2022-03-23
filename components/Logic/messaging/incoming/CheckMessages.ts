@@ -16,14 +16,14 @@ export default async function checkMessages(wallet: web3.Keypair) {
 		"confirmed"
 	);
 
-	let conversations = []
+	let conversations = [];
 
 
 	// Get message ID's, sender information 
 	for (let i = 0; i < recents.length; i++) {
-		let transaction = recents[i];
+		const transaction = recents[i];
 		try {
-			const parsedTransaction = await connection.getParsedTransaction(transaction.signature)
+			const parsedTransaction = await connection.getParsedTransaction(transaction.signature);
 			const details = parsedTransaction.transaction.message.instructions[0].parsed.info;
 			// console.log(parsedTransaction.meta.innerInstructions);
 			const innerInstructions = parsedTransaction.meta.innerInstructions[0].instructions[0].parsed.info;
@@ -50,11 +50,11 @@ export default async function checkMessages(wallet: web3.Keypair) {
 				const balance = Number(accDetail.amount);
 				if (balance > 0) {
 					const newMessage = {
-						'sender': sender,
-						'reciever': reciever,
-						'tokenAccount': tokenAccount,
-						'senderTokenAccount': senderTokenAccount,
-						'messageID': mint
+						"sender": sender,
+						"reciever": reciever,
+						"tokenAccount": tokenAccount,
+						"senderTokenAccount": senderTokenAccount,
+						"messageID": mint
 					}
 					let newConv = true;
 					for (let i = 0; i < conversations.length; i++) {

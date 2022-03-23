@@ -18,11 +18,11 @@ export default async function handler(
 		.execute(["SET", key, messageData, "EX", "259200"])
 		.then(async () => {
 			await client.execute(["QUIT"]);
-			res.status(200).send('success!');
+			res.status(200).send("success!");
 			
 		})
 		.catch(async err => {
-			await client.execute(["QUIT"])
+			await client.execute(["QUIT"]);
 			res.status(500).json(err);
 		});
 }
