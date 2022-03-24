@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CompareDates } from "../../logic/CreateFormatDate";
+import { compareDates } from "../../logic/messaging/createFormatDate";
 
 interface Props {
   showDate: boolean;
@@ -34,7 +34,7 @@ export default function Message(props: Props) {
 						props.from ? "ml-0 mr-auto" : "ml-auto mr-0"
 					}`}
 				>
-					{CompareDates(props.date)[1]}
+					{compareDates(props.date)[1]}
 				</h5>
 			)}
 		</div>

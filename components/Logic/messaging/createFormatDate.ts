@@ -1,11 +1,11 @@
-const CreateDate = () => {
+const createDate = () => {
 	return new Date();
 };
 
-const CompareDates = (past: Date) => {
+const compareDates = (past: Date) => {
 	// Gets current time & makes sure recieved date is in UTC for proper comparison
 	const current = Date.now();
-	const pastFormat = FormatDate(new Date(past));
+	const pastFormat = formatDate(new Date(past));
 	const pastDate = new Date(past).toUTCString();
 	let dif = current - Date.parse(pastDate);
 	// convert difference from ms to minutes
@@ -43,7 +43,7 @@ const CompareDates = (past: Date) => {
 	return [pastFormat, displayMessage];
 };
 
-const FormatDate = (date: Date) => {
+const formatDate = (date: Date) => {
 	const tempDate = date.toDateString();
 	return {
 		year: date.getFullYear(),
@@ -55,4 +55,4 @@ const FormatDate = (date: Date) => {
 	};
 };
 
-export { CreateDate, CompareDates };
+export { createDate, compareDates };
