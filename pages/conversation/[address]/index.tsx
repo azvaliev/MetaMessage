@@ -7,12 +7,12 @@ import AlertMessage from "../../../components/UI/AlertMessage";
 import { MessageObj } from "../../../components/types";
 import { ShortenPubkey } from "../../../components/UI/Shorten";
 import copy from "copy-to-clipboard";
-import checkSendMessage from "../../../components/Logic/messaging/outgoing/checkSendMessage";
-import IsMobile from "../../../components/Logic/IsMobile";
+import checkSendMessage from "../../../components/logic/messaging/outgoing/checkSendMessage";
+import IsMobile from "../../../components/logic/IsMobile";
 import { CloseConvBtn } from "../../../components/UI/option_bar/StyledOptionBar";
-import getMessage from "../../../components/Logic/messaging/incoming/getMessage";
-import handleRedirect from "../../../components/Logic/account/handleRedirect";
-import sendReadReceipt from "../../../components/Logic/messaging/outgoing/sendReadReceipt";
+import getMessage from "../../../components/logic/messaging/incoming/getMessage";
+import handleRedirect from "../../../components/logic/account/handleRedirect";
+import sendReadReceipt from "../../../components/logic/messaging/outgoing/sendReadReceipt";
 import { UserContext } from "../../../components/UserContext";
 
 export default function Conversation() {

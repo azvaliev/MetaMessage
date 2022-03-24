@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ShortenPubkey } from "../components/UI/Shorten";
 import { MessageObj } from "../components/types";
 import FloatOptionBar from "../components/UI/option_bar/FloatOptionBar";
-import handleRedirect from "../components/Logic/account/handleRedirect";
+import handleRedirect from "../components/logic/account/handleRedirect";
 import { useRouter } from "next/router";
 import { UserContext } from "../components/UserContext";
 
