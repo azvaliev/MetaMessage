@@ -1,6 +1,6 @@
 import generateKeypair from "../keypair/generateKeypair";
 import { toArrayBuffer } from "./bufferConv";
-import { createIVStore } from "../account/manageIndexDB";
+import { createIVStore } from "../account/manageIndexedDB";
 
 import { createCipheriv, randomBytes, createHash } from "crypto";
 

@@ -1,4 +1,4 @@
-import { deleteStore } from "./manageIndexDB";
+import { deleteStore } from "./manageIndexedDB";
 
 const deleteAccount = async () => {
 	localStorage.clear();

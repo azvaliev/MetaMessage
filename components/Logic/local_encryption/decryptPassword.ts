@@ -6,7 +6,7 @@ import {
 } from "crypto";
 import RestoreKeypair from "../keypair/restoreKeypair";
 import { toArrayBuffer, toBuffer } from "./bufferConv";
-import { getIVStore, updateIVStore } from "../account/manageIndexDB";
+import { getIVStore, updateIVStore } from "../account/manageIndexedDB";
 
 const decryptPassword = async (password: string) => {
 	const encryptedKeypair = localStorage.getItem("keypair");
