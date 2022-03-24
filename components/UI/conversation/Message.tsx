@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { compareDates } from "../../logic/messaging/createFormatDate";
+import { compareDates } from "../createFormatDate";
 
 interface Props {
   showDate: boolean;
