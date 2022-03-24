@@ -1,8 +1,8 @@
 import "../styles/globals.css";
 import { useState, useEffect } from "react";
-import getConversations from "../components/logic/messaging/incoming/getConversations";
+import getConversations from "../components/logic/messaging/in/getConversations";
 import { useRouter } from "next/router";
-import IsMobile from "../components/logic/IsMobile";
+import isMobile from "../components/logic/isMobile";
 import type { AppProps } from "next/app";
 import encryptStorePassword from "../components/logic/encryption_local/encryptStorePassword";
 import deleteAccount from "../components/logic/account/deleteAccount";
@@ -68,7 +68,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 	useEffect(() => {
 		// For testing purposes
 		// storedData.removeItem("keypair");
-		setMobile(IsMobile());
+		setMobile(isMobile());
 	}, []);
 
 

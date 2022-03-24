@@ -3,10 +3,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { OptionHolder, OptionInnerHolder, Bar } from "./StyledOptionBar";
 import QRCode from "react-qr-code";
-import IsMobile from "../../logic/IsMobile";
 import { PublicKey } from "@solana/web3.js";
 
-export default function FloatOptionBar(props: { pubkey: PublicKey }) {
+export default function FloatOptionBar(props: { pubkey: PublicKey, mobile: boolean }) {
 	const [showOptions, setShowOptions] = useState(false);
 
 	const handleToggleOptions = () => {
@@ -61,13 +60,13 @@ export default function FloatOptionBar(props: { pubkey: PublicKey }) {
 							/>
 						</Link>
 					</OptionHolder>
-					{IsMobile() && (
+					{props.mobile && (
 						<Link href="/scan">
 							<OptionHolder className="z-10 relative top-auto right-1 left-auto bg-p-blue rounded-2xl md:rounded-xl">
 								<OptionInnerHolder className="relative top-2 md:top-1 m-auto w-fit h-fit flex">
 									<QRCode
 										value=""
-										size={IsMobile ? 55 : 55}
+										size={props.mobile ? 55 : 55}
 										className="m-auto"
 										bgColor="#000"
 										fgColor="#3472f5"

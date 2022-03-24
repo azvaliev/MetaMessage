@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import ComposeMessageField from "../components/UI/conversation/ComposeMessageField";
 import AlertMessage from "../components/UI/AlertMessage";
-import checkSendMessage from "../components/logic/messaging/outgoing/checkSendMessage";
+import checkSendMessage from "../components/logic/messaging/out/checkSendMessage";
 import { useRouter } from "next/router";
 import { UserContext } from "../components/UserContext";
 

@@ -13,7 +13,7 @@ export const calculateStrengthScore = (
 	return -1;
 };
 
-const CheckPasswordStrength = (
+const checkPasswordStrength = (
 	password: string,
 	propsReqs: PasswordStrengthObj
 ) => {
@@ -69,4 +69,4 @@ const CheckPasswordStrength = (
 	return reqs;
 };
 
-export default CheckPasswordStrength;
+export default checkPasswordStrength;

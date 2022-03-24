@@ -18,7 +18,7 @@ export default function Message(props: Props) {
 	return (
 		<div className="flex flex-col">
 			<div
-				className={`w-fit px-4 py-[0.2rem] max-w-[80%] w-fit rounded-lg text-white text-2xl lg:text-2xl mt-2
+				className={`w-fit px-4 py-[0.2rem] max-w-[80%] rounded-lg text-white text-2xl lg:text-2xl mt-2
                 ${
 		props.from
 			? "border-[1px] border-gray-800 ml-0 mr-auto"

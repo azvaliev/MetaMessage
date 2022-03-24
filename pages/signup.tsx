@@ -1,6 +1,6 @@
 import { ChangeEvent, useContext, useState } from "react";
 import PasswordField from "../components/UI/signup/PasswordField";
-import CheckPasswordStrength from "../components/logic/signup/CheckPasswordStrength";
+import checkPasswordStrength from "../components/logic/account/checkPasswordStrength";
 import { PasswordStrengthObj, pageProps } from "../components/types";
 import ConfirmPasswordField from "../components/UI/signup/ConfirmPasswordField";
 import { UserContext } from "../components/UserContext";
@@ -31,7 +31,7 @@ export default function SignUp(props: pageProps) {
 
 	const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
 		setPasswordSecLevel(
-			CheckPasswordStrength(e.target.value, passwordSecLevel)
+			checkPasswordStrength(e.target.value, passwordSecLevel)
 		);
 		setPassword({ ...password, password: e.target.value });
 	};

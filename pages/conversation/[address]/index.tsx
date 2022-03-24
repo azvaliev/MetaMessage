@@ -7,12 +7,11 @@ import AlertMessage from "../../../components/UI/AlertMessage";
 import { MessageObj } from "../../../components/types";
 import { ShortenPubkey } from "../../../components/UI/Shorten";
 import copy from "copy-to-clipboard";
-import checkSendMessage from "../../../components/logic/messaging/outgoing/checkSendMessage";
-import IsMobile from "../../../components/logic/IsMobile";
+import checkSendMessage from "../../../components/logic/messaging/out/checkSendMessage";
 import { CloseConvBtn } from "../../../components/UI/option_bar/StyledOptionBar";
-import getMessage from "../../../components/logic/messaging/incoming/getMessage";
+import getMessage from "../../../components/logic/messaging/in/getMessage";
 import handleRedirect from "../../../components/logic/account/handleRedirect";
-import sendReadReceipt from "../../../components/logic/messaging/outgoing/sendReadReceipt";
+import sendReadReceipt from "../../../components/logic/messaging/out/sendReadReceipt";
 import { UserContext } from "../../../components/UserContext";
 
 export default function Conversation() {
@@ -91,7 +90,7 @@ export default function Conversation() {
 		heightCheck();
 		scrollRef.current.scrollToEnd({ animated: false });
 		setTimeout(() => {
-			IsMobile() ? setHeight("79vh") : setHeight("87vh");
+			mobile ? setHeight("79vh") : setHeight("87vh");
 			scrollRef.current.scrollToEnd({ animated: false });
 		}, 30);
 	}, []);
