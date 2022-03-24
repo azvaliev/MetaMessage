@@ -17,7 +17,7 @@ export default async function checkMessages(wallet: web3.Keypair) {
 		"confirmed"
 	);
 
-	let conversations = [];
+	const conversations = [];
 
 
 	// Get message ID's, sender information 

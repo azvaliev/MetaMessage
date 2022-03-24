@@ -1,4 +1,4 @@
-import { QrReader } from "react-qr-reader";
+import { QrReader, OnResultFunction } from "react-qr-reader";
 import adapter from "webrtc-adapter";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -16,7 +16,9 @@ export default function Scan() {
 	});
 	const [intervalC, setIntervalC] = useState({ interval: null });
 
-	const handleScanResult = (result: any) => {
+	const handleScanResult: OnResultFunction = (result) => {
+		console.log(result);
+		console.log(typeof result);
 		if (result) {
 			setScanPrompt((prevState) => {
 				return {
@@ -26,7 +28,7 @@ export default function Scan() {
 				};
 			});
 			setTimeout(() => {
-				router.push("/conversation/[address]", `conversation/${result?.text}`);
+				router.push("/conversation/[address]", `conversation/${result?.getText()}`);
 			}, 200);
 		}
 	};

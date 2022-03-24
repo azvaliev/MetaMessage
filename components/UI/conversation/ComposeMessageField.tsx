@@ -2,11 +2,11 @@ import Image from "next/image";
 import { ChangeEventHandler, FocusEventHandler } from "react";
 
 interface Props {
-  onFocus: Function<void>;
+  onFocus(): void;
   onBlur: FocusEventHandler<HTMLTextAreaElement>;
   message: string;
   handleTypingMessage: ChangeEventHandler<HTMLTextAreaElement>;
-  handleSendMessage: any;
+  handleSendMessage(): void;
   mobile: boolean;
 }
 

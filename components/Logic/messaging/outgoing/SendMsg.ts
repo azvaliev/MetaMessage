@@ -31,7 +31,7 @@ export default async function SendMsg(
 	try {
 		console.error("about to mint");
 		// Initialize a mint with unique token
-		const mint = await splToken
+		const mint = <web3.PublicKey> await splToken
 			.createMint(connection, wallet, wallet.publicKey, wallet.publicKey, 0)
 			.catch((err) => {
 				console.error(err, mint);

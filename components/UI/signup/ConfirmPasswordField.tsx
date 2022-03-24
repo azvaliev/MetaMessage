@@ -6,8 +6,8 @@ interface Props {
   passwordOG: string;
   confirmPassword: string;
   setConfirmPassword: ChangeEventHandler;
-  onPasswordConfirmed: Function;
-  onSubmit: Function;
+  onPasswordConfirmed(v: boolean): void;
+  onSubmit(): void;
   mobile: boolean;
 }
 

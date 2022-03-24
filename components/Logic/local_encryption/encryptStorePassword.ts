@@ -2,7 +2,7 @@ import generateKeypair from "../keypair/generateKeypair";
 import { toArrayBuffer } from "./bufferConv";
 import { createIVStore } from "../account/manageIndexDB";
 
-const { createCipheriv, randomBytes, createHash } = require("crypto");
+import { createCipheriv, randomBytes, createHash } from "crypto";
 
 const encryptStorePassword = async (password: string) => {
 	// This function is for first-time signup

@@ -8,7 +8,7 @@ interface Props {
   password: string;
   setPassword: ChangeEventHandler;
   strength: PasswordStrengthObj;
-  onPasswordAccepted: Function;
+  onPasswordAccepted(v: boolean): void;
   mobile: boolean;
 }
 

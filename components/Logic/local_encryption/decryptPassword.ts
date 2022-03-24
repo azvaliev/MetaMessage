@@ -1,9 +1,9 @@
-const {
+import {
 	createHash,
 	createDecipheriv,
 	randomBytes,
 	createCipheriv,
-} = require("crypto");
+} from "crypto";
 import RestoreKeypair from "../keypair/restoreKeypair";
 import { toArrayBuffer, toBuffer } from "./bufferConv";
 import { getIVStore, updateIVStore } from "../account/manageIndexDB";

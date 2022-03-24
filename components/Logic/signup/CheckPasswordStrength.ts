@@ -17,7 +17,7 @@ const CheckPasswordStrength = (
 	password: string,
 	propsReqs: PasswordStrengthObj
 ) => {
-	let reqs = propsReqs;
+	const reqs = propsReqs;
 	// list of common words that should be avoided
 	const common = [
 		"password",
@@ -31,7 +31,7 @@ const CheckPasswordStrength = (
 	];
 	// reset the reqs object so assigning false later is not neccesary
 	for (let i = 0; i < Object.keys(reqs).length; i++) {
-		let prop = Object.keys(reqs)[i];
+		const prop = Object.keys(reqs)[i];
 		reqs[prop] = false;
 	}
 	if (password.length >= 12) {
