@@ -4,7 +4,7 @@ import {
 	randomBytes,
 	createCipheriv,
 } from "crypto";
-import RestoreKeypair from "../keypair/restoreKeypair";
+import restoreKeypair from "../keypair/restoreKeypair";
 import { toArrayBuffer, toBuffer } from "./bufferConv";
 import { getIVStore, updateIVStore } from "../account/manageIndexedDB";
 
@@ -24,7 +24,7 @@ const decryptPassword = async (password: string) => {
 	// TODO - Perhaps do the above through creating two new keypairs using the string and comparing equality
 
 	// Convert JSON parsed object "keypair" into Solana Keypair type
-	const decryptedKeypair = RestoreKeypair(decyptedKeyString);
+	const decryptedKeypair = restoreKeypair(decyptedKeyString);
 	// As soon as decryption is done, re-encrypt with a new IV to protect user password security
 	ReEncrypt(password, decyptedKeyString, iv);
 	return decryptedKeypair;
