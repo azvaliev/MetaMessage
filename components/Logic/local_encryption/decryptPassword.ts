@@ -4,7 +4,7 @@ import {
 	randomBytes,
 	createCipheriv,
 } from "crypto";
-import restoreKeypair from "../keypair/restoreKeypair";
+import restoreKeypair from "../keys/restoreKeypair";
 import { toArrayBuffer, toBuffer } from "./bufferConv";
 import { getIVStore, updateIVStore } from "../account/manageIndexedDB";
 
