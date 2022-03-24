@@ -4,7 +4,7 @@ import getConversations from "../components/logic/messaging/incoming/getConversa
 import { useRouter } from "next/router";
 import IsMobile from "../components/logic/IsMobile";
 import type { AppProps } from "next/app";
-import encryptStorePassword from "../components/logic/local_encryption/encryptStorePassword";
+import encryptStorePassword from "../components/logic/encryption_local/encryptStorePassword";
 import deleteAccount from "../components/logic/account/deleteAccount";
 import { Keypair } from "@solana/web3.js";
 import { UserContext } from "../components/UserContext";
