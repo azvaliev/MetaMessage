@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { KeyboardAvoidingView, ScrollView } from "react-native-web";
 import Message from "../../../components/UI/conversation/Message";
 import ComposeMessageField from "../../../components/UI/conversation/ComposeMessageField";
 import AlertMessage from "../../../components/UI/AlertMessage";
-import { Props, MessageObj } from "../../../components/types";
+import { MessageObj } from "../../../components/types";
 import { ShortenPubkey } from "../../../components/UI/Shorten";
 import copy from "copy-to-clipboard";
 import checkSendMessage from "../../../components/Logic/messaging/outgoing/checkSendMessage";
@@ -12,11 +12,16 @@ import IsMobile from "../../../components/Logic/IsMobile";
 import { CloseConvBtn } from "../../../components/UI/option_bar/StyledOptionBar";
 import getMessage from "../../../components/Logic/messaging/incoming/getMessage";
 import handleRedirect from "../../../components/Logic/account/handleRedirect";
+import sendReadReceipt from "../../../components/Logic/messaging/outgoing/sendReadReceipt";
+import { UserContext } from "../../../components/UserContext";
 
-export default function Conversation(props: Props) {
+export default function Conversation() {
+
+	const { keypair, mobile, conversations } = useContext(UserContext);
+
 	const router = useRouter();
 	const { address } = router.query;
-	const [activeConversation, setActiveConversation] = useState([]);
+	const [activeConversation, setActiveConversation] = useState<Array<MessageObj>>([]);
 	const [messageContents, setMessageContents] = useState("");
 	const [height, setHeight] = useState("79vh");
 	const [theAlertMessage, setTheAlertMessage] = useState({
@@ -29,17 +34,17 @@ export default function Conversation(props: Props) {
 
 	useEffect(() => {
 		// Send user to login/signup if no keypair
-		if (props.keypair === null) {
+		if (keypair === null) {
 			router.push(handleRedirect());
 		}
 
 		// Handle error if prior conversations do not exist
 		try {
 			let activeConvCopy = [];
-			props.conversations.forEach((conversation: MessageObj[]) => {
+			conversations.forEach((conversation: MessageObj[]) => {
 				if (conversation[0].sender.toString() === address || conversation[0].reciever.toString() === address) {
 					activeConvCopy = [...conversation];
-					setDisplayAddress(ShortenPubkey(address, false, props.mobile));
+					setDisplayAddress(ShortenPubkey(address, false, mobile));
 				}
 			});
       
@@ -58,7 +63,7 @@ export default function Conversation(props: Props) {
 
 		} catch (e) {
 			console.error(e);
-			setDisplayAddress(ShortenPubkey(address.toString(), false, props.mobile));
+			setDisplayAddress(ShortenPubkey(address.toString(), false, mobile));
 			setActiveConversation([]);
 		}
 		const stayUp = setInterval(() => {
@@ -66,12 +71,16 @@ export default function Conversation(props: Props) {
 		}, 2);
 		return () => {
 			clearInterval(stayUp);
+			// Send read reciepts for messages viewed
+			Promise.all(activeConversation.map(async message => {
+				return await sendReadReceipt(keypair, message);	
+			}));
 		};
-	}, [props.conversations]);
+	}, [conversations]);
   
 
 	const heightCheck = () => {
-		if (props.mobile) {
+		if (mobile) {
 			setHeight("87vh");
 		} else {
 			setHeight("79vh");
@@ -93,7 +102,7 @@ export default function Conversation(props: Props) {
 		const result = await checkSendMessage(
 			messageContents,
 			address.toString(),
-			props.keypair
+			keypair
 		);
 		if (result.warning) {
 			sendAlert(result.alertMsg, result.warning);
@@ -107,12 +116,12 @@ export default function Conversation(props: Props) {
 	};
 
 	const onFocus = () => {
-		if (props.mobile) {
+		if (mobile) {
 			setHeight("45vh");
 		}
 	};
 	const onBlur = () => {
-		if (props.mobile) {
+		if (mobile) {
 			setHeight("80vh");
 		}
 	};
@@ -179,7 +188,7 @@ export default function Conversation(props: Props) {
 					})}
 				</ScrollView>
 				<ComposeMessageField
-					mobile={props.mobile}
+					mobile={mobile}
 					message={messageContents}
 					handleTypingMessage={handleTypingMessage}
 					handleSendMessage={handleSendMessage}

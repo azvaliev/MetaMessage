@@ -1,18 +1,21 @@
-import { ChangeEvent, KeyboardEvent, useState } from "react";
-import { Props } from "../components/types";
+import { ChangeEvent, KeyboardEvent, useContext, useState } from "react";
+import { pageProps } from "../components/types";
 import Link from "next/link";
 import decryptPassword from "../components/Logic/local_encryption/decryptPassword";
+import { UserContext } from "../components/UserContext";
 
-const Login = (props: Props) => {
+const Login = (props: pageProps) => {
 	const [password, setPassword] = useState("");
 	const [showError, setShowError] = useState(false);
+
+	const { mobile } = useContext(UserContext);
 
 	const handleSubmit = () => {
 		setPassword("");
 		decryptPassword(password)
 			.then((res) => {
-				const [tempKeypair, tempPubkey] = res;
-				props.onSignIn(tempKeypair, tempPubkey);
+				const tempKeypair = res;
+				props.onSignIn(tempKeypair);
 			})
 			.catch(() => setShowError(true));
 	};
@@ -31,14 +34,14 @@ const Login = (props: Props) => {
 				type="password"
 				name="password"
 				placeholder={
-					props.mobile ? "enter your password" : "Enter your password"
+					mobile ? "enter your password" : "Enter your password"
 				}
-				autoFocus={!props.mobile}
+				autoFocus={!mobile}
 				value={password}
 				onChange={handleTyping}
 				onKeyDown={checkEnter}
 				className={`text-xl mt-[30vh] px-2 w-5/6 lg:w-2/3 mx-auto bg-black outline-none border-[1px] ${
-					props.mobile ? "text-center" : "text-left"
+					mobile ? "text-center" : "text-left"
 				} ${showError ? "border-red-500" : "border-blue-500"} py-1`}
 				maxLength={20}
 			/>

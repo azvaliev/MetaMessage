@@ -1,13 +1,14 @@
 import {Keypair, PublicKey} from "@solana/web3.js";
 import {MouseEventHandler} from "react";
 
-export interface Props {
+export interface userInfo {
 	keypair: Keypair;
 	conversations: Array<Array<MessageObj>>;
 	mobile: boolean;
-	activeConversation: Array<MessageObj>;
-	onSetPassword: Function;
-	onSignIn: Function;
+}
+export interface pageProps {
+	onSetPassword(password: string): void;
+	onSignIn(kp: Keypair): void;
 	onLogout: MouseEventHandler;
 	onDeleteAccount: MouseEventHandler;
 }

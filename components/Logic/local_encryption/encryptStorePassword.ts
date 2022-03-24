@@ -7,7 +7,6 @@ const { createCipheriv, randomBytes, createHash } = require("crypto");
 const encryptStorePassword = async (password: string) => {
 	// This function is for first-time signup
 	const keypair = generateKeypair();
-	const pubkey = keypair.publicKey;
 	const key = createHash("sha256").update(password).digest("hex").substr(0, 32);
 	let iv = randomBytes(16);
 	const ivBArray = toArrayBuffer(iv);
@@ -20,7 +19,7 @@ const encryptStorePassword = async (password: string) => {
     cipher.update(JSON.stringify(keypair), "utf8", "hex") + cipher.final("hex");
 	localStorage.setItem("keypair", encryptedKeypair);
 	// Put encrypted keypair into localstorage, send unencrypted to state
-	return [keypair, pubkey];
+	return keypair;
 };
 
 export default encryptStorePassword;

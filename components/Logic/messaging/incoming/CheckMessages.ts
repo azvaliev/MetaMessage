@@ -1,5 +1,6 @@
 import * as web3 from "@solana/web3.js";
 import * as splToken from "@solana/spl-token";
+import checkForReadReceipt from "./checkForReadReceipt";
 
 export default async function checkMessages(wallet: web3.Keypair) {
 	// Connect to Devnet Cluster
@@ -46,32 +47,38 @@ export default async function checkMessages(wallet: web3.Keypair) {
 			if (sender.toString() != wallet.publicKey.toString()) {
 				// Messages sent from user will be encrypted in localstorage until
 				// read signal is recieved
-				const accDetail = await splToken.getAccount(connection, tokenAccount);
-				const balance = Number(accDetail.amount);
+				const mintAuthority = (await splToken.getMint(connection, mint)).mintAuthority;
+				const splAccDetail = await splToken.getAccount(connection, tokenAccount);
+				const balance = Number(splAccDetail.amount);
 				if (balance > 0) {
-					const newMessage = {
-						"sender": sender,
-						"reciever": reciever,
-						"tokenAccount": tokenAccount,
-						"senderTokenAccount": senderTokenAccount,
-						"messageID": mint
-					}
-					let newConv = true;
-					for (let i = 0; i < conversations.length; i++) {
-						if (conversations[i][0].sender.toString() == sender.toString()) {
-							newConv = false;
-							conversations[i].push(newMessage)
+					const isReadReceipt = await checkForReadReceipt(connection, splAccDetail, mint, mintAuthority, wallet, sender);
+					// Check if the token is a read receipt or new message
+					// Handle read receipt in checkForReadReceipt()
+					if (!isReadReceipt) {
+						const newMessage = {
+							"sender": sender,
+							"reciever": reciever,
+							"tokenAccount": tokenAccount,
+							"senderTokenAccount": senderTokenAccount,
+							"messageID": mint
+						};
+						let newConv = true;
+						for (let i = 0; i < conversations.length; i++) {
+							if (conversations[i][0].sender.toString() == sender.toString()) {
+								newConv = false;
+								conversations[i].push(newMessage);
+							}
 						}
-					}
-					if (newConv == true) {
-						conversations.push([newMessage])
+						if (newConv == true) {
+							conversations.push([newMessage]);
+						}
 					}
 				}
 			}
 		} catch {
-			continue
+			continue;
 		}
-	};
+	}
 
 	return conversations;
 }

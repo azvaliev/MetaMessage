@@ -3,6 +3,8 @@ import adapter from "webrtc-adapter";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { TouchEvent, useState } from "react";
+
+
 export default function Scan() {
 	const router = useRouter();
 	const [scanPrompt, setScanPrompt] = useState({

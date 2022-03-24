@@ -7,18 +7,20 @@ import type { AppProps } from "next/app";
 import encryptStorePassword from "../components/Logic/local_encryption/encryptStorePassword";
 import deleteAccount from "../components/Logic/account/deleteAccount";
 import { Keypair } from "@solana/web3.js";
+import { UserContext } from "../components/UserContext";
+import { MessageObj } from "../components/types";
 
 function MyApp({ Component, pageProps }: AppProps) {
-	const [keypair, setKeypair] = useState(null);
-	const [conversations, setConversations] = useState([]);
-	const [mobile, setMobile] = useState(false);
+	const [keypair, setKeypair] = useState<Keypair>(null);
+	const [conversations, setConversations] = useState<Array<Array<MessageObj>>>([]);
+	const [mobile, setMobile] = useState<boolean>(false);
 	const router = useRouter();
 
 	useEffect(() => {
 		// Check if keypair has been retrieved succesfully before
 		// atttempting to get messages
 		if (keypair !== null) {
-			if (keypair.length < 1) {
+			if (keypair.toString().length < 1) {
 				router.push("/welcome");
 			} else {
 				setTimeout(async () => {
@@ -60,7 +62,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 		await deleteAccount();
 
 		setConversations([]);
-		setKeypair("");
+		setKeypair(null);
 	};
 
 	useEffect(() => {
@@ -71,22 +73,25 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 
 	const handleSetPassword = async (password: string) => {
-		const [tempKey] = await encryptStorePassword(password);
+		const tempKey = await encryptStorePassword(password);
 		setKeypair(tempKey);
 		router.push("/");
 	};
 
 	return (
-		<Component
-			{...pageProps}
-			keypair={keypair}
-			conversations={conversations}
-			mobile={mobile}
-			onSetPassword={handleSetPassword}
-			onSignIn={handleSignIn}
-			onLogout={handleLogout}
-			onDeleteAccount={handleDeleteAccount}
-		/>
+		<UserContext.Provider value={{
+			keypair: keypair,
+			conversations: conversations,
+			mobile: mobile,
+		}}>
+			<Component
+				{...pageProps}
+				onSetPassword={handleSetPassword}
+				onSignIn={handleSignIn}
+				onLogout={handleLogout}
+				onDeleteAccount={handleDeleteAccount}
+			/>
+		</UserContext.Provider>
 	);
 }
 

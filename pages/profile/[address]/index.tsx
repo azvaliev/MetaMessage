@@ -2,17 +2,21 @@ import QRCode from "react-qr-code";
 import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import copy from "copy-to-clipboard";
 import { useRouter } from "next/router";
-import { Props } from "../../../components/types";
+import { pageProps } from "../../../components/types";
 import { ShortenPubkey } from "../../../components/UI/Shorten";
+import { UserContext } from "../../../components/UserContext";
 
 const AddressHolder = styled.h1`
   word-wrap: break-word;
 `;
 
-export default function Profile(props: Props) {
+export default function Profile(props: pageProps) {
+
+	const { mobile, keypair } = useContext(UserContext);
+
 	const router = useRouter();
 	const { address } = router.query;
 
@@ -25,7 +29,7 @@ export default function Profile(props: Props) {
 
 	useEffect(() => {
 		try {
-			const key = props.keypair.publicKey.toString();
+			const key = keypair.publicKey.toString();
 			if (typeof key === "string") {
 				setDisplayAddress(ShortenPubkey(key, false, true));
 				setFullAddress(key);
@@ -35,7 +39,7 @@ export default function Profile(props: Props) {
 		} catch (err) {
 			router.push("/");
 		}
-	}, [props.keypair]);
+	}, [keypair]);
 
 	const displayAddAppGuide = () => {
 		router.push("/");
@@ -64,11 +68,11 @@ export default function Profile(props: Props) {
 			</h2>
 			<QRCode
 				className="mx-auto my-6 border-[0.8px] border-gray-700"
-				size={props.mobile ? 200 : 256}
+				size={mobile ? 200 : 256}
 				bgColor="#2563EB"
 				value={fullAddress}
 			/>
-			{props.mobile && (
+			{mobile && (
 				<div className="flex flex-col border-b-[0.5px] pb-6 border-white">
 					<div className="flex flex-row h-[14vh] pt-4 border-t-[0.5px] border-white">
 						<h2 className="text-2xl md:text-3xl text-left ml-2 w-3/4 mt-4">

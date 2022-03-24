@@ -1,10 +1,14 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import PasswordField from "../components/UI/signup/PasswordField";
 import CheckPasswordStrength from "../components/Logic/signup/CheckPasswordStrength";
-import { PasswordStrengthObj, Props } from "../components/types";
+import { PasswordStrengthObj, pageProps } from "../components/types";
 import ConfirmPasswordField from "../components/UI/signup/ConfirmPasswordField";
+import { UserContext } from "../components/UserContext";
 
-export default function SignUp(props: Props) {
+export default function SignUp(props: pageProps) {
+
+	const { mobile } = useContext(UserContext);
+
 	const [passwordSecLevel, setPasswordSecLevel] = useState<PasswordStrengthObj>(
 		{
 			min_length: false,
@@ -52,7 +56,7 @@ export default function SignUp(props: Props) {
 					password={password.password}
 					setPassword={handleChangePassword}
 					strength={passwordSecLevel}
-					mobile={props.mobile}
+					mobile={mobile}
 					onPasswordAccepted={(v: boolean) =>
 						setPasswordValid({ ...passwordValid, password: v })
 					}
@@ -64,7 +68,7 @@ export default function SignUp(props: Props) {
 						confirmPassword={password.confirmPassword}
 						onSubmit={handleSubmitPassword}
 						setConfirmPassword={handleChangeConfirmPassword}
-						mobile={props.mobile}
+						mobile={mobile}
 						onPasswordConfirmed={(v: boolean) =>
 							setPasswordValid({ ...passwordValid, confirmPassword: v })
 						}

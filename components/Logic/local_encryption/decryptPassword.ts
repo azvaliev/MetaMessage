@@ -27,7 +27,7 @@ const decryptPassword = async (password: string) => {
 	const decryptedKeypair = RestoreKeypair(decyptedKeyString);
 	// As soon as decryption is done, re-encrypt with a new IV to protect user password security
 	ReEncrypt(password, decyptedKeyString, iv);
-	return [decryptedKeypair, decryptedKeypair.publicKey];
+	return decryptedKeypair;
 };
 const ReEncrypt = (password: string, keypairString: string, iv: Buffer) => {
 	let newIV: Buffer;

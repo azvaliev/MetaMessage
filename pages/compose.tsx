@@ -1,13 +1,16 @@
 import {KeyboardAvoidingView, View} from "react-native-web";
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import { useContext, useEffect, useState } from "react";
 import ComposeMessageField from "../components/UI/conversation/ComposeMessageField";
 import AlertMessage from "../components/UI/AlertMessage";
-import {Props} from "../components/types";
 import checkSendMessage from "../components/Logic/messaging/outgoing/checkSendMessage";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
+import { UserContext } from "../components/UserContext";
 
-const Compose = (props: Props) => {
+const Compose = () => {
+
+	const {keypair, mobile} = useContext(UserContext);
+
 	const [recipient, setRecipient] = useState("");
 	const [message, setMessage] = useState("");
 	const [theAlertMessage, setTheAlertMessage] = useState({
@@ -20,7 +23,7 @@ const Compose = (props: Props) => {
 	async function handleSendMessage() {
 		setMessage("");
 		sendAlert("Sending...", false);
-		const result = await checkSendMessage(message, recipient, props.keypair);
+		const result = await checkSendMessage(message, recipient, keypair);
 		if (!result.warning) {
 			router.push("/conversation/[address]", `/conversation/${recipient}`);
 		} else {
@@ -49,7 +52,7 @@ const Compose = (props: Props) => {
 		const stayup = setInterval(() => {
 			window.scrollTo(0, 0);
 		}, 1);
-		if (!props.mobile) {
+		if (!mobile) {
 			setHeight("85vh");
 		}
 		return () => {
@@ -57,12 +60,12 @@ const Compose = (props: Props) => {
 		};
 	}, []);
 	const onFocus = () => {
-		if (props.mobile) {
+		if (mobile) {
 			setHeight("45vh");
 		}
 	};
 	const onBlur = () => {
-		if (props.mobile) {
+		if (mobile) {
 			setHeight("80vh");
 		}
 	};
@@ -124,7 +127,7 @@ const Compose = (props: Props) => {
 					/>
 				</View>
 				<ComposeMessageField
-					mobile={props.mobile}
+					mobile={mobile}
 					handleSendMessage={handleSendMessage}
 					message={message}
 					handleTypingMessage={handleTypingMessage}
