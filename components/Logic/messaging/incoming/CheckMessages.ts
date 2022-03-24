@@ -24,7 +24,7 @@ export default async function checkMessages(wallet: web3.Keypair) {
 	for (let i = 0; i < recents.length; i++) {
 		const transaction = recents[i];
 		try {
-			const parsedTransaction = await connection.getParsedTransaction(transaction.signature);
+			const parsedTransaction: any = await connection.getParsedTransaction(transaction.signature);
 			const details = parsedTransaction.transaction.message.instructions[0].parsed.info;
 			// console.log(parsedTransaction.meta.innerInstructions);
 			const innerInstructions = parsedTransaction.meta.innerInstructions[0].instructions[0].parsed.info;
