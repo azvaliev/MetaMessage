@@ -1,6 +1,5 @@
 import "../styles/globals.css";
 import { useState, useEffect } from "react";
-import getConversations from "../components/logic/messaging/in/getConversations";
 import { useRouter } from "next/router";
 import isMobile from "../components/logic/isMobile";
 import type { AppProps } from "next/app";
@@ -9,6 +8,15 @@ import deleteAccount from "../components/logic/account/deleteAccount";
 import { Keypair } from "@solana/web3.js";
 import { UserContext } from "../components/UserContext";
 import { MessageObj } from "../components/types";
+import checkMessages from "../components/logic/messaging/in/checkMessages";
+
+async function getConversations(wallet: Keypair) {
+	let incoming = await checkMessages(wallet);
+	if (incoming.length === 0) {
+		incoming = null;
+	}
+	return incoming;
+}
 
 function MyApp({ Component, pageProps }: AppProps) {
 	const [keypair, setKeypair] = useState<Keypair>(null);
