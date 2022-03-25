@@ -1,6 +1,5 @@
 import { KeyboardEvent, useEffect, ChangeEventHandler } from "react";
 import PasswordBarIndicator from "./PasswordBarIndicator";
-import checkConfirmPassword from "../../logic/signup/checkConfirmPassword";
 
 interface Props {
   passwordOG: string;
@@ -10,6 +9,10 @@ interface Props {
   onSubmit(): void;
   mobile: boolean;
 }
+
+const checkConfirmPassword = (password: string, confirmPassword: string) => 
+	password === confirmPassword ?  3 : 1;
+
 
 const ConfirmPasswordField = (props: Props) => {
 	// Literally just checks if they are equal
