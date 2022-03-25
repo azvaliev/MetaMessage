@@ -2,7 +2,7 @@ import { ChangeEventHandler, useState, useEffect } from "react";
 import PasswordBarIndicator from "./PasswordBarIndicator";
 import { PasswordStrengthObj } from "../../types";
 import PasswordStrengthHint from "./PasswordStrengthHint";
-import { calculateStrengthScore } from "../../logic/account/CheckPasswordStrength";
+import { calculateStrengthScore } from "../../logic/account/checkPasswordStrength";
 
 interface Props {
   password: string;

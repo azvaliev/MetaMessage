@@ -84,7 +84,7 @@ export default function Home() {
 				</div>
 			)}
 
-			{keypair !== null && <FloatOptionBar pubkey={keypair.publicKey} />}
+			{keypair !== null && <FloatOptionBar pubkey={keypair.publicKey} mobile={mobile}/>}
 		</div>
 	);
 }
