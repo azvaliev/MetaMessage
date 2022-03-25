@@ -1,7 +1,6 @@
 import "../styles/globals.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import isMobile from "../components/logic/isMobile";
 import type { AppProps } from "next/app";
 import encryptStorePassword from "../components/logic/encryption_local/encryptStorePassword";
 import deleteAccount from "../components/logic/account/deleteAccount";
@@ -9,6 +8,13 @@ import { Keypair } from "@solana/web3.js";
 import { UserContext } from "../components/UserContext";
 import { MessageObj } from "../components/types";
 import checkMessages from "../components/logic/messaging/in/checkMessages";
+
+const isMobile = () => {
+	if (window.innerHeight > window.innerWidth * 1.5 && window.innerWidth < 650) {
+		return true;
+	}
+	return false;
+};
 
 async function getConversations(wallet: Keypair) {
 	let incoming = await checkMessages(wallet);
