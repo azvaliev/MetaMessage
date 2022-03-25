@@ -34,11 +34,11 @@ export default function Home() {
 				</h1>
 			</div>
 
-			{keypair !== null && conversations.length === 0 ? (
+			{ conversations === null ? (
 				<div className="w-full">
 					<h3 className="pt-8 text-3xl text-center">Loading...</h3>
 				</div>
-			) : conversations === null ? (
+			) : conversations !== null && conversations.length === 0 ? (
 				<div className="w-full">
 					<h3 className="pt-8 text-3xl text-center">No conversations yet</h3>
 				</div>
@@ -46,39 +46,41 @@ export default function Home() {
 				<div className="w-full">
 					{conversations.map((conversation: Array<MessageObj>) => {
 						let recipient = null;
-						conversation.forEach((message) => {
-							if (
-								message.sender !== keypair.publicKey &&
-								message.sender !== undefined
-							) {
-								recipient = message.sender;
+						if (keypair) {
+							conversation.forEach((message) => {
+								if (
+									message.sender !== keypair.publicKey &&
+									message.sender !== undefined
+								) {
+									recipient = message.sender;
+								}
+							});
+							if (recipient === null) {
+								recipient = conversation[0].reciever;
 							}
-						});
-						if (recipient == null) {
-							recipient = conversation[0].reciever;
-						}
-						if (recipient !== null) {
-							return (
-								<Link
-									href="/conversation/[address]"
-									as={`/conversation/${recipient.toString()}`}
-									key={recipient.toString()}
-								>
-									<div className="flex flex-col w-full px-2 pt-4 pb-2 border-b-2 border-gray-700">
-										<div className="flex flex-row">
-											<h3 className="ml-0 mr-auto text-2xl">
-												{ShortenPubkey(recipient.toString(), false, mobile)}
-											</h3>
-										</div>
-										<h4 className="pt-2 text-xl italic text-left text-gray-400 md:pt-4">
-											{conversation[conversation.length - 1].sender !==
+							if (recipient !== null) {
+								return (
+									<Link
+										href="/conversation/[address]"
+										as={`/conversation/${recipient.toString()}`}
+										key={recipient.toString()}
+									>
+										<div className="flex flex-col w-full px-2 pt-4 pb-2 border-b-2 border-gray-700">
+											<div className="flex flex-row">
+												<h3 className="ml-0 mr-auto text-2xl">
+													{ShortenPubkey(recipient.toString(), false, mobile)}
+												</h3>
+											</div>
+											<h4 className="pt-2 text-xl italic text-left text-gray-400 md:pt-4">
+												{conversation[conversation.length - 1].sender !==
 												keypair.publicKey
-												? "New Message"
-												: "Delivered"}
-										</h4>
-									</div>
-								</Link>
-							);
+													? "New Message"
+													: "Delivered"}
+											</h4>
+										</div>
+									</Link>
+								);
+							}
 						}
 					})}
 				</div>

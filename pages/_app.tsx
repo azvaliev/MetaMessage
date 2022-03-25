@@ -2,31 +2,27 @@ import "../styles/globals.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
+import type { Keypair } from "@solana/web3.js";
+import type { MessageObj } from "../lib/types";
+
+import { UserContext } from "../lib/UserContext";
 import encryptStorePassword from "../lib/encryption/encryptStorePassword";
 import deleteAccount from "../lib/account/deleteAccount";
-import type { Keypair } from "@solana/web3.js";
-import { UserContext } from "../lib/UserContext";
-import type { MessageObj } from "../lib/types";
 import checkMessages from "../lib/messaging/in/checkMessages";
+import isMobile from "../lib/isMobile";
 
-const isMobile = () => {
-	if (window.innerHeight > window.innerWidth * 1.5 && window.innerWidth < 650) {
-		return true;
-	}
-	return false;
-};
 
 async function getConversations(wallet: Keypair) {
 	let incoming = await checkMessages(wallet);
 	if (incoming.length === 0) {
-		incoming = null;
+		incoming = [];
 	}
 	return incoming;
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
 	const [keypair, setKeypair] = useState<Keypair>(null);
-	const [conversations, setConversations] = useState<Array<Array<MessageObj>>>([]);
+	const [conversations, setConversations] = useState<Array<Array<MessageObj>>>(null);
 	const [mobile, setMobile] = useState<boolean>(false);
 	const router = useRouter();
 
@@ -50,7 +46,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 					} catch (err) {
 						console.error(err);
 					}
-				}, 5000);
+				}, 2000);
 
 				() => {
 					clearInterval(check);
