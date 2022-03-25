@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { compareDates } from "../createFormatDate";
+import { compareDates } from "../sortFormatDate";
 
 interface Props {
   showDate: boolean;
