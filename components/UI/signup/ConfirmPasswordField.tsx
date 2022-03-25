@@ -1,6 +1,6 @@
 import { KeyboardEvent, useEffect, ChangeEventHandler } from "react";
 import PasswordBarIndicator from "./PasswordBarIndicator";
-import checkConfirmPassword from "../../logic/account/checkConfirmPassword";
+import checkConfirmPassword from "../../logic/signup/checkConfirmPassword";
 
 interface Props {
   passwordOG: string;
