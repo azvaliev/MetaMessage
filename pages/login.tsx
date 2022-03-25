@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useContext, useState } from "react";
 import { pageProps } from "../components/types";
 import Link from "next/link";
-import decryptPassword from "../components/logic/encryption_local/decryptPassword";
+import decryptPassword from "../components/logic/encryption/decryptPassword";
 import { UserContext } from "../components/UserContext";
 
 const Login = (props: pageProps) => {

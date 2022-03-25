@@ -2,11 +2,11 @@ import "../styles/globals.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
-import encryptStorePassword from "../components/logic/encryption_local/encryptStorePassword";
+import encryptStorePassword from "../components/logic/encryption/encryptStorePassword";
 import deleteAccount from "../components/logic/account/deleteAccount";
-import { Keypair } from "@solana/web3.js";
+import type { Keypair } from "@solana/web3.js";
 import { UserContext } from "../components/UserContext";
-import { MessageObj } from "../components/types";
+import type { MessageObj } from "../components/types";
 import checkMessages from "../components/logic/messaging/in/checkMessages";
 
 const isMobile = () => {
