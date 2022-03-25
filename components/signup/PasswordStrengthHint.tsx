@@ -1,4 +1,4 @@
-import { PasswordStrengthObj } from "../../types";
+import { PasswordStrengthObj } from "../../lib/types";
 
 interface Props {
   strength: PasswordStrengthObj;

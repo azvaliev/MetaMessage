@@ -1,11 +1,11 @@
 import { useContext, useEffect } from "react";
 import Link from "next/link";
-import { ShortenPubkey } from "../components/UI/Shorten";
-import { MessageObj } from "../components/types";
-import FloatOptionBar from "../components/UI/option_bar/FloatOptionBar";
-import handleRedirect from "../components/logic/account/handleRedirect";
+import { ShortenPubkey } from "../components/Shorten";
+import { MessageObj } from "../lib/types";
+import FloatOptionBar from "../components/option_bar/FloatOptionBar";
+import handleRedirect from "../lib/account/handleRedirect";
 import { useRouter } from "next/router";
-import { UserContext } from "../components/UserContext";
+import { UserContext } from "../lib/UserContext";
 
 export default function Home() {
 

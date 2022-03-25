@@ -1,6 +1,6 @@
 import  * as spl from "@solana/spl-token";
 import { Keypair, Connection, clusterApiUrl } from "@solana/web3.js";
-import { MessageObj } from "../../../types";
+import { MessageObj } from "../../types";
 
 const sendReadReceipt = async (wallet: Keypair, messageDetails: MessageObj) => {
 	const connection = new Connection(

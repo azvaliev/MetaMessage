@@ -1,11 +1,11 @@
 import {KeyboardAvoidingView, View} from "react-native-web";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
-import ComposeMessageField from "../components/UI/conversation/ComposeMessageField";
-import AlertMessage from "../components/UI/AlertMessage";
-import checkSendMessage from "../components/logic/messaging/out/checkSendMessage";
+import ComposeMessageField from "../components/conversation/ComposeMessageField";
+import AlertMessage from "../components/AlertMessage";
+import checkSendMessage from "../lib/messaging/out/checkSendMessage";
 import { useRouter } from "next/router";
-import { UserContext } from "../components/UserContext";
+import { UserContext } from "../lib/UserContext";
 
 const Compose = () => {
 

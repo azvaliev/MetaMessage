@@ -1,6 +1,6 @@
 import { ChangeEventHandler, useState, useEffect } from "react";
 import PasswordBarIndicator from "./PasswordBarIndicator";
-import { PasswordStrengthObj } from "../../types";
+import { PasswordStrengthObj } from "../../lib/types";
 import PasswordStrengthHint from "./PasswordStrengthHint";
 
 interface Props {

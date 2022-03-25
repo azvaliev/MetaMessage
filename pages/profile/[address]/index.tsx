@@ -5,9 +5,9 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import copy from "copy-to-clipboard";
 import { useRouter } from "next/router";
-import { pageProps } from "../../../components/types";
-import { ShortenPubkey } from "../../../components/UI/Shorten";
-import { UserContext } from "../../../components/UserContext";
+import { pageProps } from "../../../lib/types";
+import { ShortenPubkey } from "../../../components/Shorten";
+import { UserContext } from "../../../lib/UserContext";
 
 const AddressHolder = styled.h1`
   word-wrap: break-word;

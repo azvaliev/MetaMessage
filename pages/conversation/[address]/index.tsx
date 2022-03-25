@@ -1,18 +1,18 @@
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef, useContext } from "react";
 import { KeyboardAvoidingView, ScrollView } from "react-native-web";
-import Message from "../../../components/UI/conversation/Message";
-import ComposeMessageField from "../../../components/UI/conversation/ComposeMessageField";
-import AlertMessage from "../../../components/UI/AlertMessage";
-import { MessageObj } from "../../../components/types";
-import { ShortenPubkey } from "../../../components/UI/Shorten";
+import Message from "../../../components/conversation/Message";
+import ComposeMessageField from "../../../components/conversation/ComposeMessageField";
+import AlertMessage from "../../../components/AlertMessage";
+import { MessageObj } from "../../../lib/types";
+import { ShortenPubkey } from "../../../components/Shorten";
 import copy from "copy-to-clipboard";
-import checkSendMessage from "../../../components/logic/messaging/out/checkSendMessage";
-import { CloseConvBtn } from "../../../components/UI/option_bar/StyledOptionBar";
-import getMessage from "../../../components/logic/messaging/in/getMessage";
-import handleRedirect from "../../../components/logic/account/handleRedirect";
-import sendReadReceipt from "../../../components/logic/messaging/out/sendReadReceipt";
-import { UserContext } from "../../../components/UserContext";
+import checkSendMessage from "../../../lib/messaging/out/checkSendMessage";
+import { CloseConvBtn } from "../../../components/option_bar/StyledOptionBar";
+import getMessage from "../../../lib/messaging/in/getMessage";
+import handleRedirect from "../../../lib/account/handleRedirect";
+import sendReadReceipt from "../../../lib/messaging/out/sendReadReceipt";
+import { UserContext } from "../../../lib/UserContext";
 
 export default function Conversation() {
 

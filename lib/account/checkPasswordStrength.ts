@@ -1,4 +1,4 @@
-import { PasswordStrengthObj } from "../../types";
+import { PasswordStrengthObj } from "../types";
 
 const checkPasswordStrength = (
 	password: string,

@@ -1,8 +1,8 @@
 import { ChangeEvent, KeyboardEvent, useContext, useState } from "react";
-import { pageProps } from "../components/types";
+import { pageProps } from "../lib/types";
 import Link from "next/link";
-import decryptPassword from "../components/logic/encryption/decryptPassword";
-import { UserContext } from "../components/UserContext";
+import decryptPassword from "../lib/encryption/decryptPassword";
+import { UserContext } from "../lib/UserContext";
 
 const Login = (props: pageProps) => {
 	const [password, setPassword] = useState("");

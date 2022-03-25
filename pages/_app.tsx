@@ -2,12 +2,12 @@ import "../styles/globals.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
-import encryptStorePassword from "../components/logic/encryption/encryptStorePassword";
-import deleteAccount from "../components/logic/account/deleteAccount";
+import encryptStorePassword from "../lib/encryption/encryptStorePassword";
+import deleteAccount from "../lib/account/deleteAccount";
 import type { Keypair } from "@solana/web3.js";
-import { UserContext } from "../components/UserContext";
-import type { MessageObj } from "../components/types";
-import checkMessages from "../components/logic/messaging/in/checkMessages";
+import { UserContext } from "../lib/UserContext";
+import type { MessageObj } from "../lib/types";
+import checkMessages from "../lib/messaging/in/checkMessages";
 
 const isMobile = () => {
 	if (window.innerHeight > window.innerWidth * 1.5 && window.innerWidth < 650) {
