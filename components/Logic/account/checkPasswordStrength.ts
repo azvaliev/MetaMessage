@@ -1,18 +1,5 @@
 import { PasswordStrengthObj } from "../../types";
 
-export const calculateStrengthScore = (
-	strengthArr: Array<boolean>,
-	passLength: number
-) => {
-	// calculate the number of password strength reqs that are met (true)
-	const total = strengthArr.filter((v) => v === true).length;
-	// divide this by 2.3 to create a score for indicator
-	if (passLength > 3) {
-		return Math.round(total / 2.3);
-	}
-	return -1;
-};
-
 const checkPasswordStrength = (
 	password: string,
 	propsReqs: PasswordStrengthObj

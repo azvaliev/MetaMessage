@@ -2,7 +2,6 @@ import { ChangeEventHandler, useState, useEffect } from "react";
 import PasswordBarIndicator from "./PasswordBarIndicator";
 import { PasswordStrengthObj } from "../../types";
 import PasswordStrengthHint from "./PasswordStrengthHint";
-import { calculateStrengthScore } from "../../logic/account/checkPasswordStrength";
 
 interface Props {
   password: string;
@@ -11,6 +10,19 @@ interface Props {
   onPasswordAccepted(v: boolean): void;
   mobile: boolean;
 }
+
+const calculateStrengthScore = (
+	strengthArr: Array<boolean>,
+	passLength: number
+) => {
+	// calculate the number of password strength reqs that are met (true)
+	const total = strengthArr.filter((v) => v === true).length;
+	// divide this by 2.3 to create a score for indicator
+	if (passLength > 3) {
+		return Math.round(total / 2.3);
+	}
+	return -1;
+};
 
 const PasswordField = (props: Props) => {
 	const [strengthScore, setStrengthScore] = useState(
