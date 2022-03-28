@@ -25,4 +25,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## How It Works
 
-Currently, it uses the [Solana Memo Program](https://spl.solana.com/memo), however it will work through a system of Spl-Tokens in the future. 
+Currently, it uses the [Spl Token Programm](https://spl.solana.com) to send unique tokens that are used as keys to message values in a Redis database
