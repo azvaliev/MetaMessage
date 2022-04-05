@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Bar = styled.div`
-  right: 4%;
+  right: 17.5%;
   min-width: 6vw;
   @media screen and (max-width: 767px) {
     min-width: 19vw;
@@ -9,7 +9,8 @@ export const Bar = styled.div`
 `;
 
 export const OptionHolder = styled.div`
-  min-width: 6vw;
+  display: flex;
+  width: 6vw;
   height: 6vw;
   @media screen and (max-width: 767px) {
     min-width: 19vw;
@@ -22,12 +23,10 @@ export const OptionHolder = styled.div`
 export const OptionInnerHolder = styled.div`
   min-width: 5vw;
   height: 5vw;
+  margin: auto;
   @media screen and (max-width: 767px) {
     min-width: 14vw;
     min-height: 14vw;
-  }
-  @media (min-width: 660px) {
-    bottom: 1.5vw;
   }
 `;
 export const CloseConvBtn = styled.h5`

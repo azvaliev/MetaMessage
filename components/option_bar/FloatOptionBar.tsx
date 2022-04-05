@@ -16,7 +16,7 @@ export default function FloatOptionBar(props: { pubkey: PublicKey, mobile: boole
 		<Bar className="h-full left-auto z-20 absolute flex flex-col-reverse">
 			<Link href="/compose">
 				<OptionHolder className="relative invert top-auto right-1 left-auto bg-yellow-600 rounded-2xl md:rounded-xl">
-					<OptionInnerHolder className="relative invert top-3 md:top-2">
+					<OptionInnerHolder className="relative invert">
 						<Image
 							src="/img/compose.png"
 							alt="Compose"
@@ -32,19 +32,23 @@ export default function FloatOptionBar(props: { pubkey: PublicKey, mobile: boole
 					className="relative top-auto right-1 left-auto invert  bg-gray-300 rounded-2xl md:rounded-xl"
 					onClick={handleToggleOptions}
 				>
-					<OptionInnerHolder className="relative bottom-4 invert  md:bottom-0 top-auto flex my-auto">
-						<h5 className="mx-auto text-7xl lg:-mt-2">...</h5>
+					<OptionInnerHolder className="relative invert top-auto flex my-auto">
+						<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" fill="#fff" className="h-full w-full">
+							<path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path>
+						</svg>
 					</OptionInnerHolder>
 				</OptionHolder>
 			) : (
 				<>
 					<OptionHolder
-						className="relative top-auto right-1 left-auto bg-gray-300 invert rounded-2xl md:rounded-xl"
+						className="relative top-auto right-1 left-auto invert  bg-gray-300 rounded-2xl md:rounded-xl"
 						onClick={handleToggleOptions}
 					>
-						<div className="relative bottom-1 text-black md:bottom-2 top-auto flex my-auto">
-							<h5 className="mx-auto text-7xl ">&#x2715;</h5>
-						</div>
+						<OptionInnerHolder className="relative invert top-auto flex my-auto">
+							<svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" fill="#fff" className="h-full w-full">
+								<path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+							</svg>
+						</OptionInnerHolder>
 					</OptionHolder>
 					<OptionHolder className="z-10 relative top-auto right-1 left-auto bg-black rounded-2xl md:rounded-xl">
 						<Link
