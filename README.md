@@ -1,5 +1,9 @@
 This is a [Next.js] TypeScript project bootstrapped with [`create-next-app`]
 
+# Known Bugs
+- Messages instantly dissapears after opening
+- App crashes after opening and viewing message
+
 The latest deployment can be viewed [here](https://meta-message-bcxq7js8l-azatvaliev.vercel.app)
 
 ## Getting Started
