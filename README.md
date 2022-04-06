@@ -1,6 +1,6 @@
 This is a [Next.js] TypeScript project bootstrapped with [`create-next-app`]
 
-For the latest version using Spl-Tokens / NFTs, see the spl-token-redis branch
+# For the latest version using Spl-Tokens / NFTs, see the spl-token-redis branch
 
 The latest deployment can be viewed [here](https://meta-message-bcxq7js8l-azatvaliev.vercel.app)
 
