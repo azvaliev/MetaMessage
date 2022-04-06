@@ -19,7 +19,6 @@ export default async function checkMessages(wallet: web3.Keypair) {
 
 	const conversations = [];
 
-
 	// Get message ID's, sender information 
 	for (let i = 0; i < recents.length; i++) {
 		const transaction = recents[i];
@@ -31,7 +30,12 @@ export default async function checkMessages(wallet: web3.Keypair) {
 			const sender = new web3.PublicKey(details.source);
 			const reciever = new web3.PublicKey(details.wallet);
 			const mint = new web3.PublicKey(details.mint);
-			const tokenAccount = new web3.PublicKey(innerInstructions.destination);
+			let tokenAccount;
+			try {
+				tokenAccount = new web3.PublicKey(innerInstructions.destination);
+			} catch {
+				tokenAccount = new web3.PublicKey(innerInstructions.newAccount);
+			}
 			const senderTokenAccount = new web3.PublicKey(innerInstructions.source);
 
 			// an alternate way of getting some of this information
@@ -75,8 +79,8 @@ export default async function checkMessages(wallet: web3.Keypair) {
 					}
 				}
 			}
-		} catch {
-			continue;
+		} catch (err) {
+			console.log(err);
 		}
 	}
 
