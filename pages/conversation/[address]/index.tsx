@@ -29,6 +29,7 @@ export default function Conversation() {
 	});
 	const [displayAddress, setDisplayAddress] = useState(address);
 
+
 	const scrollRef = useRef(null);
 
 	useEffect(() => {
@@ -39,27 +40,23 @@ export default function Conversation() {
 
 		// Handle error if prior conversations do not exist
 		try {
-			let activeConvCopy = [];
-			conversations.forEach((conversation: MessageObj[]) => {
-				if (conversation[0].sender.toString() === address || conversation[0].reciever.toString() === address) {
-					activeConvCopy = [...conversation];
-					setDisplayAddress(ShortenPubkey(address, false, mobile));
-				}
-			});
-      
+			const activeConvEncoded = conversations.find(
+				conversation => conversation.some(
+					message => message.sender.toString() === address
+				));
 
-			Promise.all(activeConvCopy.map(async (message: MessageObj) => {
+			setDisplayAddress(ShortenPubkey(address.toString(), false, mobile));
+			Promise.all(activeConvEncoded.map(async (message: MessageObj) => {
 				return await getMessage(message.messageID.toString());
-			}))
-				.then((res) => {
-					setActiveConversation(() => {
-						return activeConvCopy.map((message, i) => {
-							return {...message, messageContents: res[i]};
-						});
-					});
-				})
-				.catch((error) => console.error(error));
-
+			})).then(res => {
+				console.log(res);
+				setActiveConversation(() => 
+					activeConvEncoded.map((message, i) => (
+						{...message, messageContents: res[i]})
+					)
+				);
+			});
+			
 		} catch (e) {
 			console.error(e);
 			setDisplayAddress(ShortenPubkey(address.toString(), false, mobile));
@@ -68,6 +65,7 @@ export default function Conversation() {
 		const stayUp = setInterval(() => {
 			window.scrollTo(0, 0);
 		}, 2);
+
 		return () => {
 			clearInterval(stayUp);
 			// Send read reciepts for messages viewed
@@ -88,10 +86,10 @@ export default function Conversation() {
 
 	useEffect(() => {
 		heightCheck();
-		scrollRef.current.scrollToEnd({ animated: false });
+		scrollRef.current.scrollToEnd({ animated: true });
 		setTimeout(() => {
 			mobile ? setHeight("79vh") : setHeight("87vh");
-			scrollRef.current.scrollToEnd({ animated: false });
+			scrollRef.current.scrollToEnd({ animated: true });
 		}, 30);
 	}, []);
 
