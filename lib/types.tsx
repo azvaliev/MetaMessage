@@ -3,7 +3,7 @@ import {MouseEventHandler} from "react";
 
 export interface userInfo {
 	keypair: Keypair;
-	conversations: Array<Array<MessageObj>>;
+	conversations: ConversationDict;
 	mobile: boolean;
 }
 export interface pageProps {
@@ -21,6 +21,8 @@ export interface MessageObj {
 	messageID: PublicKey,
 	messageContents?: string,
 }
+
+export type ConversationDict = Record<string, MessageObj[]>;
 
 export interface PasswordStrengthObj {
 	min_length: boolean;

@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 import * as web3 from "@solana/web3.js";
 import * as splToken from "@solana/spl-token";
 import checkForReadReceipt from "./checkForReadReceipt";
@@ -17,7 +18,7 @@ export default async function checkMessages(wallet: web3.Keypair) {
 		"confirmed"
 	);
 
-	const conversations = [];
+	const conversations = {};
 
 	// Get message ID's, sender information 
 	for (let i = 0; i < recents.length; i++) {
@@ -66,21 +67,16 @@ export default async function checkMessages(wallet: web3.Keypair) {
 							"senderTokenAccount": senderTokenAccount,
 							"messageID": mint
 						};
-						let newConv = true;
-						for (let i = 0; i < conversations.length; i++) {
-							if (conversations[i][0].sender.toString() == sender.toString()) {
-								newConv = false;
-								conversations[i].push(newMessage);
-							}
-						}
-						if (newConv == true) {
-							conversations.push([newMessage]);
+						if (conversations.hasOwnProperty(sender.toString())) {
+							conversations[sender.toString()].push(newMessage);
+						} else {
+							conversations[sender.toString()] = [newMessage];
 						}
 					}
 				}
 			}
 		} catch (err) {
-			console.log(err);
+			continue;
 		}
 	}
 

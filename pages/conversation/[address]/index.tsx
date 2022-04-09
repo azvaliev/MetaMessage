@@ -40,10 +40,7 @@ export default function Conversation() {
 
 		// Handle error if prior conversations do not exist
 		try {
-			const activeConvEncoded = conversations.find(
-				conversation => conversation.some(
-					message => message.sender.toString() === address
-				));
+			const activeConvEncoded = conversations[address.toString()];
 
 			setDisplayAddress(ShortenPubkey(address.toString(), false, mobile));
 			Promise.all(activeConvEncoded.map(async (message: MessageObj) => {
@@ -170,6 +167,7 @@ export default function Conversation() {
 									message={message.messageContents}
 									showDate={true}
 									date={new Date}
+									key={message.messageID.toString()}
 								/>
 							);
 						} else {
@@ -179,6 +177,7 @@ export default function Conversation() {
 									message={""}
 									showDate={false}
 									date={new Date}
+									key={message.messageID.toString()}
 								/>
 							);
 						}

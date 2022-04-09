@@ -3,26 +3,28 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 import type { Keypair } from "@solana/web3.js";
-import type { MessageObj } from "../lib/types";
+import * as _ from "lodash";
 
 import { UserContext } from "../lib/UserContext";
 import encryptStorePassword from "../lib/encryption/encryptStorePassword";
 import deleteAccount from "../lib/account/deleteAccount";
 import checkMessages from "../lib/messaging/in/checkMessages";
 import isMobile from "../lib/isMobile";
+import type { ConversationDict } from "../lib/types";
+import useInterval from "../lib/hooks/useInterval";
 
 
 async function getConversations(wallet: Keypair) {
 	let incoming = await checkMessages(wallet);
-	if (incoming.length === 0) {
-		incoming = [];
+	if (Object.keys(incoming).length === 0) {
+		incoming = {};
 	}
 	return incoming;
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
 	const [keypair, setKeypair] = useState<Keypair>(null);
-	const [conversations, setConversations] = useState<Array<Array<MessageObj>>>(null);
+	const [conversations, setConversations] = useState<ConversationDict>(null);
 	const [mobile, setMobile] = useState<boolean>(false);
 	const router = useRouter();
 
@@ -36,24 +38,20 @@ function MyApp({ Component, pageProps }: AppProps) {
 				setTimeout(async () => {
 					setConversations(await getConversations(keypair));
 				}, 5);
-				// TODO move this with the above
-				const check = setInterval(async () => {
-					try {
-						const newConversations = await getConversations(keypair);
-						if (newConversations !== conversations) {
-							setConversations(newConversations);
-						}
-					} catch (err) {
-						console.error(err);
-					}
-				}, 3000);
-
-				() => {
-					clearInterval(check);
-				};
 			}
 		}
-	}, [keypair]);
+	}, []);
+
+	useInterval(async () => {
+		try {
+			const newConversations = await getConversations(keypair);
+			if (!_.isEqual(newConversations, conversations)) {
+				setConversations(newConversations);
+			}
+		} catch (err) {
+			console.error(err);
+		}
+	}, 3000);
 
 	const handleSignIn = (kp: Keypair) => {
 		setKeypair(kp);
@@ -71,7 +69,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 		router.push("/welcome");
 		await deleteAccount();
 
-		setConversations([]);
+		setConversations({});
 		setKeypair(null);
 	};
 
