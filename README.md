@@ -6,11 +6,21 @@ This is a [Next.js] TypeScript project bootstrapped with [`create-next-app`]
 - Read receipts don't work
 - New conversations are not shown until a message is recieved
 
-The latest deployment can be viewed [here](https://meta-message-bcxq7js8l-azatvaliev.vercel.app)
+### Latest deployment can be viewed [here](https://meta-message-git-spl-token-redis-azatvaliev.vercel.app/welcome)
 
-## Getting Started
+## Getting Started Locally
 
-First, install dependencies:
+Create a .env.local file in the root folder with the following environment variable
+```
+API_URL=YOUR_REDIS_ENDPOINT_HERE
+```
+
+You can get a free Redis database at [redis.com](https://redis.com/redis-enterprise-cloud/overview/).
+
+After signing up, create a database then you can compose the endpoint url as follows.
+redis://default:**DEFAULT_PASSWORD_HERE**@**PROVIDED-ENDPOINT-URL**
+
+Then, install dependencies:
 ```bash
 npm install
 ```
@@ -36,6 +46,7 @@ Bob and Alice both create accounts with Meta Message.
 Their wallet addresses are as follows.
 
 Bob - 3C3WRxARtXAeHEht5usyPFFRSX5gZSHDoBjBWwL3N8Sf
+
 Alice - 38qxLjdQ2y3cyNcnGwoLu929xjXqT5esnT2uSksqJftn
 
 
@@ -46,9 +57,9 @@ Private keys needed to sign and send a message are secure with Bob and Alice, en
 
 ### Messaging
 
-Bob wants to send a message to Alice, so he composes his message and enters the address 38qxLjdQ2y3cyNcnGwoLu929xjXqT5esnT2uSksqJftn as the recipient, since that is Alice's address.
+Bob wants to send a message to Alice, so he composes his message and enters the address 38qx...ksqJftn as the recipient, since that is Alice's address.
 
-Bob's address will then create and mint a unique NFT, let's say the mint ID is FxWPR8rsPPnq2mQJN9P8DsUcMUpSkCJDYHbMQEV51UV7DsUcMU. This NFT is then sent to Alice's address, and Bob will send a request to a Redis database to submit an key-value with his encrypted message as the value, and the mint ID as the key.
+Bob's address will then create and mint a unique NFT, let's say the mint ID is FxWPR8rsP...cMU. This NFT is then sent to Alice's address, and Bob will send a request to a Redis database to submit an key-value with his encrypted message as the value, and the mint ID as the key.
 
 Alice will then recieve the NFT, and can verify that it came from Bob's address and derive the mint ID. Using the mint ID, Alice will access the database entry, and upon access the message in database will be destroyed or within 72 hours if not opened.
 
