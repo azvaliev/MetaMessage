@@ -11,7 +11,6 @@ import checkSendMessage from "../../../lib/messaging/out/checkSendMessage";
 import { CloseConvBtn } from "../../../components/option_bar/StyledOptionBar";
 import getMessage from "../../../lib/messaging/in/getMessage";
 import handleRedirect from "../../../lib/account/handleRedirect";
-import sendReadReceipt from "../../../lib/messaging/out/sendReadReceipt";
 import { UserContext } from "../../../lib/UserContext";
 
 export default function Conversation() {
@@ -155,8 +154,7 @@ export default function Conversation() {
 				nativeID="main-conversation"
 			>
 				<ScrollView ref={scrollRef} nativeID="div-scroll-conv">
-					{activeConversation.map((message: MessageObj, i) => {
-						console.log(message);
+					{activeConversation.reverse().map((message: MessageObj, i) => {
 						if (!message.messageContents) {
 							return null;
 						}
@@ -174,7 +172,7 @@ export default function Conversation() {
 							return (
 								<Message
 									from={message.sender.toString() === address ? true : false}
-									message={""}
+									message={message.messageContents}
 									showDate={false}
 									date={new Date}
 									key={message.messageID.toString()}
