@@ -18,7 +18,7 @@ const ConfirmPasswordField = (props: Props) => {
 
 	const { mobile } = useContext(UserContext);
 
-	// Literally just checks if they are equal
+	// Literally just checks if they are equal and length > 0
 	const confirmPasswordScore = checkConfirmPassword(
 		props.passwordOG,
 		props.confirmPassword
@@ -51,7 +51,7 @@ const ConfirmPasswordField = (props: Props) => {
 				}
 				maxLength={20}
 			/>
-			<PasswordBarIndicator score={confirmPasswordScore} halfBar={true} />
+			<PasswordBarIndicator score={confirmPasswordScore} />
 		</>
 	);
 };

@@ -1,4 +1,4 @@
-const PasswordBarIndicator = (props: { score: number; halfBar?: boolean }) => {
+const PasswordBarIndicator = (props: { score: number }) => {
 	return (
 		<div className="flex w-full ">
 			{props.score >= 1 &&
