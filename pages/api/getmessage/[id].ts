@@ -12,10 +12,10 @@ export default async function handler(
 		);
 	}
 	try {
-		const msg = await client.execute(["GET", id]);
+		const message = await client.execute(["GET", id]) as string;
 		await client.execute(["DEL", id]);
 		await client.execute(["QUIT"]);
-		res.status(200).json(msg);
+		res.status(200).json(message);
 	} catch (err) {
 		await client.execute(["QUIT"]);
 		res.status(404);
