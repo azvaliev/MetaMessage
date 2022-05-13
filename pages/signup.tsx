@@ -1,42 +1,26 @@
 import { ChangeEvent, useState } from "react";
 import PasswordField from "../components/signup/PasswordField";
-import checkPasswordStrength from "../lib/account/checkPasswordStrength";
-import { PasswordStrengthObj, pageProps } from "../lib/types";
+import { pageProps } from "../lib/types";
 import ConfirmPasswordField from "../components/signup/ConfirmPasswordField";
 
 export default function SignUp (props: pageProps) {
 
-	const [passwordSecLevel, setPasswordSecLevel] = useState<PasswordStrengthObj>(
-		{
-			minLength: false,
-			containsNum: false,
-			containsSpecial: false,
-			containsCapital: false,
-			optimalLength: false
-		}
-	);
 	const [password, setPassword] = useState({
 		password: "",
 		confirmPassword: ""
 	});
-	const [passwordValid, setPasswordValid] = useState({
-		password: false,
-		confirmPassword: false
-	});
+	const [passwordValid, setPasswordValid] = useState(false);
 
-	const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-		setPasswordSecLevel(
-			checkPasswordStrength(e.target.value, passwordSecLevel)
-		);
+	const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => 
 		setPassword({ ...password, password: e.target.value });
-	};
-	const handleChangeConfirmPassword = (e: ChangeEvent<HTMLInputElement>) => {
+	
+	const handleChangeConfirmPassword = (e: ChangeEvent<HTMLInputElement>) => 
 		setPassword({ ...password, confirmPassword: e.target.value });
-	};
-	const handleSubmitPassword = () => {
+	
+	const handleSubmitPassword = () => 
 		props.onSetPassword(password.password);
-		// Send user to homepage
-	};
+
+	console.log(passwordValid);
 
 	return (
 		<div className="text-white text-center md:w-5/6 lg:w-1/2 md:mx-auto">
@@ -50,32 +34,20 @@ export default function SignUp (props: pageProps) {
 				<PasswordField
 					password={password.password}
 					setPassword={handleChangePassword}
-					strength={passwordSecLevel}
-					onPasswordAccepted={(res: boolean) =>
-						setPasswordValid({ ...passwordValid, password: res })
-					}
 				/>
-				{/* only show confirm field when password is minimum strength */}
-				{password.password.length > 3 && (
-					<ConfirmPasswordField
-						passwordOG={password.password}
-						confirmPassword={password.confirmPassword}
-						onSubmit={handleSubmitPassword}
-						setConfirmPassword={handleChangeConfirmPassword}
-						onPasswordConfirmed={(res: boolean) =>
-							setPasswordValid({ ...passwordValid, confirmPassword: res })
-						}
-					/>
-				)}
-				{/* Hide/disable button until password is min strength & confirmed */}
+				<ConfirmPasswordField
+					passwordOG={password.password}
+					confirmPassword={password.confirmPassword}
+					onSubmit={handleSubmitPassword}
+					setConfirmPassword={handleChangeConfirmPassword}
+					onPasswordConfirmed={(res: boolean) => setPasswordValid(res)}
+				/>
 				<button
-					onClick={passwordValid.confirmPassword ? handleSubmitPassword : null}
+					onClick={passwordValid ? handleSubmitPassword : null}
 					className={`mt-8 bg-blue-500 rounded-md px-4 py-2 text-3xl font-semibold ${
-						passwordValid.password
-							? passwordValid.confirmPassword
-								? ""
-								: "btn-disabled line-through"
-							: "invisible"
+						passwordValid
+							? ""
+							: "btn-disabled line-through"
 					}`}
 				>
           Submit

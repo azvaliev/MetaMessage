@@ -11,7 +11,7 @@ interface Props {
 }
 
 const checkConfirmPassword = (password: string, confirmPassword: string) => 
-	password === confirmPassword ? 3 : 1;
+	password === confirmPassword && confirmPassword.length > 0 ? 1 : 0;
 
 
 const ConfirmPasswordField = (props: Props) => {
@@ -26,14 +26,14 @@ const ConfirmPasswordField = (props: Props) => {
 
 	// if confirmed and original password is identical, score of 3 and let signup component know
 	useEffect(() => {
-		confirmPasswordScore === 3
+		confirmPasswordScore
 			? props.onPasswordConfirmed(true)
 			: props.onPasswordConfirmed(false);
 	}, [props.confirmPassword]);
 
 	// allow users to hit enter to submit
 	const checkEnter = (e: KeyboardEvent<HTMLInputElement>) => {
-		e.key === "Enter" && confirmPasswordScore === 3 ? props.onSubmit() : null;
+		e.key === "Enter" && confirmPasswordScore ? props.onSubmit() : null;
 	};
 
 	return (
