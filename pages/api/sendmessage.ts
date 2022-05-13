@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Client } from "redis-om";
 
+const EXPIRATION_3_DAYS = "259200";
+
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
@@ -14,7 +16,7 @@ export default async function handler(
 	const key = req.body.key;
 	const messageData = req.body.message;
 	client
-		.execute(["SET", key, messageData, "EX", "259200"])
+		.execute(["SET", key, messageData, "EX", EXPIRATION_3_DAYS])
 		.then(async () => {
 			try {
 				await client.execute(["QUIT"]);
