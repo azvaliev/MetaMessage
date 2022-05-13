@@ -4,7 +4,7 @@ import checkPasswordStrength from "../lib/account/checkPasswordStrength";
 import { PasswordStrengthObj, pageProps } from "../lib/types";
 import ConfirmPasswordField from "../components/signup/ConfirmPasswordField";
 
-export default function SignUp(props: pageProps) {
+export default function SignUp (props: pageProps) {
 
 	const [passwordSecLevel, setPasswordSecLevel] = useState<PasswordStrengthObj>(
 		{

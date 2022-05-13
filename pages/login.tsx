@@ -20,9 +20,10 @@ const Login = (props: pageProps) => {
 				setShowError(true)
 			);
 	};
-	const checkEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+
+	const checkEnter = (e: KeyboardEvent<HTMLInputElement>) => 
 		e.key === "Enter" ? handleSubmit() : null;
-	};
+	
 	const handleTyping = (e: ChangeEvent<HTMLInputElement>) => {
 		e.target.value.length > 2 ? setShowError(false) : null;
 		setPassword(e.target.value);
@@ -41,9 +42,11 @@ const Login = (props: pageProps) => {
 				value={password}
 				onChange={handleTyping}
 				onKeyDown={checkEnter}
-				className={`text-xl mt-[30vh] px-2 w-5/6 lg:w-2/3 mx-auto bg-black outline-none border-[1px] ${
-					mobile ? "text-center" : "text-left"
-				} ${showError ? "border-red-500" : "border-blue-500"} py-1`}
+				className={`
+					text-xl mt-[30vh] px-2 w-5/6 lg:w-2/3 mx-auto bg-black 
+					border-[1px] py-1 text-center sm:text-left outline-none
+					${showError ? "border-red-500" : "border-blue-500"}
+				`}
 				maxLength={20}
 			/>
 			{showError && (
