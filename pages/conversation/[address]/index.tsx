@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState, useRef, useContext } from "react";
+import { useEffect, useState, useRef, useContext, ChangeEvent } from "react";
 import { KeyboardAvoidingView, ScrollView } from "react-native-web";
 import Message from "../../../components/conversation/Message";
 import ComposeMessageField from "../../../components/conversation/ComposeMessageField";
@@ -25,7 +25,7 @@ export default function Conversation() {
 	const [height, setHeight] = useState("79vh");
 	const [theAlertMessage, setTheAlertMessage] = useState({
 		message: "",
-		warning: true,
+		warning: true
 	});
 	const [displayAddress, setDisplayAddress] = useState(address);
 
@@ -49,7 +49,7 @@ export default function Conversation() {
 				console.log(res);
 				setActiveConversation(() => 
 					activeConvEncoded.map((message, i) => (
-						{...message, messageContents: res[i]})
+						{ ...message, messageContents: res[i] })
 					)
 				);
 			});
@@ -105,7 +105,7 @@ export default function Conversation() {
 			scrollRef.current.scrollToEnd({ animated: false });
 		}, 5);
 	}
-	const handleTypingMessage = (e) => {
+	const handleTypingMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		setMessageContents(e.target.value);
 	};
 
@@ -124,7 +124,7 @@ export default function Conversation() {
 		setTimeout(() => {
 			setTheAlertMessage({
 				message: "",
-				warning: true,
+				warning: true
 			});
 		}, 7500);
 	};
@@ -141,7 +141,7 @@ export default function Conversation() {
 			<div
 				className="border-b-2 border-white flex flex-row"
 				style={{
-					padding: "2vh 0",
+					padding: "2vh 0"
 				}}
 			>
 				<h1

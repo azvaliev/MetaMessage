@@ -41,6 +41,7 @@ a {
   left: 5vw;
   right: 5vw;
 }
+
 @keyframes reveal {
   0% {
     opacity: 0;
