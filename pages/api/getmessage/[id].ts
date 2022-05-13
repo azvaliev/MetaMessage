@@ -14,7 +14,8 @@ export default async function handler(
 	try {
 		const message = await client.execute(["GET", id]) as string;
 		await client.execute(["DEL", id]);
-		await client.execute(["QUIT"]);
+		await client.close();
+		// await client.execute(["QUIT"]);
 		res.status(200).json(message);
 	} catch (err) {
 		await client.execute(["QUIT"]);
