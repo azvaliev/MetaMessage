@@ -25,11 +25,9 @@ export interface MessageObj {
 export type ConversationDict = Record<string, MessageObj[]>;
 
 export interface PasswordStrengthObj {
-	min_length: boolean;
-	contain_num: boolean;
-	contain_special: boolean;
-	not_generic: boolean;
-	contains_capital: boolean;
-	good_mix?: boolean;
-	optimal_length?: boolean;
+	minLength: boolean;
+	containsNum: boolean;
+	containsSpecial: boolean;
+	containsCapital: boolean;
+	optimalLength?: boolean;
 }

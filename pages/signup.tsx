@@ -11,22 +11,20 @@ export default function SignUp(props: pageProps) {
 
 	const [passwordSecLevel, setPasswordSecLevel] = useState<PasswordStrengthObj>(
 		{
-			min_length: false,
-			contain_num: false,
-			contain_special: false,
-			not_generic: false,
-			contains_capital: false,
-			good_mix: false,
-			optimal_length: false,
+			minLength: false,
+			containsNum: false,
+			containsSpecial: false,
+			containsCapital: false,
+			optimalLength: false
 		}
 	);
 	const [password, setPassword] = useState({
 		password: "",
-		confirmPassword: "",
+		confirmPassword: ""
 	});
 	const [passwordValid, setPasswordValid] = useState({
 		password: false,
-		confirmPassword: false,
+		confirmPassword: false
 	});
 
 	const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +60,7 @@ export default function SignUp(props: pageProps) {
 					}
 				/>
 				{/* only show confirm field when password is minimum strength */}
-				{passwordValid.password && (
+				{password.password.length > 3 && (
 					<ConfirmPasswordField
 						passwordOG={password.password}
 						confirmPassword={password.confirmPassword}

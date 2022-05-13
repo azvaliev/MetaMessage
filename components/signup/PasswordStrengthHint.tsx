@@ -8,8 +8,7 @@ const formattedReqs = [
 	"At least 8 characters",
 	"Include a number (0-9)",
 	"Include a special character ^&$*",
-	"Avoid common phrases (123, year)",
-	"Include a capital letter",
+	"Include a capital letter"
 ];
 
 const PasswordStrengthHint = (props: Props) => {
