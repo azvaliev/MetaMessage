@@ -1,17 +1,16 @@
 import { useRouter } from "next/router";
-import { useEffect, useState, useRef, useContext } from "react";
+import { useEffect, useState, useRef, useContext, ChangeEvent } from "react";
 import { KeyboardAvoidingView, ScrollView } from "react-native-web";
 import Message from "../../../components/conversation/Message";
 import ComposeMessageField from "../../../components/conversation/ComposeMessageField";
 import AlertMessage from "../../../components/AlertMessage";
 import { MessageObj } from "../../../lib/types";
-import { ShortenPubkey } from "../../../components/Shorten";
+import { shortenPubkey } from "../../../lib/shorten";
 import copy from "copy-to-clipboard";
 import checkSendMessage from "../../../lib/messaging/out/checkSendMessage";
 import { CloseConvBtn } from "../../../components/option_bar/StyledOptionBar";
 import getMessage from "../../../lib/messaging/in/getMessage";
 import handleRedirect from "../../../lib/account/handleRedirect";
-import sendReadReceipt from "../../../lib/messaging/out/sendReadReceipt";
 import { UserContext } from "../../../lib/UserContext";
 
 export default function Conversation() {
@@ -25,7 +24,7 @@ export default function Conversation() {
 	const [height, setHeight] = useState("79vh");
 	const [theAlertMessage, setTheAlertMessage] = useState({
 		message: "",
-		warning: true,
+		warning: true
 	});
 	const [displayAddress, setDisplayAddress] = useState(address);
 
@@ -42,21 +41,20 @@ export default function Conversation() {
 		try {
 			const activeConvEncoded = conversations[address.toString()];
 
-			setDisplayAddress(ShortenPubkey(address.toString(), false, mobile));
+			setDisplayAddress(shortenPubkey(address.toString(), false, mobile));
 			Promise.all(activeConvEncoded.map(async (message: MessageObj) => {
 				return await getMessage(message.messageID.toString());
 			})).then(res => {
-				console.log(res);
 				setActiveConversation(() => 
 					activeConvEncoded.map((message, i) => (
-						{...message, messageContents: res[i]})
+						{ ...message, messageContents: res[i] })
 					)
 				);
 			});
 			
 		} catch (e) {
 			console.error(e);
-			setDisplayAddress(ShortenPubkey(address.toString(), false, mobile));
+			setDisplayAddress(shortenPubkey(address.toString(), false, mobile));
 			setActiveConversation([]);
 		}
 		const stayUp = setInterval(() => {
@@ -65,10 +63,10 @@ export default function Conversation() {
 
 		return () => {
 			clearInterval(stayUp);
-			// Send read reciepts for messages viewed
-			Promise.all(activeConversation.map(async message => {
-				return await sendReadReceipt(keypair, message);	
-			}));
+			// Send read reciepts for messages viewed - TODO - RE-ENABLE
+			// Promise.all(activeConversation.map(async message => {
+			// 	return await sendReadReceipt(keypair, message);	
+			// }));
 		};
 	}, [conversations]);
   
@@ -105,7 +103,7 @@ export default function Conversation() {
 			scrollRef.current.scrollToEnd({ animated: false });
 		}, 5);
 	}
-	const handleTypingMessage = (e) => {
+	const handleTypingMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		setMessageContents(e.target.value);
 	};
 
@@ -124,7 +122,7 @@ export default function Conversation() {
 		setTimeout(() => {
 			setTheAlertMessage({
 				message: "",
-				warning: true,
+				warning: true
 			});
 		}, 7500);
 	};
@@ -141,7 +139,7 @@ export default function Conversation() {
 			<div
 				className="border-b-2 border-white flex flex-row"
 				style={{
-					padding: "2vh 0",
+					padding: "2vh 0"
 				}}
 			>
 				<h1
@@ -156,7 +154,7 @@ export default function Conversation() {
 				nativeID="main-conversation"
 			>
 				<ScrollView ref={scrollRef} nativeID="div-scroll-conv">
-					{activeConversation.map((message: MessageObj, i) => {
+					{activeConversation.reverse().map((message: MessageObj, i) => {
 						if (!message.messageContents) {
 							return null;
 						}
@@ -174,7 +172,7 @@ export default function Conversation() {
 							return (
 								<Message
 									from={message.sender.toString() === address ? true : false}
-									message={""}
+									message={message.messageContents}
 									showDate={false}
 									date={new Date}
 									key={message.messageID.toString()}

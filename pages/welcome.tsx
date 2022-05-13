@@ -19,7 +19,9 @@ const Welcome = () => {
           (It&lsquo;s like your phone # on the blockchain)
 				</h3>
 				<Link href="/signup">
-					<button className="bg-blue-700 px-4 lg:px-6 py-2 rounded-md mt-6 lg:mt-10 text-3xl lg:text-4xl lg:hover:text-[2.6rem] lg:hover:py-3 font-bold">
+					<button className="
+						bg-blue-700 px-4 lg:px-6 py-2 rounded-md mt-6 lg:mt-10 text-3xl
+						lg:text-4xl lg:hover:text-[2.6rem] lg:hover:py-3 font-bold">
             Sign Up
 					</button>
 				</Link>

@@ -21,23 +21,24 @@ export default async function checkMessages(wallet: web3.Keypair) {
 	const conversations = {};
 
 	// Get message ID's, sender information 
-	for (let i = 0; i < recents.length; i++) {
-		const transaction = recents[i];
+	for (const transaction of recents) {
 		try {
-			const parsedTransaction: any = await connection.getParsedTransaction(transaction.signature);
-			const details = parsedTransaction.transaction.message.instructions[0].parsed.info;
+			const parsedTransaction: web3.ParsedTransactionWithMeta = await connection.getParsedTransaction(transaction.signature);
+			const instructions = parsedTransaction.transaction.message.instructions[0] as web3.ParsedInstruction;
+			const details = instructions.parsed.info;
 			// console.log(parsedTransaction.meta.innerInstructions);
-			const innerInstructions = parsedTransaction.meta.innerInstructions[0].instructions[0].parsed.info;
+			const innerInstructions = parsedTransaction.meta.innerInstructions[0].instructions[0] as web3.ParsedInstruction;
+			const innerDetails = innerInstructions.parsed.info;
 			const sender = new web3.PublicKey(details.source);
 			const reciever = new web3.PublicKey(details.wallet);
 			const mint = new web3.PublicKey(details.mint);
-			let tokenAccount;
+			let tokenAccount: web3.PublicKey;
 			try {
-				tokenAccount = new web3.PublicKey(innerInstructions.destination);
+				tokenAccount = new web3.PublicKey(innerDetails.destination);
 			} catch {
-				tokenAccount = new web3.PublicKey(innerInstructions.newAccount);
+				tokenAccount = new web3.PublicKey(innerDetails.newAccount);
 			}
-			const senderTokenAccount = new web3.PublicKey(innerInstructions.source);
+			const senderTokenAccount = new web3.PublicKey(innerDetails.source);
 
 			// an alternate way of getting some of this information
 			// const tokenAccount = details.account;
@@ -49,7 +50,7 @@ export default async function checkMessages(wallet: web3.Keypair) {
 			// 	}
 			// })
 
-			if (sender.toString() != wallet.publicKey.toString()) {
+			if (sender.toString() !== wallet.publicKey.toString()) {
 				// Messages sent from user will be encrypted in localstorage until
 				// read signal is recieved
 				const mintAuthority = (await splToken.getMint(connection, mint)).mintAuthority;

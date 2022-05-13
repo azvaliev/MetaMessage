@@ -5,15 +5,15 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import copy from "copy-to-clipboard";
 import { useRouter } from "next/router";
-import { pageProps } from "../../../lib/types";
-import { ShortenPubkey } from "../../../components/Shorten";
+import { PageProps } from "../../../lib/types";
+import { shortenPubkey } from "../../../lib/shorten";
 import { UserContext } from "../../../lib/UserContext";
 
 const AddressHolder = styled.h1`
   word-wrap: break-word;
 `;
 
-export default function Profile(props: pageProps) {
+export default function Profile(props: PageProps) {
 
 	const { mobile, keypair } = useContext(UserContext);
 
@@ -31,7 +31,7 @@ export default function Profile(props: pageProps) {
 		try {
 			const key = keypair.publicKey.toString();
 			if (typeof key === "string") {
-				setDisplayAddress(ShortenPubkey(key, false, true));
+				setDisplayAddress(shortenPubkey(key, false, true));
 				setFullAddress(key);
 			} else {
 				setDisplayAddress("loading...");

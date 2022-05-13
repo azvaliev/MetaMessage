@@ -1,6 +1,6 @@
 import postMessage from "./postMessage";
-import * as splToken from "@solana/spl-token";
 
+import * as splToken from "@solana/spl-token";
 import * as web3 from "@solana/web3.js";
 
 export default async function SendMsg(
@@ -13,7 +13,7 @@ export default async function SendMsg(
 		web3.clusterApiUrl("devnet"),
 		"confirmed"
 	);
-	console.log("CONNECTED");
+	console.error("CONNECTED");
 
 	const recipPubkey = new web3.PublicKey(recipient);
 
@@ -33,11 +33,9 @@ export default async function SendMsg(
 		// Initialize a mint with unique token
 		const mint = <web3.PublicKey> await splToken
 			.createMint(connection, wallet, wallet.publicKey, wallet.publicKey, 0)
-			.catch((err) => {
-				console.error(err, mint);
-			});
-
-		console.error("minted!");
+			.catch(err => 
+				console.error(err, mint)
+			);
 
 		// Create a new account to hold token
 		// Mint directly to recipient account
@@ -77,6 +75,7 @@ export default async function SendMsg(
 		// 	wallet.publicKey,
 		// 	1
 		// );
+
 		const mintInfo = await splToken.getMint(connection, mint);
 		// Mint creators i.e. sender address
 		console.error(mintInfo.mintAuthority.toString());

@@ -1,6 +1,6 @@
 const getMessage = async (key: string) => {
 	const res = await fetch(`/api/getmessage/${key}`, {
-		method: "GET",
+		method: "GET"
 	});
 	return res.text();
 };

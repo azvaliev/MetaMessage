@@ -12,19 +12,18 @@ export default function Scan() {
 		yPos: 0,
 		show: false,
 		text: "",
-		success: false,
+		success: false
 	});
 	const [intervalC, setIntervalC] = useState({ interval: null });
 
-	const handleScanResult: OnResultFunction = (result) => {
+	const handleScanResult: OnResultFunction = result => {
 		console.log(result);
-		console.log(typeof result);
 		if (result) {
-			setScanPrompt((prevState) => {
+			setScanPrompt(prevState => {
 				return {
 					...prevState,
 					success: true,
-					text: "Success!",
+					text: "Success!"
 				};
 			});
 			setTimeout(() => {
@@ -39,17 +38,17 @@ export default function Scan() {
 			yPos: Math.round(e.touches[0].clientY + window.innerHeight * -0.1),
 			show: true,
 			text: "Scanning.",
-			success: false,
+			success: false
 		});
 		const dotAnim = setInterval(() => {
 			let newText: string;
-			setScanPrompt((prevState) => {
+			setScanPrompt(prevState => {
 				prevState.text === "Scanning..."
 					? (newText = "Scanning.")
 					: (newText = prevState.text + ".");
 				return {
 					...prevState,
-					text: newText,
+					text: newText
 				};
 			});
 		}, 1000);
@@ -62,7 +61,7 @@ export default function Scan() {
 				yPos: 0,
 				show: false,
 				text: "Scanning",
-				success: false,
+				success: false
 			});
 		}, 100);
 		if (intervalC.interval !== null) {
@@ -71,11 +70,11 @@ export default function Scan() {
 	};
 	const handleMoveScan = (e: TouchEvent<HTMLDivElement>) => {
 		e.preventDefault();
-		setScanPrompt((prevState) => {
+		setScanPrompt(prevState => {
 			return {
 				...prevState,
 				xPos: Math.round(e.touches[0].clientX + window.innerWidth * 0.02),
-				yPos: Math.round(e.touches[0].clientY + window.innerHeight * -0.1),
+				yPos: Math.round(e.touches[0].clientY + window.innerHeight * -0.1)
 			};
 		});
 	};
@@ -89,8 +88,8 @@ export default function Scan() {
 				onTouchMove={handleMoveScan}
 				onTouchStart={handleScanPrompt}
 				onTouchEnd={handleReleaseScan}
-				onScroll={(e) => e.preventDefault()}
-				onPointerMove={(e) => e.preventDefault()}
+				onScroll={e => e.preventDefault()}
+				onPointerMove={e => e.preventDefault()}
 			>
 				<QrReader
 					onResult={handleScanResult}
@@ -101,14 +100,14 @@ export default function Scan() {
 						padding: "0",
 						margin: "1.5vh auto",
 						width: "100vw",
-						height: "70vh",
+						height: "70vh"
 					}}
 					videoStyle={{
 						width: "100vw",
 						left: "0",
 						top: "0.3%",
 						height: "70vh",
-						borderRadius: "2.5rem",
+						borderRadius: "2.5rem"
 					}}
 				/>
 			</div>
@@ -121,7 +120,7 @@ export default function Scan() {
 				<h5
 					style={{
 						top: `${scanPrompt.yPos.toString()}px`,
-						left: `${scanPrompt.xPos.toString()}px`,
+						left: `${scanPrompt.xPos.toString()}px`
 					}}
 					className={`absolute z-30 text-2xl px-2 top-auto right-auto ${
 						scanPrompt.success ? "bg-green-500" : "bg-blue-500"

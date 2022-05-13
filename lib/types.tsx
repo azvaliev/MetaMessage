@@ -1,12 +1,12 @@
-import {Keypair, PublicKey} from "@solana/web3.js";
-import {MouseEventHandler} from "react";
+import { Keypair, PublicKey } from "@solana/web3.js";
+import { MouseEventHandler } from "react";
 
-export interface userInfo {
+export interface UserInfo {
 	keypair: Keypair;
 	conversations: ConversationDict;
 	mobile: boolean;
 }
-export interface pageProps {
+export interface PageProps {
 	onSetPassword(password: string): void;
 	onSignIn(kp: Keypair): void;
 	onLogout: MouseEventHandler;
@@ -23,13 +23,3 @@ export interface MessageObj {
 }
 
 export type ConversationDict = Record<string, MessageObj[]>;
-
-export interface PasswordStrengthObj {
-	min_length: boolean;
-	contain_num: boolean;
-	contain_special: boolean;
-	not_generic: boolean;
-	contains_capital: boolean;
-	good_mix?: boolean;
-	optimal_length?: boolean;
-}

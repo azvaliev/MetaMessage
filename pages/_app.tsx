@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 import type { Keypair } from "@solana/web3.js";
-import * as _ from "lodash";
+import _ from "lodash";
 
 import { UserContext } from "../lib/UserContext";
 import encryptStorePassword from "../lib/encryption/encryptStorePassword";
@@ -15,10 +15,7 @@ import useInterval from "../lib/hooks/useInterval";
 
 
 async function getConversations(wallet: Keypair) {
-	let incoming = await checkMessages(wallet);
-	if (Object.keys(incoming).length === 0) {
-		incoming = {};
-	}
+	const incoming = await checkMessages(wallet);
 	return incoming;
 }
 
@@ -31,25 +28,23 @@ function MyApp({ Component, pageProps }: AppProps) {
 	useEffect(() => {
 		// Check if keypair has been retrieved succesfully before
 		// atttempting to get messages
-		if (keypair !== null) {
-			if (keypair.toString().length < 1) {
-				router.push("/welcome");
-			} else {
-				setTimeout(async () => {
-					setConversations(await getConversations(keypair));
-				}, 5);
-			}
+		if (keypair) {
+			setTimeout(async () => {
+				setConversations(await getConversations(keypair));
+			}, 5);
 		}
 	}, []);
 
 	useInterval(async () => {
-		try {
-			const newConversations = await getConversations(keypair);
-			if (!_.isEqual(newConversations, conversations)) {
-				setConversations(newConversations);
+		if (keypair) {
+			try {
+				const newConversations = await getConversations(keypair);
+				if (!_.isEqual(newConversations, conversations)) {
+					setConversations(newConversations);
+				}
+			} catch (err) {
+				console.error(err);
 			}
-		} catch (err) {
-			console.error(err);
 		}
 	}, 3000);
 
@@ -64,6 +59,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 			router.push("/login");
 		}, 50);
 	};
+
 	const handleDeleteAccount = async () => {
 		// Send user back to homepage while deleting all data
 		router.push("/welcome");
@@ -88,9 +84,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 	return (
 		<UserContext.Provider value={{
-			keypair: keypair,
-			conversations: conversations,
-			mobile: mobile,
+			keypair,
+			conversations,
+			mobile
 		}}>
 			<Component
 				{...pageProps}

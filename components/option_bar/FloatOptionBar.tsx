@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-max-props-per-line */
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";

@@ -1,25 +1,22 @@
 import { NextApiResponse } from "next";
-import { Client } from "redis-om";
+import { createClient } from "redis";
 
 export default async function handler(
-	{query: {id}},
+	{ query: { id }},
 	res: NextApiResponse
 ) {
-	const client = new Client();
-	if (!client.isOpen()) {
-		await client.open(
-			process.env.API_URL
-		);
-	}
+	const client = createClient({
+		url: process.env.REDIS_URL
+	});
+
+	await client.connect();
+
 	try {
-		const msg = await client.execute(["GET", id]);
-		await client.execute(["DEL", id]);
-		await client.execute(["QUIT"]);
-		res.status(200).json(msg);
+		const message = await client.GET(id);
+		await client.disconnect();
+		res.status(200).json(message);
 	} catch (err) {
-		await client.execute(["QUIT"]);
+		await client.disconnect();
 		res.status(404);
 	}
-	
-	
 }
