@@ -1,5 +1,5 @@
-import {NextApiRequest, NextApiResponse} from "next";
-import {Client} from "redis-om";
+import { NextApiRequest, NextApiResponse } from "next";
+import { Client } from "redis-om";
 
 export default async function handler(
 	req: NextApiRequest,

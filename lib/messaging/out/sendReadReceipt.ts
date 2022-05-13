@@ -1,4 +1,4 @@
-import  * as spl from "@solana/spl-token";
+import * as spl from "@solana/spl-token";
 import { Keypair, Connection, clusterApiUrl } from "@solana/web3.js";
 import { MessageObj } from "../../types";
 

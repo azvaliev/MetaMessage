@@ -2,7 +2,7 @@ import { NextApiResponse } from "next";
 import { Client } from "redis-om";
 
 export default async function handler(
-	{query: {id}},
+	{ query: { id }},
 	res: NextApiResponse
 ) {
 	const client = new Client();
@@ -20,6 +20,4 @@ export default async function handler(
 		await client.execute(["QUIT"]);
 		res.status(404);
 	}
-	
-	
 }
