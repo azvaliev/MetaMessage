@@ -5,7 +5,7 @@ import Message from "../../../components/conversation/Message";
 import ComposeMessageField from "../../../components/conversation/ComposeMessageField";
 import AlertMessage from "../../../components/AlertMessage";
 import { MessageObj } from "../../../lib/types";
-import { ShortenPubkey } from "../../../components/Shorten";
+import { shortenPubkey } from "../../../lib/shorten";
 import copy from "copy-to-clipboard";
 import checkSendMessage from "../../../lib/messaging/out/checkSendMessage";
 import { CloseConvBtn } from "../../../components/option_bar/StyledOptionBar";
@@ -42,7 +42,7 @@ export default function Conversation() {
 		try {
 			const activeConvEncoded = conversations[address.toString()];
 
-			setDisplayAddress(ShortenPubkey(address.toString(), false, mobile));
+			setDisplayAddress(shortenPubkey(address.toString(), false, mobile));
 			Promise.all(activeConvEncoded.map(async (message: MessageObj) => {
 				return await getMessage(message.messageID.toString());
 			})).then(res => {
@@ -56,7 +56,7 @@ export default function Conversation() {
 			
 		} catch (e) {
 			console.error(e);
-			setDisplayAddress(ShortenPubkey(address.toString(), false, mobile));
+			setDisplayAddress(shortenPubkey(address.toString(), false, mobile));
 			setActiveConversation([]);
 		}
 		const stayUp = setInterval(() => {

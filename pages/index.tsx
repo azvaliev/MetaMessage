@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import Link from "next/link";
-import { ShortenPubkey } from "../components/Shorten";
+import { shortenPubkey } from "../lib/shorten";
 import FloatOptionBar from "../components/option_bar/FloatOptionBar";
 import handleRedirect from "../lib/account/handleRedirect";
 import { useRouter } from "next/router";
@@ -27,7 +27,7 @@ export default function Home() {
 							href="/profile/[address]"
 							as={`/profile/${keypair.publicKey.toString()}`}
 						>
-							{ShortenPubkey(keypair.publicKey.toString(), true, mobile)}
+							{shortenPubkey(keypair.publicKey.toString(), true, mobile)}
 						</Link>
 					)}
 				</h1>
@@ -56,7 +56,7 @@ export default function Home() {
 									<div className="flex flex-col w-full px-2 pt-4 pb-2 border-b-2 border-gray-700">
 										<div className="flex flex-row">
 											<h3 className="ml-0 mr-auto text-2xl">
-												{ShortenPubkey(convID.toString(), false, mobile)}
+												{shortenPubkey(convID.toString(), false, mobile)}
 											</h3>
 										</div>
 										<h4 className="pt-2 text-xl italic text-left text-gray-400 md:pt-4">

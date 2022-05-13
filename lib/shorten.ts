@@ -1,4 +1,4 @@
-const ShortenPubkey = (key: string, intro: boolean, mobile: boolean) => {
+const shortenPubkey = (key: string, intro: boolean, mobile: boolean) => {
 	// Solana addresses are way too long to display
 	// This function shortens them
 	let subLen: number;
@@ -13,7 +13,7 @@ const ShortenPubkey = (key: string, intro: boolean, mobile: boolean) => {
 	}
 };
 
-const ShortenMessage = (message: string, mobile: boolean) => {
+const shortenMessage = (message: string, mobile: boolean) => {
 	// This shortens the message for preview on homescreen
 	let charlimit: number;
 	mobile ? (charlimit = 35) : (charlimit = 70);
@@ -23,4 +23,4 @@ const ShortenMessage = (message: string, mobile: boolean) => {
 	return message;
 };
 
-export { ShortenMessage, ShortenPubkey };
+export { shortenMessage, shortenPubkey };
