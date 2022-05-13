@@ -1,7 +1,6 @@
 import { useContext, useEffect } from "react";
 import Link from "next/link";
 import { ShortenPubkey } from "../components/Shorten";
-import { MessageObj } from "../lib/types";
 import FloatOptionBar from "../components/option_bar/FloatOptionBar";
 import handleRedirect from "../lib/account/handleRedirect";
 import { useRouter } from "next/router";

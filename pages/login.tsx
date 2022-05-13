@@ -13,11 +13,12 @@ const Login = (props: pageProps) => {
 	const handleSubmit = () => {
 		setPassword("");
 		decryptPassword(password)
-			.then((res) => {
-				const tempKeypair = res;
-				props.onSignIn(tempKeypair);
-			})
-			.catch(() => setShowError(true));
+			.then(res => 
+				props.onSignIn(res)
+			)
+			.catch(() => 
+				setShowError(true)
+			);
 	};
 	const checkEnter = (e: KeyboardEvent<HTMLInputElement>) => {
 		e.key === "Enter" ? handleSubmit() : null;

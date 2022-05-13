@@ -1,5 +1,5 @@
-import {Keypair, PublicKey} from "@solana/web3.js";
-import {MouseEventHandler} from "react";
+import { Keypair, PublicKey } from "@solana/web3.js";
+import { MouseEventHandler } from "react";
 
 export interface userInfo {
 	keypair: Keypair;

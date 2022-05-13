@@ -52,7 +52,7 @@ module.exports = {
 		"arrow-spacing": ["error", { "before": true, "after": true }],
 		"comma-dangle": ["warn", "never"],
 		"jsx-quotes": ["error", "prefer-double"],
-		"react/jsx-max-props-per-line": ["error", { "maximum": { "single": 2 } }],
+		"react/jsx-max-props-per-line": ["error", { "maximum": { "single": 3 }}],
 		"no-multi-spaces": "error"
 	}
 };
