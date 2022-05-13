@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from "react";
 import PasswordField from "../components/signup/PasswordField";
-import { pageProps } from "../lib/types";
+import { PageProps } from "../lib/types";
 import ConfirmPasswordField from "../components/signup/ConfirmPasswordField";
 
-export default function SignUp (props: pageProps) {
+export default function SignUp (props: PageProps) {
 
 	const [password, setPassword] = useState({
 		password: "",

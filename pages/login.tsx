@@ -1,10 +1,10 @@
 import { ChangeEvent, KeyboardEvent, useContext, useState } from "react";
-import { pageProps } from "../lib/types";
+import { PageProps } from "../lib/types";
 import Link from "next/link";
 import decryptPassword from "../lib/encryption/decryptPassword";
 import { UserContext } from "../lib/UserContext";
 
-const Login = (props: pageProps) => {
+const Login = (props: PageProps) => {
 	const [password, setPassword] = useState("");
 	const [showError, setShowError] = useState(false);
 

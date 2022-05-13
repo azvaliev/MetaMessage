@@ -1,4 +1,4 @@
 import { createContext } from "react";
-import { userInfo } from "./types";
+import { UserInfo } from "./types";
 
-export const UserContext = createContext<userInfo>(null);
+export const UserContext = createContext<UserInfo>(null);
