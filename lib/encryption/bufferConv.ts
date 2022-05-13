@@ -9,6 +9,7 @@ export const toArrayBuffer = (buf: Buffer) => {
 	}
 	return ab;
 };
+
 export const toBuffer = (ab: ArrayBuffer) => {
 	const buf = Buffer.alloc(ab.byteLength);
 	const view = new Uint8Array(ab);

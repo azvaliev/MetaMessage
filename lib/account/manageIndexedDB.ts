@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import { openDB } from "idb";
 
 export const updateIVStore = async (iv: ArrayBuffer) => {
@@ -12,7 +13,7 @@ export const updateIVStore = async (iv: ArrayBuffer) => {
 			} catch (e) {
 				console.error(e);
 			}
-		},
+		}
 	});
 	return db
 		.put("iv", iv, "iv_buffer")
@@ -30,16 +31,18 @@ export const createIVStore = async (iv: ArrayBuffer) => {
 	const db = await openDB("IVDB", 2, {
 		upgrade(db) {
 			db.createObjectStore("iv");
-		},
+		}
 	});
 	return db
 		.add("iv", iv, "iv_buffer")
 		.then(() => true)
-		.catch(() => {
-			return db
-				.put("iv", iv, "iv_buffer")
-				.then(() => true)
-				.catch((err) => console.error(err));
+		.catch(async () => {
+			try {
+				await db.put("iv", iv, "iv_buffer");
+				return true;
+			} catch (err) {
+				return console.error(err);
+			}
 		});
 };
 
