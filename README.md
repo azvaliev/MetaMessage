@@ -12,7 +12,7 @@ This is a [Next.js] TypeScript project bootstrapped with [`create-next-app`]
 
 Create a .env.local file in the root folder with the following environment variable
 ```
-API_URL=YOUR_REDIS_ENDPOINT_HERE
+REDIS_URL=YOUR_REDIS_ENDPOINT_HERE
 ```
 
 You can get a free Redis database at [redis.com](https://redis.com/redis-enterprise-cloud/overview/).
