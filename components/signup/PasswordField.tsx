@@ -1,14 +1,14 @@
-import { ChangeEventHandler, useState, useEffect } from "react";
+import { ChangeEventHandler, useState, useEffect, useContext } from "react";
 import PasswordBarIndicator from "./PasswordBarIndicator";
 import { PasswordStrengthObj } from "../../lib/types";
 import PasswordStrengthHint from "./PasswordStrengthHint";
+import { UserContext } from "../../lib/UserContext";
 
 interface Props {
   password: string;
   setPassword: ChangeEventHandler;
   strength: PasswordStrengthObj;
   onPasswordAccepted(v: boolean): void;
-  mobile: boolean;
 }
 
 const calculateStrengthScore = (
@@ -25,6 +25,9 @@ const calculateStrengthScore = (
 };
 
 const PasswordField = (props: Props) => {
+
+	const { mobile } = useContext(UserContext);
+
 	const [strengthScore, setStrengthScore] = useState(
 		calculateStrengthScore(Object.values(props.strength), props.password.length)
 	);
@@ -49,8 +52,8 @@ const PasswordField = (props: Props) => {
 			<input
 				type="password"
 				name="password"
-				placeholder={props.mobile ? "password" : "Create a password"}
-				autoFocus={!props.mobile}
+				placeholder={mobile ? "password" : "Create a password"}
+				autoFocus={!mobile}
 				value={props.password}
 				onChange={props.setPassword}
 				className="

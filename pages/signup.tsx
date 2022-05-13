@@ -1,13 +1,10 @@
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import PasswordField from "../components/signup/PasswordField";
 import checkPasswordStrength from "../lib/account/checkPasswordStrength";
 import { PasswordStrengthObj, pageProps } from "../lib/types";
 import ConfirmPasswordField from "../components/signup/ConfirmPasswordField";
-import { UserContext } from "../lib/UserContext";
 
 export default function SignUp(props: pageProps) {
-
-	const { mobile } = useContext(UserContext);
 
 	const [passwordSecLevel, setPasswordSecLevel] = useState<PasswordStrengthObj>(
 		{
@@ -54,9 +51,8 @@ export default function SignUp(props: pageProps) {
 					password={password.password}
 					setPassword={handleChangePassword}
 					strength={passwordSecLevel}
-					mobile={mobile}
-					onPasswordAccepted={(v: boolean) =>
-						setPasswordValid({ ...passwordValid, password: v })
+					onPasswordAccepted={(res: boolean) =>
+						setPasswordValid({ ...passwordValid, password: res })
 					}
 				/>
 				{/* only show confirm field when password is minimum strength */}
@@ -66,9 +62,8 @@ export default function SignUp(props: pageProps) {
 						confirmPassword={password.confirmPassword}
 						onSubmit={handleSubmitPassword}
 						setConfirmPassword={handleChangeConfirmPassword}
-						mobile={mobile}
-						onPasswordConfirmed={(v: boolean) =>
-							setPasswordValid({ ...passwordValid, confirmPassword: v })
+						onPasswordConfirmed={(res: boolean) =>
+							setPasswordValid({ ...passwordValid, confirmPassword: res })
 						}
 					/>
 				)}
