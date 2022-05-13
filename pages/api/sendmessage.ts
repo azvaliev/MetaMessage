@@ -8,7 +8,7 @@ export default async function handler(
 	const client = new Client();
 	if (!client.isOpen()) {
 		await client.open(
-			process.env.API_URL
+			process.env.REDIS_URL
 		);
 	}
 	const key = req.body.key;
