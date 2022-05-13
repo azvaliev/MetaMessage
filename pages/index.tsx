@@ -45,7 +45,6 @@ export default function Home() {
 				<div className="w-full">
 					{Object.keys(conversations).map((convID: string) => {
 						const latest = conversations[convID].length - 1;
-						console.log(conversations[convID]);
 						if (keypair) {
 							return (
 								<Link

@@ -13,7 +13,7 @@ export default async function SendMsg(
 		web3.clusterApiUrl("devnet"),
 		"confirmed"
 	);
-	console.log("CONNECTED");
+	console.error("CONNECTED");
 
 	const recipPubkey = new web3.PublicKey(recipient);
 

@@ -20,8 +20,6 @@ export default function SignUp (props: PageProps) {
 	const handleSubmitPassword = () => 
 		props.onSetPassword(password.password);
 
-	console.log(passwordValid);
-
 	return (
 		<div className="text-white text-center md:w-5/6 lg:w-1/2 md:mx-auto">
 			<h1 className="text-4xl py-2 pt-6 underline">Create a password</h1>

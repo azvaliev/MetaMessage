@@ -18,7 +18,6 @@ export default function Scan() {
 
 	const handleScanResult: OnResultFunction = result => {
 		console.log(result);
-		console.log(typeof result);
 		if (result) {
 			setScanPrompt(prevState => {
 				return {

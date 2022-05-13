@@ -46,7 +46,6 @@ export default function Conversation() {
 			Promise.all(activeConvEncoded.map(async (message: MessageObj) => {
 				return await getMessage(message.messageID.toString());
 			})).then(res => {
-				console.log(res);
 				setActiveConversation(() => 
 					activeConvEncoded.map((message, i) => (
 						{ ...message, messageContents: res[i] })
@@ -65,10 +64,10 @@ export default function Conversation() {
 
 		return () => {
 			clearInterval(stayUp);
-			// Send read reciepts for messages viewed
-			Promise.all(activeConversation.map(async message => {
-				return await sendReadReceipt(keypair, message);	
-			}));
+			// Send read reciepts for messages viewed - TODO - RE-ENABLE
+			// Promise.all(activeConversation.map(async message => {
+			// 	return await sendReadReceipt(keypair, message);	
+			// }));
 		};
 	}, [conversations]);
   
@@ -157,6 +156,7 @@ export default function Conversation() {
 			>
 				<ScrollView ref={scrollRef} nativeID="div-scroll-conv">
 					{activeConversation.map((message: MessageObj, i) => {
+						console.log(message);
 						if (!message.messageContents) {
 							return null;
 						}
