@@ -37,9 +37,22 @@ module.exports = {
 			"error",
 			"always"
 		],
-		// suppress errors for missing 'import React' in files
+		"react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx", ".tsx"] }],
 		"react/react-in-jsx-scope": "off",
-		// allow jsx syntax in js files (for next.js project)
-		"react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+		"object-curly-spacing": ["error", "always", { "objectsInObjects": false }],
+		"camelcase": ["warn", { "properties": "always" }],
+		"default-case": "warn",
+		"default-case-last": "warn",
+		"no-alert": "warn",
+		"no-empty-function": "warn",
+		"no-new-func": "warn",
+		"no-shadow": "warn",
+		"require-await": "warn",
+		"arrow-parens": ["error", "as-needed"],
+		"arrow-spacing": ["error", { "before": true, "after": true }],
+		"comma-dangle": ["warn", "never"],
+		"jsx-quotes": ["error", "prefer-double"],
+		"react/jsx-max-props-per-line": ["error", { "maximum": { "single": 2 } }],
+		"no-multi-spaces": "error"
 	}
 };
