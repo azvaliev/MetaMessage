@@ -1,5 +1,5 @@
 import { Account, burn, closeAccount } from "@solana/spl-token";
-import { Keypair, Connection, PublicKey} from "@solana/web3.js";
+import { Keypair, Connection, PublicKey } from "@solana/web3.js";
 
 const checkForReadReceipt = async (
 	connection: Connection, 
